@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rektometer">
+    package="com.maciejjagodzinski.rektometer">
    <application
         android:label="rektometer"
         android:name="${applicationName}"

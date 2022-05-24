@@ -1,4 +1,4 @@
-package com.example.rektometer
+package com.maciejjagodzinski.rektometer
 
 import io.flutter.embedding.android.FlutterActivity
 
