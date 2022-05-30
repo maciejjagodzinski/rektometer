@@ -16,11 +16,39 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Rektometer',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Scaffold(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Login or Sign In'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('login screen'),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'My account',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.currency_bitcoin),
+              label: 'Portfolio',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.speed),
+              label: 'Rekt-O-Meter',
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
