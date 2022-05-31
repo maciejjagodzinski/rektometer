@@ -20,6 +20,15 @@ class MyAccountPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('You are logged in as ${user.email}'),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Sign Out'),
+            )
           ],
         ),
       ),

@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var errorMessage = '';
+  var isCreatingAccount = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('You are not logged in'),
+              Text(isCreatingAccount == true
+                  ? 'Create account'
+                  : 'Please sign in'),
               const SizedBox(
                 height: 20,
               ),
@@ -45,23 +48,70 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: widget.emailController.text,
-                      password: widget.passwordController.text,
-                    );
-                  } catch (error) {
-                    setState(() {
-                      errorMessage = error.toString();
-                    });
-                    final snackBar = SnackBar(
-                      content: Text('Login attempt got REKT. $errorMessage'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  if (isCreatingAccount == true) {
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: widget.emailController.text,
+                        password: widget.passwordController.text,
+                      );
+                    } catch (error) {
+                      setState(() {
+                        errorMessage = error.toString();
+                      });
+                      final snackBar = SnackBar(
+                        content:
+                            Text('User registration got REKT. $errorMessage'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  } else {
+                    //login
+                    try {
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: widget.emailController.text,
+                        password: widget.passwordController.text,
+                      );
+                    } catch (error) {
+                      setState(() {
+                        errorMessage = error.toString();
+                      });
+                      final snackBar = SnackBar(
+                        content: Text('Login attempt got REKT. $errorMessage'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
                   }
                 },
-                child: const Text('Log In'),
+                child: Text(isCreatingAccount == true ? 'Register' : 'Log In'),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              if (isCreatingAccount == false) ...[
+                TextButton(
+                  onPressed: () {
+                    setState(
+                      () {
+                        isCreatingAccount = true;
+                      },
+                    );
+                  },
+                  child: const Text('Create Account'),
+                ),
+              ],
+              if (isCreatingAccount == true) ...[
+                TextButton(
+                  onPressed: () {
+                    setState(
+                      () {
+                        isCreatingAccount = false;
+                      },
+                    );
+                  },
+                  child: const Text('Go back to login page'),
+                ),
+              ],
             ],
           ),
         ),
