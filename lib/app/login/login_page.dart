@@ -38,10 +38,14 @@ class LoginPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+                  } catch (error) {
+                    print(error);
+                  }
                 },
                 child: const Text('Log In'),
               ),
