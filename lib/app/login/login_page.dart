@@ -44,7 +44,10 @@ class LoginPage extends StatelessWidget {
                       password: passwordController.text,
                     );
                   } catch (error) {
-                    print(error);
+                    const snackBar = SnackBar(
+                      content: Text('Your login attempt is REKT. error'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
                 child: const Text('Log In'),
