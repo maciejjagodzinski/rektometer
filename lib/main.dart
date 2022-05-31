@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rektometer/app/account/my_account_page.dart';
+import 'package:rektometer/app/login/login_page.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -38,41 +40,9 @@ class RootPage extends StatelessWidget {
         builder: (context, snapshot) {
           final user = snapshot.data;
           if (user == null) {
-            return const Scaffold(
-              body: Center(
-                child: Text('You are not logged in'),
-              ),
-            );
+            return const LoginPage();
           }
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Your account'),
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('You are logged in as ${user.email}'),
-                ],
-              ),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'My account',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.currency_bitcoin),
-                  label: 'Portfolio',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.speed),
-                  label: 'Rekt-O-Meter',
-                ),
-              ],
-            ),
-          );
+          return MyAccountPage(user: user);
         });
   }
 }
