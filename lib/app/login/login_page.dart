@@ -1,13 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({
     Key? key,
   }) : super(key: key);
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  var errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +30,12 @@ class LoginPage extends StatelessWidget {
                 height: 20,
               ),
               TextField(
-                controller: emailController,
+                controller: widget.emailController,
                 decoration:
                     const InputDecoration(hintText: 'Enter your e-mail'),
               ),
               TextField(
-                controller: passwordController,
+                controller: widget.passwordController,
                 obscureText: true,
                 decoration:
                     const InputDecoration(hintText: 'Enter your passsword'),
@@ -40,12 +47,15 @@ class LoginPage extends StatelessWidget {
                 onPressed: () async {
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text,
+                      email: widget.emailController.text,
+                      password: widget.passwordController.text,
                     );
                   } catch (error) {
-                    const snackBar = SnackBar(
-                      content: Text('Your login attempt is REKT. error'),
+                    setState(() {
+                      errorMessage = error.toString();
+                    });
+                    final snackBar = SnackBar(
+                      content: Text('Login attempt got REKT. $errorMessage'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
