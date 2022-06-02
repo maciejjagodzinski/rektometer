@@ -50,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () async {
                   if (isCreatingAccount == true) {
                     try {
+                      //registration
                       await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                         email: widget.emailController.text,
