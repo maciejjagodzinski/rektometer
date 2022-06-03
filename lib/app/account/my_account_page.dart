@@ -3,13 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/cubit/root_cubit.dart';
 
-class MyAccountPage extends StatelessWidget {
+class MyAccountPage extends StatefulWidget {
   const MyAccountPage({
     Key? key,
     required this.user,
   }) : super(key: key);
 
   final User user;
+
+  @override
+  State<MyAccountPage> createState() => _MyAccountPageState();
+}
+
+class _MyAccountPageState extends State<MyAccountPage> {
+  var currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,7 @@ class MyAccountPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('You are logged in as ${user.email}'),
+            Text('You are logged in as ${widget.user.email}'),
             const SizedBox(
               height: 20,
             ),
@@ -35,6 +42,12 @@ class MyAccountPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (newIndex) {
+          setState(() {
+            currentIndex = newIndex;
+          });
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
