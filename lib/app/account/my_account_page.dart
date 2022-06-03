@@ -8,10 +8,10 @@ import 'package:rektometer/app/rektometer/rektometer_page.dart';
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({
     Key? key,
-    required this.email,
+    required this.user,
   }) : super(key: key);
 
-  final String email;
+  final User user;
 
   @override
   State<MyAccountPage> createState() => _MyAccountPageState();
@@ -33,16 +33,11 @@ class _MyAccountPageState extends State<MyAccountPage> {
         if (currentIndex == 2) {
           return const RektometerPage();
         }
-        if (currentIndex == 0) {
-          return MyAccountPage(
-            email: widget.user.email,
-          );
-        }
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('You are logged in as $email'),
+              Text('You are logged in as ${widget.user.email}'),
               const SizedBox(
                 height: 20,
               ),
