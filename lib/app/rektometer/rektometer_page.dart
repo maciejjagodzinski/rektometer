@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rektometer/app/account/my_account_page.dart';
+import 'package:rektometer/app/portfolio/portfolio_page.dart';
 
 class RektometerPage extends StatefulWidget {
   const RektometerPage({
@@ -15,17 +17,27 @@ class _RektometerPageState extends State<RektometerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('REKT-O-METER'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('rektometer'),
-          ],
-        ),
-      ),
+      body: Builder(builder: (context) {
+        if (currentIndex == 1) {
+          return const PortfolioPage();
+        }
+        if (currentIndex == 0) {
+          return const MyAccountPage();
+        }
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('REKT-O-METER'),
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text('rektometer'),
+              ],
+            ),
+          ),
+        );
+      }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (newIndex) {

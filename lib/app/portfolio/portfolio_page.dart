@@ -7,8 +7,11 @@ class PortfolioPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text('portfolio'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Portfolio'),
+      ),
+      body: const Text('portfolio'),
     );
   }
 }
