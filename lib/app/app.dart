@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/account/my_account_page.dart';
 import 'package:rektometer/app/cubit/root_cubit.dart';
 import 'package:rektometer/app/login/login_page.dart';
+import 'package:rektometer/app/rektometer/rektometer_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class RootPage extends StatelessWidget {
           if (user == null) {
             return LoginPage();
           }
-          return MyAccountPage(user: user);
+          return const RektometerPage();
         },
       ),
     );
