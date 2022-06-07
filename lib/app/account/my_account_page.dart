@@ -22,7 +22,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('You are logged in as email'),
+              Text(
+                'You are logged in as ${context.read<RootCubit>().state.user!.email}',
+              ),
               const SizedBox(
                 height: 20,
               ),

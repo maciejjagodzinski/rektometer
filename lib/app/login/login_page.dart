@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/cubit/root_cubit.dart';
+import 'package:rektometer/app/login/cubit/login_cubit.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({
@@ -15,15 +15,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var errorMessage = '';
-  var isCreatingAccount = false;
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RootCubit(),
-      child: BlocBuilder<RootCubit, RootState>(
+      create: (context) => LoginCubit(),
+      child: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
+          if (state.errorMessage.isNotEmpty) {
+            return Center(
+              child: Text('Something got REKT...${state.errorMessage}'),
+            );
+          }
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Scaffold(
             body: Center(
               child: Padding(
@@ -31,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(isCreatingAccount == true
+                    Text(state.isCreatingAccount == true
                         ? 'Create account'
                         : 'Please sign in'),
                     const SizedBox(
@@ -53,71 +60,38 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        if (isCreatingAccount == true) {
-                          try {
-                            //registration
-                            await context
-                                .read<RootCubit>()
-                                .createUserWithEmailAndPassword(
-                                    widget.emailController.text,
-                                    widget.passwordController.text);
-                          } catch (error) {
-                            setState(() {
-                              errorMessage = error.toString();
-                            });
-                            final snackBar = SnackBar(
-                              content: Text(
-                                  'User registration got REKT. $errorMessage'),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          }
+                        if (state.isCreatingAccount == false) {
+                          await context
+                              .read<LoginCubit>()
+                              .signInWithEmailAndPassword(
+                                  widget.emailController.text,
+                                  widget.passwordController.text);
                         } else {
-                          //login
-                          try {
-                            await context
-                                .read<RootCubit>()
-                                .signInWithEmailAndPassword(
-                                    widget.emailController.text,
-                                    widget.passwordController.text);
-                          } catch (error) {
-                            setState(() {
-                              errorMessage = error.toString();
-                            });
-                            final snackBar = SnackBar(
-                              content: Text('Login attempt got REKT. '),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          }
+                          await context
+                              .read<LoginCubit>()
+                              .createUserWithEmailAndPassword(
+                                  widget.emailController.text,
+                                  widget.passwordController.text);
                         }
                       },
-                      child: Text(
-                          isCreatingAccount == true ? 'Register' : 'Log In'),
+                      child:
+                          Text(state.isCreatingAccount ? 'Register' : 'Log In'),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    if (isCreatingAccount == false) ...[
+                    if (state.isCreatingAccount == false) ...[
                       TextButton(
                         onPressed: () {
-                          setState(
-                            () {
-                              isCreatingAccount = true;
-                            },
-                          );
+                          context.read<LoginCubit>().createUserState();
                         },
                         child: const Text('Create Account'),
                       ),
                     ],
-                    if (isCreatingAccount == true) ...[
+                    if (state.isCreatingAccount == true) ...[
                       TextButton(
                         onPressed: () {
-                          setState(
-                            () {
-                              isCreatingAccount = false;
-                            },
-                          );
+                          context.read<LoginCubit>().signInUserState();
                         },
                         child: const Text('Go back to login page'),
                       ),
