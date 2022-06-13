@@ -1,49 +1,29 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
+import 'package:rektometer/models/investment_model.dart';
+import 'package:rektometer/repositories/investments_repository.dart';
 
 part 'portfolio_state.dart';
 
 class PortfolioCubit extends Cubit<PortfolioState> {
-  PortfolioCubit()
-      : super(
-          const PortfolioState(
-            documents: [],
-            isLoading: false,
-            errorMessage: '',
-          ),
-        );
+  PortfolioCubit(this._investmentsRepository) : super(const PortfolioState());
+
+  final InvestmentsRepository _investmentsRepository;
 
   StreamSubscription? _streamSubscription;
 
-  Future<void> start() async {
-    emit(
-      const PortfolioState(
-        documents: [],
-        isLoading: true,
-        errorMessage: '',
-      ),
-    );
-    _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc('6030qh2FrhbCvyASFXmwU6tG4QJ3')
-        .collection('investments')
-        .snapshots()
-        .listen((data) {
-      emit(
-        PortfolioState(
-          isLoading: false,
-          errorMessage: '',
-          documents: data.docs,
-        ),
-      );
+  Future<void> portfolioStart() async {
+    _streamSubscription =
+        _investmentsRepository.getInvestmentsStream().listen((investments) {
+      emit(PortfolioState(investments: investments));
     })
-      ..onError((error) {
-        emit(PortfolioState(
-            isLoading: false, errorMessage: error.toString(), documents: []));
-      });
+          ..onError((error) {
+            emit(PortfolioState(
+                isLoading: false,
+                errorMessage: error.toString(),
+                investments: const []));
+          });
   }
 
   @override

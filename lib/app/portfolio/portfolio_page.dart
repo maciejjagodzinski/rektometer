@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/portfolio/cubit/portfolio_cubit.dart';
+import 'package:rektometer/models/investment_model.dart';
+import 'package:rektometer/repositories/investments_repository.dart';
 
 class PortfolioPage extends StatelessWidget {
   const PortfolioPage({
@@ -14,23 +16,25 @@ class PortfolioPage extends StatelessWidget {
         title: const Text('Portfolio'),
       ),
       body: BlocProvider(
-        create: (context) => PortfolioCubit()..start(),
+        create: (context) =>
+            PortfolioCubit(InvestmentsRepository())..portfolioStart(),
         child: BlocBuilder<PortfolioCubit, PortfolioState>(
           builder: (context, state) {
-            if (state.errorMessage.isNotEmpty) {
-              return Text('Unexpected REKT ${state.errorMessage.toString()}');
-            }
+            final investmentModels = state.investments;
             if (state.isLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            final documents = state.documents;
-
+            if (state.errorMessage.isNotEmpty) {
+              return Center(
+                child: Text('occured ${state.errorMessage}'),
+              );
+            }
             return ListView(
               children: [
-                for (final document in documents) ...[
-                  InvestmentWidget(document['name'])
+                for (final investmentModel in investmentModels) ...[
+                  InvestmentWidget(investmentModel)
                 ],
               ],
             );
@@ -43,25 +47,19 @@ class PortfolioPage extends StatelessWidget {
 
 class InvestmentWidget extends StatelessWidget {
   const InvestmentWidget(
-    this.name, {
+    this.investmentModel, {
     Key? key,
   }) : super(key: key);
 
-  final String name;
+  final InvestmentModel investmentModel;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(2.0),
-      padding: const EdgeInsets.all(15.0),
-      color: Colors.blueGrey.shade600,
-      child: Text(
-        name,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 15,
-        ),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(investmentModel.name),
+      ],
     );
   }
 }
