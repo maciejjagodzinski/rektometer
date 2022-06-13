@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rektometer/app/add/add_token_page.dart';
 import 'package:rektometer/app/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/models/investment_model.dart';
 import 'package:rektometer/repositories/investments_repository.dart';
@@ -12,8 +13,18 @@ class PortfolioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) => const AddTokenPage()),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
-        title: const Text('Portfolio'),
+        title: const Text('Your Portfolio'),
       ),
       body: BlocProvider(
         create: (context) =>
