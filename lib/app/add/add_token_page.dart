@@ -62,10 +62,16 @@ class CustomSearchDelegate extends SearchDelegate {
       "polkadot",
       "ethereum",
     ];
+    List<String> matchQuery = [];
+    for (final token in tokenList) {
+      if (token.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(token);
+      }
+    }
     return ListView.builder(
-        itemCount: tokenList.length,
+        itemCount: matchQuery.length,
         itemBuilder: (context, index) {
-          final suggestion = tokenList[index];
+          final suggestion = matchQuery[index];
           return ListTile(
             title: Text(suggestion),
             onTap: () {
