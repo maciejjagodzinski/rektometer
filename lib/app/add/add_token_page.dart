@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rektometer/repositories/token_list_repository.dart';
 
 class AddTokenPage extends StatelessWidget {
   const AddTokenPage({
@@ -21,6 +22,14 @@ class AddTokenPage extends StatelessWidget {
             icon: const Icon(Icons.search),
           )
         ],
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // insert method to get token list
+          },
+          child: const Text('get token list'),
+        ),
       ),
     );
   }
