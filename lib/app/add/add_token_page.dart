@@ -10,7 +10,69 @@ class AddTokenPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add some shitcoins'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(),
+              );
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
     );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+          onPressed: () {
+            query = '';
+          },
+          icon: const Icon(Icons.clear))
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: const Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) => Center(
+        child: Text(
+          query,
+          style: const TextStyle(fontSize: 50),
+        ),
+      );
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> tokenList = [
+      "bitcoin",
+      "polkadot",
+      "ethereum",
+    ];
+    return ListView.builder(
+        itemCount: tokenList.length,
+        itemBuilder: (context, index) {
+          final suggestion = tokenList[index];
+          return ListTile(
+            title: Text(suggestion),
+            onTap: () {
+              query = suggestion;
+              showResults(context);
+            },
+          );
+        });
   }
 }
