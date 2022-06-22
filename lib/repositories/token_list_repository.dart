@@ -6,14 +6,12 @@ class TokenListRepository {
 
   final TokenListRemoteDataSource _tokenListRemoteDataSource;
 
-  Future<TokenListModel?> getTokenListModel() async {
-    final responseData = await _tokenListRemoteDataSource.getTokenListData();
-    if (responseData == null) {
-      return null;
+  Future<List<TokenListModel>> getTokenListModel() async {
+    final json = await _tokenListRemoteDataSource.getTokenListData();
+
+    if (json == null) {
+      return [];
     }
-    final name = responseData['name'] as String;
-    final symbol = responseData['symbol'] as String;
-    final id = responseData['id'] as String;
-    return TokenListModel(id: id, symbol: symbol, name: name);
+    return json.map((e) => TokenListModel.fromJson(e)).toList();
   }
 }

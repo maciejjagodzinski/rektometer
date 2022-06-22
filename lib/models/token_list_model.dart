@@ -1,10 +1,15 @@
 class TokenListModel {
   TokenListModel({
+    required this.name,
     required this.id,
     required this.symbol,
-    required this.name,
   });
+  final String name;
   final String id;
   final String symbol;
-  final String name;
+
+  TokenListModel.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        id = json['id'],
+        symbol = json['symbol'];
 }

@@ -1,34 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rektometer/app/add/cubit/add_token_cubit.dart';
+import 'package:rektometer/data/remote_data_sources/token_remote_data_source.dart';
+import 'package:rektometer/models/token_list_model.dart';
 import 'package:rektometer/repositories/token_list_repository.dart';
 
-class AddTokenPage extends StatelessWidget {
+class AddTokenPage extends StatefulWidget {
   const AddTokenPage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<AddTokenPage> createState() => _AddTokenPageState();
+}
+
+class _AddTokenPageState extends State<AddTokenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add some shitcoins'),
         actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: CustomSearchDelegate(),
-              );
-            },
-            icon: const Icon(Icons.search),
+          BlocProvider(
+            create: (context) =>
+                AddTokenCubit(TokenListRepository(TokenListRemoteDataSource()))
+                  ..start(),
+            child: BlocBuilder<AddTokenCubit, AddTokenState>(
+              builder: (context, state) {
+                final tokenList = state.tokenList;
+                return IconButton(
+                  onPressed: () {
+                    showSearch(
+                        context: context,
+                        delegate: CustomSearchDelegate(tokenList));
+                  },
+                  icon: const Icon(Icons.search),
+                );
+              },
+            ),
           )
         ],
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // insert method to get token list
+      body: BlocProvider(
+        create: (context) =>
+            AddTokenCubit(TokenListRepository(TokenListRemoteDataSource()))
+              ..start(),
+        child: BlocBuilder<AddTokenCubit, AddTokenState>(
+          builder: (context, state) {
+            final tokenListModels = state.tokenList;
+            return Center(
+                child: ListView(
+              children: [
+                for (final tokenListModel in tokenListModels) ...[
+                  Text(tokenListModel.name)
+                ]
+              ],
+            ));
           },
-          child: const Text('get token list'),
         ),
       ),
     );
@@ -36,6 +64,10 @@ class AddTokenPage extends StatelessWidget {
 }
 
 class CustomSearchDelegate extends SearchDelegate {
+  CustomSearchDelegate(this.tokenList);
+
+  final List<TokenListModel> tokenList;
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -66,15 +98,10 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> tokenList = [
-      "bitcoin",
-      "polkadot",
-      "ethereum",
-    ];
     List<String> matchQuery = [];
     for (final token in tokenList) {
-      if (token.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(token);
+      if (token.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(token.name);
       }
     }
     return ListView.builder(
