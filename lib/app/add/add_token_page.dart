@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/add/cubit/add_token_cubit.dart';
+import 'package:rektometer/data/remote_data_sources/investments_remote_data_source.dart';
 import 'package:rektometer/data/remote_data_sources/token_remote_data_source.dart';
 import 'package:rektometer/models/token_list_model.dart';
+import 'package:rektometer/repositories/investments_repository.dart';
 import 'package:rektometer/repositories/token_list_repository.dart';
 
 class AddTokenPage extends StatefulWidget {
@@ -22,9 +24,10 @@ class _AddTokenPageState extends State<AddTokenPage> {
         title: const Text('Add some shitcoins'),
         actions: [
           BlocProvider(
-            create: (context) =>
-                AddTokenCubit(TokenListRepository(TokenListRemoteDataSource()))
-                  ..start(),
+            create: (context) => AddTokenCubit(
+                TokenListRepository(TokenListRemoteDataSource()),
+                InvestmentsRepository(InvestmentsRemoteDataSource()))
+              ..start(),
             child: BlocBuilder<AddTokenCubit, AddTokenState>(
               builder: (context, state) {
                 final tokenList = state.tokenList;
@@ -42,9 +45,10 @@ class _AddTokenPageState extends State<AddTokenPage> {
         ],
       ),
       body: BlocProvider(
-        create: (context) =>
-            AddTokenCubit(TokenListRepository(TokenListRemoteDataSource()))
-              ..start(),
+        create: (context) => AddTokenCubit(
+            TokenListRepository(TokenListRemoteDataSource()),
+            InvestmentsRepository(InvestmentsRemoteDataSource()))
+          ..start(),
         child: BlocBuilder<AddTokenCubit, AddTokenState>(
           builder: (context, state) {
             final tokenListModels = state.tokenList;
@@ -52,7 +56,9 @@ class _AddTokenPageState extends State<AddTokenPage> {
                 child: ListView(
               children: [
                 for (final tokenListModel in tokenListModels) ...[
-                  Text(tokenListModel.name)
+                  Text(tokenListModel.name),
+                  Text(tokenListModel.id),
+                  Text(tokenListModel.symbol),
                 ]
               ],
             ));
@@ -90,9 +96,15 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) => Center(
-        child: Text(
-          query,
-          style: const TextStyle(fontSize: 50),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 20.0,
+            horizontal: 20.0,
+          ),
+          child: Text(
+            query,
+            style: const TextStyle(fontSize: 30),
+          ),
         ),
       );
 

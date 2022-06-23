@@ -1,56 +1,41 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rektometer/data/remote_data_sources/investments_remote_data_source.dart';
 import 'package:rektometer/models/investment_model.dart';
 
 class InvestmentsRepository {
+  InvestmentsRepository(this._investmentsRemoteDataSource);
+  final InvestmentsRemoteDataSource _investmentsRemoteDataSource;
+
   Stream<List<InvestmentModel>> getInvestmentsStream() {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User not logged in');
-    }
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('investments')
-        .snapshots()
+    return _investmentsRemoteDataSource
+        .getInvestmentsData()
         .map((querySnapshot) {
-      return querySnapshot.docs.map((doc) {
+      return querySnapshot!.docs.map((doc) {
         return InvestmentModel(
           id: doc.id,
           symbol: doc['symbol'],
-          priceChangePercentage: doc['price_change_percentage_24h'],
           name: doc['name'],
-          image: doc['image'],
           tokenId: doc['id'],
-          currentPrice: doc['current_price'] + 0.0,
-          buyVolume: doc['buy_volume'] + 0.0,
-          buyPrice: doc['buy_price'] + 0.0,
         );
       }).toList();
     });
   }
 
   Future<InvestmentModel> get({required String id}) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
-    final doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('investments')
-        .doc(id)
-        .get();
+    final doc = await _investmentsRemoteDataSource.getRemoteDocs(id: id);
     return InvestmentModel(
       id: doc.id,
       symbol: doc['symbol'],
-      priceChangePercentage: doc['price_change_percentage_24h'],
       name: doc['name'],
-      image: doc['image'],
       tokenId: doc['id'],
-      currentPrice: doc['current_price'],
-      buyVolume: doc['buy_volume'],
-      buyPrice: doc['buy_price'],
     );
+  }
+
+  Future<void> addTokenToPortfolio({
+    required String name,
+    required String id,
+    required String symbol,
+  }) async {
+    await _investmentsRemoteDataSource.add(name: name, id: id, symbol: symbol);
   }
 }
