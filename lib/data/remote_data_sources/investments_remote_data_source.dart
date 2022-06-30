@@ -30,9 +30,7 @@ class InvestmentsRemoteDataSource {
   }
 
   Future<void> add({
-    required String name,
     required String id,
-    required String symbol,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     {
@@ -41,9 +39,7 @@ class InvestmentsRemoteDataSource {
           .doc(userID)
           .collection('investments')
           .add({
-        'name': name,
         'id': id,
-        'symbol': symbol,
       });
     }
   }

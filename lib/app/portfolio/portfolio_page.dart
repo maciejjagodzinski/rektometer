@@ -71,7 +71,7 @@ class InvestmentWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(investmentModel.name),
+        Text(investmentModel.tokenId),
       ],
     );
   }

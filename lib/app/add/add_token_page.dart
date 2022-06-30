@@ -17,51 +17,51 @@ class AddTokenPage extends StatefulWidget {
 }
 
 class _AddTokenPageState extends State<AddTokenPage> {
+  var addTokenId = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add some shitcoins'),
-        actions: [
-          BlocProvider(
-            create: (context) => AddTokenCubit(
-                TokenListRepository(TokenListRemoteDataSource()),
-                InvestmentsRepository(InvestmentsRemoteDataSource()))
-              ..start(),
-            child: BlocBuilder<AddTokenCubit, AddTokenState>(
-              builder: (context, state) {
-                final tokenList = state.tokenList;
-                return IconButton(
-                  onPressed: () {
-                    showSearch(
-                        context: context,
-                        delegate: CustomSearchDelegate(tokenList));
-                  },
-                  icon: const Icon(Icons.search),
-                );
-              },
-            ),
-          )
-        ],
       ),
       body: BlocProvider(
         create: (context) => AddTokenCubit(
-            TokenListRepository(TokenListRemoteDataSource()),
-            InvestmentsRepository(InvestmentsRemoteDataSource()))
-          ..start(),
+          TokenListRepository(TokenListRemoteDataSource()),
+          InvestmentsRepository(InvestmentsRemoteDataSource()),
+        )..start(),
         child: BlocBuilder<AddTokenCubit, AddTokenState>(
           builder: (context, state) {
-            final tokenListModels = state.tokenList;
+            final tokenList = state.tokenList;
             return Center(
-                child: ListView(
-              children: [
-                for (final tokenListModel in tokenListModels) ...[
-                  Text(tokenListModel.name),
-                  Text(tokenListModel.id),
-                  Text(tokenListModel.symbol),
-                ]
-              ],
-            ));
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      final searchResult = await showSearch(
+                          context: context,
+                          delegate: SearchTokenModelDelegate(tokenList));
+                      setState(() {
+                        addTokenId = searchResult;
+                      });
+                    },
+                    icon: const Icon(Icons.search),
+                    label: const Text("Search for tokens to add"),
+                  ),
+                  addTokenId == ''
+                      ? Container()
+                      : ElevatedButton.icon(
+                          onPressed: () {
+                            context
+                                .read<AddTokenCubit>()
+                                .addToken(id: addTokenId);
+                          },
+                          icon: const Icon(Icons.add),
+                          label: Text(addTokenId))
+                ],
+              ),
+            );
           },
         ),
       ),
@@ -69,8 +69,8 @@ class _AddTokenPageState extends State<AddTokenPage> {
   }
 }
 
-class CustomSearchDelegate extends SearchDelegate {
-  CustomSearchDelegate(this.tokenList);
+class SearchTokenModelDelegate extends SearchDelegate {
+  SearchTokenModelDelegate(this.tokenList);
 
   final List<TokenListModel> tokenList;
 
@@ -89,24 +89,33 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildLeading(BuildContext context) {
     return IconButton(
         onPressed: () {
-          close(context, null);
+          close(context, query);
         },
         icon: const Icon(Icons.arrow_back));
   }
 
   @override
-  Widget buildResults(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 20.0,
-            horizontal: 20.0,
-          ),
-          child: Text(
-            query,
-            style: const TextStyle(fontSize: 30),
-          ),
-        ),
-      );
+  Widget buildResults(BuildContext context) {
+    List<String> matchQuery = [];
+    for (final token in tokenList) {
+      if (token.name.toLowerCase() == (query.toLowerCase())) {
+        matchQuery.add(token.id);
+      }
+    }
+    return ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (context, index) {
+          final result = matchQuery[index];
+          return ListTile(
+            tileColor: Colors.blueGrey[200],
+            title: Text(query),
+            subtitle: Text(result),
+            onTap: () {
+              close(context, result);
+            },
+          );
+        });
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {

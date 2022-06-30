@@ -9,7 +9,7 @@ part 'add_token_state.dart';
 class AddTokenCubit extends Cubit<AddTokenState> {
   AddTokenCubit(this._tokenListRepository, this._investmentsRepository)
       : super(const AddTokenState(
-            tokenList: [], isLoading: false, errorMessage: ''));
+            addTokenId: '', tokenList: [], isLoading: false, errorMessage: ''));
 
   final TokenListRepository _tokenListRepository;
   final InvestmentsRepository _investmentsRepository;
@@ -17,15 +17,17 @@ class AddTokenCubit extends Cubit<AddTokenState> {
   Future<void> start() async {
     final tokenList = await _tokenListRepository.getTokenListModel();
     {
-      emit(AddTokenState(tokenList: tokenList));
+      emit(AddTokenState(
+          tokenList: tokenList,
+          addTokenId: '',
+          isLoading: false,
+          errorMessage: ''));
     }
   }
 
-  Future<void> addToken(
-      {required String name,
-      required String id,
-      required String symbol}) async {
-    await _investmentsRepository.addTokenToPortfolio(
-        name: name, id: id, symbol: symbol);
+  Future<void> addToken({
+    required String id,
+  }) async {
+    await _investmentsRepository.addTokenToPortfolio(id: id);
   }
 }
