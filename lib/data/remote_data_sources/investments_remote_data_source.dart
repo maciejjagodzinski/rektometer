@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rektometer/models/investment_model.dart';
 
 class InvestmentsRemoteDataSource {
   Stream<QuerySnapshot<Map<String, dynamic>>?> getInvestmentsData() {

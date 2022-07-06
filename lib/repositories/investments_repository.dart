@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rektometer/data/remote_data_sources/investments_remote_data_source.dart';
 import 'package:rektometer/models/investment_model.dart';
 

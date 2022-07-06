@@ -102,19 +102,25 @@ class SearchTokenModelDelegate extends SearchDelegate {
         matchQuery.add(token.id);
       }
     }
-    return ListView.builder(
-        itemCount: matchQuery.length,
-        itemBuilder: (context, index) {
-          final result = matchQuery[index];
-          return ListTile(
-            tileColor: Colors.blueGrey[200],
-            title: Text(query),
-            subtitle: Text(result),
-            onTap: () {
-              close(context, result);
-            },
-          );
-        });
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: ListView.builder(
+          itemCount: matchQuery.length,
+          itemBuilder: (context, index) {
+            final result = matchQuery[index];
+            return ListTile(
+              tileColor: Colors.blue.shade200,
+              title: Text(
+                query,
+                style: const TextStyle(fontSize: 30),
+              ),
+              subtitle: Text('ID:$result'),
+              onTap: () {
+                close(context, result);
+              },
+            );
+          }),
+    );
   }
 
   @override
