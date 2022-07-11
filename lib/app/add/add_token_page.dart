@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/add/cubit/add_token_cubit.dart';
-import 'package:rektometer/data/remote_data_sources/investments_remote_data_source.dart';
+import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/data/remote_data_sources/token_remote_data_source.dart';
 import 'package:rektometer/models/token_list_model.dart';
-import 'package:rektometer/repositories/investments_repository.dart';
+import 'package:rektometer/repositories/portfolio_repository.dart';
 import 'package:rektometer/repositories/token_list_repository.dart';
 
 class AddTokenPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _AddTokenPageState extends State<AddTokenPage> {
       body: BlocProvider(
         create: (context) => AddTokenCubit(
           TokenListRepository(TokenListRemoteDataSource()),
-          InvestmentsRepository(InvestmentsRemoteDataSource()),
+          PortfolioRepository(PortfolioRemoteDataSource()),
         )..start(),
         child: BlocBuilder<AddTokenCubit, AddTokenState>(
           builder: (context, state) {

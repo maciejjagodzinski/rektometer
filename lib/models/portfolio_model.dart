@@ -1,5 +1,5 @@
-class InvestmentModel {
-  InvestmentModel({
+class PortfolioModel {
+  PortfolioModel({
     required this.id,
     required this.tokenId,
   });

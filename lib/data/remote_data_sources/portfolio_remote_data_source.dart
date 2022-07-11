@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class InvestmentsRemoteDataSource {
-  Stream<QuerySnapshot<Map<String, dynamic>>?> getInvestmentsData() {
+class PortfolioRemoteDataSource {
+  Stream<QuerySnapshot<Map<String, dynamic>>?> getPortfolioData() {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User not logged in');
