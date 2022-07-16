@@ -3,18 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class PortfolioRemoteDataSource {
-  Stream<QuerySnapshot<Map<String, dynamic>>?> getPortfolioData() {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User not logged in');
-    }
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('investments')
-        .snapshots();
-  }
-
   Future<QuerySnapshot<Map<String, dynamic>>?> getRemoteDocs() async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {

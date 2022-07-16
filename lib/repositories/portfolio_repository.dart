@@ -6,13 +6,17 @@ class PortfolioRepository {
   PortfolioRepository(this._portfolioRemoteDataSource);
   final PortfolioRemoteDataSource _portfolioRemoteDataSource;
 
-  Future<List<AddedTokenModel>> getAddedTokensIds() async {
+  Future<List<String>> getAddedTokensIds() async {
     final tokenIds = await _portfolioRemoteDataSource.getRemoteDocs();
-    return tokenIds!.docs.map((doc) {
-      return AddedTokenModel(
-        addedTokenId: doc['id'],
-      );
-    }).toList();
+    return tokenIds!.docs
+        .map((doc) {
+          return AddedTokenModel(
+            addedTokenId: doc['id'],
+          );
+        })
+        .toList()
+        .map((addedTokensIds) => addedTokensIds.addedTokenId)
+        .toList();
   }
 
   Future<void> addTokenToPortfolio({

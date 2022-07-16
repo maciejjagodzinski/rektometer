@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rektometer/models/added_token_model.dart';
 import 'package:rektometer/models/tracker_model.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
 
@@ -9,50 +8,31 @@ part 'portfolio_state.dart';
 
 class PortfolioCubit extends Cubit<PortfolioState> {
   PortfolioCubit(this._portfolioRepository)
-      : super(const PortfolioState(addedTokensIdsList: null));
+      : super(
+          const PortfolioState(
+              trackerModels: [], isLoading: false, errorMessage: ''),
+        );
 
   final PortfolioRepository _portfolioRepository;
 
-  // StreamSubscription? _streamSubscription;
-
-  // Future<void> portfolioStart() async {
-  //   _streamSubscription =
-  //       _portfolioRepository.getPortfolioStream().listen((addedTokensIds) {
-  //     emit(PortfolioState(addedTokensIds: addedTokensIds));
-  //   })
-  //         ..onError((error) {
-  //           emit(PortfolioState(
-  //             isLoading: false,
-  //             errorMessage: error.toString(),
-  //             addedTokensIds: const [],
-  //             addedTokensIdsString: '',
-  //           ));
-  //         });
-  // }
-
-  Future<void> getIdsforApi() async {
+  Future<void> showPortfolioTokens() async {
     final addedTokensIdsList = await _portfolioRepository.getAddedTokensIds();
     emit(
+      const PortfolioState(
+        isLoading: true,
+        errorMessage: '',
+        trackerModels: [],
+      ),
+    );
+    final trackerModels = await _portfolioRepository.getTrackerModels(
+      trackerIdsList: addedTokensIdsList,
+    );
+    emit(
       PortfolioState(
+        trackerModels: trackerModels,
         isLoading: false,
         errorMessage: '',
-        addedTokensIdsList: addedTokensIdsList,
-        trackerModels: const [],
       ),
     );
   }
-
-  Future<void> showPortfolioTokens() async {
-    final trackerModels = await _portfolioRepository.getTrackerModels(
-      trackerIdsList: ['bitcoin', 'polkadot', 'xi-token'],
-    );
-    emit(PortfolioState(
-        addedTokensIdsList: const [], trackerModels: trackerModels));
-  }
-
-  // @override
-  // Future<void> close() {
-  //   _streamSubscription?.cancel();
-  //   return super.close();
-  // }
 }
