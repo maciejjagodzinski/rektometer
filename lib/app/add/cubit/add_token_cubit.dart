@@ -14,7 +14,7 @@ class AddTokenCubit extends Cubit<AddTokenState> {
   final TokenListRepository _tokenListRepository;
   final PortfolioRepository _portfolioRepository;
 
-  Future<void> start() async {
+  Future<void> addTokenPageStart() async {
     final tokenList = await _tokenListRepository.getTokenListModel();
     {
       emit(AddTokenState(

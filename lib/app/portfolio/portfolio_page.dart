@@ -3,14 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/add/add_token_page.dart';
 import 'package:rektometer/app/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/models/portfolio_model.dart';
+import 'package:rektometer/models/tracker_model.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
 
-class PortfolioPage extends StatelessWidget {
+class PortfolioPage extends StatefulWidget {
   const PortfolioPage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<PortfolioPage> createState() => _PortfolioPageState();
+}
+
+class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +35,10 @@ class PortfolioPage extends StatelessWidget {
       body: BlocProvider(
         create: (context) =>
             PortfolioCubit(PortfolioRepository(PortfolioRemoteDataSource()))
-              ..portfolioStart(),
+              ..showPortfolioTokens(),
         child: BlocBuilder<PortfolioCubit, PortfolioState>(
           builder: (context, state) {
-            final portfolioModels = state.tokensTracked;
+            final trackerModels = state.trackerModels;
             if (state.isLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -46,9 +51,9 @@ class PortfolioPage extends StatelessWidget {
             }
             return ListView(
               children: [
-                for (final portfolioModel in portfolioModels) ...[
-                  PortfolioWidget(portfolioModel)
-                ],
+                for (final trackerModel in trackerModels) ...[
+                  PortfolioWidget(trackerModel)
+                ]
               ],
             );
           },
@@ -60,11 +65,11 @@ class PortfolioPage extends StatelessWidget {
 
 class PortfolioWidget extends StatelessWidget {
   const PortfolioWidget(
-    this.portfolioModel, {
+    this.trackerModel, {
     Key? key,
   }) : super(key: key);
 
-  final PortfolioModel portfolioModel;
+  final TrackerModel trackerModel;
 
   @override
   Widget build(BuildContext context) {
@@ -78,27 +83,27 @@ class PortfolioWidget extends StatelessWidget {
           children: [
             Container(
               height: 40,
-              child: Text('B'),
+              child: Text('image'),
             ),
             Container(
               height: 35,
-              child: Text(portfolioModel.tokenId),
+              child: Text(trackerModel.name),
             ),
             Container(
               height: 35,
-              child: Text('40000\$'),
+              child: Text(trackerModel.price.toString()),
             ),
             Container(
               height: 35,
-              child: Text('7.4%'),
+              child: Text(trackerModel.priceChange.toString()),
             ),
             Container(
               height: 35,
-              child: Text('3.0'),
+              child: Text(trackerModel.volume.toString()),
             ),
             Container(
               height: 35,
-              child: Text('120000\$'),
+              child: Text(trackerModel.value.toString()),
             ),
           ],
         ),

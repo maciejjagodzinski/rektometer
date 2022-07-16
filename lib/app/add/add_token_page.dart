@@ -29,7 +29,7 @@ class _AddTokenPageState extends State<AddTokenPage> {
         create: (context) => AddTokenCubit(
           TokenListRepository(TokenListRemoteDataSource()),
           PortfolioRepository(PortfolioRemoteDataSource()),
-        )..start(),
+        )..addTokenPageStart(),
         child: BlocBuilder<AddTokenCubit, AddTokenState>(
           builder: (context, state) {
             final tokenList = state.tokenList;
