@@ -82,8 +82,8 @@ class PortfolioWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 40,
-              child: Text('image'),
+              height: 35,
+              child: Image.network(trackerModel.image),
             ),
             Container(
               height: 35,
