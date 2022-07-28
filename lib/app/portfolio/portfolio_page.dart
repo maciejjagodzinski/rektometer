@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/add/add_token_page.dart';
 import 'package:rektometer/app/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/models/tracker_model.dart';
+import 'package:rektometer/models/portfolio_item_model.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
 
 class PortfolioPage extends StatefulWidget {
@@ -35,10 +35,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
       body: BlocProvider(
         create: (context) =>
             PortfolioCubit(PortfolioRepository(PortfolioRemoteDataSource()))
-              ..showPortfolioTokens(),
+              ..showTradeModels(),
         child: BlocBuilder<PortfolioCubit, PortfolioState>(
           builder: (context, state) {
-            final trackerModels = state.trackerModels;
+            final portfolioItemModels = state.portfolioItemModels;
             if (state.isLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -49,10 +49,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 child: Text('occured ${state.errorMessage}'),
               );
             }
+
+            // return ListView(
+            //   children: [
+            //     for (final tradeModel in tradeModels)
+            //       Text(tradeModel.toString())
+            //   ],
+            // );
+
             return ListView(
               children: [
-                for (final trackerModel in trackerModels) ...[
-                  PortfolioWidget(trackerModel)
+                for (final portfolioItemModel in portfolioItemModels) ...[
+                  PortfolioWidget(portfolioItemModel)
                 ]
               ],
             );
@@ -65,11 +73,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
 class PortfolioWidget extends StatelessWidget {
   const PortfolioWidget(
-    this.trackerModel, {
+    this.portfolioItemModel, {
     Key? key,
   }) : super(key: key);
 
-  final TrackerModel trackerModel;
+  final PortfolioItemModel portfolioItemModel;
 
   @override
   Widget build(BuildContext context) {
@@ -83,27 +91,35 @@ class PortfolioWidget extends StatelessWidget {
           children: [
             Container(
               height: 35,
-              child: Image.network(trackerModel.image),
+              child: Image.network(portfolioItemModel.image),
             ),
             Container(
               height: 35,
-              child: Text(trackerModel.name),
+              child: Text(portfolioItemModel.volume.toString()),
             ),
             Container(
               height: 35,
-              child: Text(trackerModel.price.toString()),
+              child: Text(portfolioItemModel.price.toString()),
             ),
             Container(
               height: 35,
-              child: Text(trackerModel.priceChange.toString()),
+              child: Text(portfolioItemModel.tokenId),
             ),
             Container(
               height: 35,
-              child: Text(trackerModel.volume.toString()),
+              child: Text(portfolioItemModel.priceChange.toString()),
             ),
             Container(
               height: 35,
-              child: Text(trackerModel.value.toString()),
+              child: Text(portfolioItemModel.value.toString()),
+            ),
+            Container(
+              height: 35,
+              child: Text(portfolioItemModel.symbol),
+            ),
+            Container(
+              height: 35,
+              child: Text(portfolioItemModel.name),
             ),
           ],
         ),

@@ -3,7 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class PortfolioRemoteDataSource {
-  Future<QuerySnapshot<Map<String, dynamic>>?> getRemoteDocs() async {
+  Future<QuerySnapshot<Map<String, dynamic>>?>
+      getRemoteInvestmentsData() async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -28,6 +29,18 @@ class PortfolioRemoteDataSource {
         'id': id,
       });
     }
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>?> getRemoteTradesData() async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('trades')
+        .get();
   }
 
   Future<List<Map<String, dynamic>>?> getTrackerData({
