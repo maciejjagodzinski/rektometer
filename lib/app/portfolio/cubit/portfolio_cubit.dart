@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rektometer/models/portfolio_item_model.dart';
-import 'package:rektometer/models/trades_model.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
 
 part 'portfolio_state.dart';
@@ -19,7 +18,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
 
   final PortfolioRepository _portfolioRepository;
 
-  Future<void> showTradeModels() async {
+  Future<void> showPortfolio() async {
     final portfolioItemModels =
         await _portfolioRepository.testUzyskaniaTrades();
     emit(

@@ -16,21 +16,6 @@ class PortfolioRemoteDataSource {
         .get();
   }
 
-  Future<void> add({
-    required String id,
-  }) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userID)
-          .collection('investments')
-          .add({
-        'id': id,
-      });
-    }
-  }
-
   Future<QuerySnapshot<Map<String, dynamic>>?> getRemoteTradesData() async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     if (userID == null) {
@@ -55,5 +40,41 @@ class PortfolioRemoteDataSource {
       return null;
     }
     return listDynamic.map((e) => e as Map<String, dynamic>).toList();
+  }
+
+  Future<void> add({
+    required String id,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection('investments')
+          .add({
+        'id': id,
+      });
+    }
+  }
+
+  Future<void> addTrade({
+    required String tradeTokenId,
+    required String price,
+    required String volume,
+  }) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    double priceDouble = double.parse(price);
+    double volumeDouble = double.parse(volume);
+    {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection('trades')
+          .add({
+        'id': tradeTokenId,
+        'price': priceDouble,
+        'volume': volumeDouble,
+      });
+    }
   }
 }

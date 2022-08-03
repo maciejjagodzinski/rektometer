@@ -1,68 +1,11 @@
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/models/added_token_model.dart';
 import 'package:rektometer/models/portfolio_item_model.dart';
-import 'package:rektometer/models/trades_model.dart';
 
 class PortfolioRepository {
   PortfolioRepository(this._portfolioRemoteDataSource);
   final PortfolioRemoteDataSource _portfolioRemoteDataSource;
 
-  Future<void> addTokenToPortfolio({
-    required String id,
-  }) async {
-    await _portfolioRemoteDataSource.add(id: id);
-  }
-  //
-  // Future<List<TradeModel>> testUzyskaniaTrades() async {
-  //   final addedTokenModels =
-  //       await _portfolioRemoteDataSource.getRemoteInvestmentsData();
-  //   final addedTokensIds = addedTokenModels!.docs
-  //       .map((doc) {
-  //         return AddedTokenModel(
-  //           addedTokenId: doc['id'],
-  //           investmentDocumentId: doc.id,
-  //         );
-  //       })
-  //       .toList()
-  //       .map((addedTokensIds) => addedTokensIds.addedTokenId)
-  //       .toSet();
-
-  //   final firebaseTradeModels =
-  //       await _portfolioRemoteDataSource.getRemoteTradesData();
-
-  //   final listOfTradeModels = firebaseTradeModels!.docs.map((doc) {
-  //     return TradeModel(
-  //       tradeTokenId: doc['id'],
-  //       price: 0.0,
-  //       volume: doc['volume'] + 0.0,
-  //     );
-  //   }).toList();
-
-  //   return addedTokensIds.map((addedTokenId) {
-  //     final portfolioModels = listOfTradeModels
-  //         .where((tradeModel) => tradeModel.tradeTokenId == addedTokenId);
-
-  //     if (portfolioModels.isEmpty) {
-  //       return TradeModel(
-  //         tradeTokenId: addedTokenId,
-  //         volume: 0,
-  //         price: 0,
-  //       );
-  //     }
-
-  //     return portfolioModels.reduce((value, element) {
-  //       return TradeModel(
-  //         tradeTokenId: value.tradeTokenId,
-  //         volume: value.volume + element.volume + 0.0,
-  //         price: value.price + 0.0,
-  //       );
-  //     });
-  //   }).toList();
-  // }
-
-//
-
-//
   Future<List<PortfolioItemModel>> getPortfolioItemsApiData({
     required List<String> trackerIdsList,
   }) async {
@@ -74,7 +17,6 @@ class PortfolioRepository {
     }
     return jsonTracker.map((e) => PortfolioItemModel.fromJson(e)).toList();
   }
-//
 
   Future<List<PortfolioItemModel>> testUzyskaniaTrades() async {
     final addedTokenModels =
@@ -166,5 +108,23 @@ class PortfolioRepository {
         );
       });
     }).toList();
+  }
+
+  Future<void> addTokenToPortfolio({
+    required String id,
+  }) async {
+    await _portfolioRemoteDataSource.add(id: id);
+  }
+
+  Future<void> addTradeModel({
+    required String tradeTokenId,
+    required String price,
+    required String volume,
+  }) async {
+    await _portfolioRemoteDataSource.addTrade(
+      tradeTokenId: tradeTokenId,
+      price: price,
+      volume: volume,
+    );
   }
 }
