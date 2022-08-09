@@ -11,7 +11,7 @@ class DetailsCubit extends Cubit<DetailsState> {
           const DetailsState(
             tradeModels: [],
             errorMessage: '',
-            isLoading: false,
+            isLoading: true,
           ),
         );
 
@@ -38,6 +38,20 @@ class DetailsCubit extends Cubit<DetailsState> {
       tradeTokenId: tradeTokenId,
       price: price,
       volume: volume,
+    );
+  }
+
+  Future<void> showTrades({
+    required String id,
+  }) async {
+    final tradeModels =
+        await _portfolioRepository.getTradesForSingleTokenData(id: id);
+    emit(
+      DetailsState(
+        tradeModels: tradeModels,
+        isLoading: false,
+        errorMessage: '',
+      ),
     );
   }
 }

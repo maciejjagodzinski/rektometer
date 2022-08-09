@@ -28,9 +28,12 @@ class _DetailsPage extends State<DetailsPage> {
       ),
       body: BlocProvider(
         create: (context) =>
-            DetailsCubit(PortfolioRepository(PortfolioRemoteDataSource())),
+            DetailsCubit(PortfolioRepository(PortfolioRemoteDataSource()))
+              ..showTrades(id: widget.portfolioItemModel.tokenId),
         child:
             BlocBuilder<DetailsCubit, DetailsState>(builder: (context, state) {
+          final tradeModels = state.tradeModels;
+
           if (state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -129,7 +132,24 @@ class _DetailsPage extends State<DetailsPage> {
                           )),
                         ),
                       )
-                    ])
+                    ]),
+                const SizedBox(height: 30),
+                for (final tradeModel in tradeModels) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        child: Text(tradeModel.date.toDate().toString()),
+                      ),
+                      SizedBox(
+                        child: Text(tradeModel.price.toString()),
+                      ),
+                      SizedBox(
+                        child: Text(tradeModel.volume.toString()),
+                      )
+                    ],
+                  )
+                ]
               ]),
             )
           ]);

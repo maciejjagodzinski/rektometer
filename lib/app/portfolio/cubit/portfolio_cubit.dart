@@ -20,7 +20,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
 
   Future<void> showPortfolio() async {
     final portfolioItemModels =
-        await _portfolioRepository.testUzyskaniaTrades();
+        await _portfolioRepository.getPortfolioItemModels();
     emit(
       PortfolioState(
         isLoading: false,

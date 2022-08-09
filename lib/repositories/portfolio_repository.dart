@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/models/added_token_model.dart';
 import 'package:rektometer/models/portfolio_item_model.dart';
+import 'package:rektometer/models/trades_model.dart';
 
 class PortfolioRepository {
   PortfolioRepository(this._portfolioRemoteDataSource);
@@ -18,7 +20,7 @@ class PortfolioRepository {
     return jsonTracker.map((e) => PortfolioItemModel.fromJson(e)).toList();
   }
 
-  Future<List<PortfolioItemModel>> testUzyskaniaTrades() async {
+  Future<List<PortfolioItemModel>> getPortfolioItemModels() async {
     final addedTokenModels =
         await _portfolioRemoteDataSource.getRemoteInvestmentsData();
     final addedTokensIds = addedTokenModels!.docs
@@ -88,14 +90,15 @@ class PortfolioRepository {
       });
     }).toList();
 
-    final combinedportfolioItemModels =
+    final combinedPortfolioItemModels =
         apiPortfolioItemModels + firebasePortfolioItemModels;
 
     return addedTokensIds.map((addedTokenId) {
-      final kupa = combinedportfolioItemModels.where(
+      final portfolioItemModels = combinedPortfolioItemModels.where(
           (combinedPortfolioItemModel) =>
               combinedPortfolioItemModel.tokenId == addedTokenId);
-      return kupa.reduce((value, element) {
+
+      return portfolioItemModels.reduce((value, element) {
         return PortfolioItemModel(
           tokenId: value.tokenId,
           image: value.image + element.image,
@@ -126,5 +129,23 @@ class PortfolioRepository {
       price: price,
       volume: volume,
     );
+  }
+
+  Future<List<TradeModel>> getTradesForSingleTokenData({
+    required String id,
+  }) async {
+    final firebaseTrades =
+        await _portfolioRemoteDataSource.getRemoteTradesData();
+
+    final allTrades = firebaseTrades!.docs.map((doc) {
+      return TradeModel(
+        tradeTokenId: doc['id'],
+        volume: doc['volume'] + 0.0,
+        price: doc['price'] + 0.0,
+        date: doc['date'] as Timestamp,
+      );
+    }).toList();
+
+    return allTrades.where((trade) => trade.tradeTokenId == id).toList();
   }
 }
