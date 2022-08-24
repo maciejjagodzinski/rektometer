@@ -124,12 +124,14 @@ class PortfolioRepository {
     required String price,
     required String volume,
     required DateTime date,
+    required String type,
   }) async {
     await _portfolioRemoteDataSource.addTrade(
       tradeTokenId: tradeTokenId,
       price: price,
       volume: volume,
       date: date,
+      type: type,
     );
   }
 
@@ -145,6 +147,7 @@ class PortfolioRepository {
         volume: doc['volume'] + 0.0,
         price: doc['price'] + 0.0,
         date: doc['date'] as Timestamp,
+        type: doc['type'],
       );
     }).toList();
 

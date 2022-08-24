@@ -62,6 +62,7 @@ class PortfolioRemoteDataSource {
     required String price,
     required String volume,
     required DateTime date,
+    required String type,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
     double priceDouble = double.parse(price);
@@ -76,6 +77,7 @@ class PortfolioRemoteDataSource {
         'price': priceDouble,
         'volume': volumeDouble,
         'date': date,
+        'type': type,
       });
     }
   }

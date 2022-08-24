@@ -106,6 +106,7 @@ class _DetailsPage extends State<DetailsPage> {
                                   price: widget.priceController.text,
                                   volume: widget.volumeController.text,
                                   date: DateTime.now(),
+                                  type: 'BUY',
                                 );
                           },
                           child: const Text('BUY'),
@@ -125,6 +126,7 @@ class _DetailsPage extends State<DetailsPage> {
                                   price: widget.priceController.text,
                                   volume: widget.volumeController.text,
                                   date: DateTime.now(),
+                                  type: 'SELL',
                                 );
                           },
                           child: const Text('SELL'),
@@ -140,6 +142,9 @@ class _DetailsPage extends State<DetailsPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      SizedBox(
+                        child: Text(tradeModel.type.toString()),
+                      ),
                       SizedBox(
                         child: Text(tradeModel.date.toDate().toString()),
                       ),

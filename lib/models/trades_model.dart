@@ -6,10 +6,12 @@ class TradeModel {
     required this.volume,
     required this.price,
     required this.date,
+    required this.type,
   });
 
   final String tradeTokenId;
   final double volume;
   final double price;
   final Timestamp date;
+  final String type;
 }
