@@ -43,7 +43,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     await _portfolioRepository.addTradeModel(
       tradeTokenId: tradeTokenId,
       price: price,
-      volume: volume,
+      volume: '-' + volume,
       date: date,
       type: type,
     );
