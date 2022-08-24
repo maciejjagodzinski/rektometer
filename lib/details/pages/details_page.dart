@@ -108,6 +108,14 @@ class _DetailsPage extends State<DetailsPage> {
                                   date: DateTime.now(),
                                   type: 'BUY',
                                 );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsPage(
+                                  portfolioItemModel: widget.portfolioItemModel,
+                                ),
+                              ),
+                            );
                           },
                           child: const Text('BUY'),
                           style: ButtonStyle(
@@ -128,6 +136,14 @@ class _DetailsPage extends State<DetailsPage> {
                                   date: DateTime.now(),
                                   type: 'SELL',
                                 );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsPage(
+                                  portfolioItemModel: widget.portfolioItemModel,
+                                ),
+                              ),
+                            );
                           },
                           child: const Text('SELL'),
                           style: ButtonStyle(
@@ -143,7 +159,7 @@ class _DetailsPage extends State<DetailsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        child: Text(tradeModel.type.toString()),
+                        child: Text(tradeModel.type),
                       ),
                       SizedBox(
                         child: Text(tradeModel.date.toDate().toString()),
