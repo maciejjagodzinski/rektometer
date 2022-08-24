@@ -105,6 +105,7 @@ class _DetailsPage extends State<DetailsPage> {
                                       widget.portfolioItemModel.tokenId,
                                   price: widget.priceController.text,
                                   volume: widget.volumeController.text,
+                                  date: DateTime.now(),
                                 );
                           },
                           child: const Text('BUY'),
@@ -123,6 +124,7 @@ class _DetailsPage extends State<DetailsPage> {
                                       widget.portfolioItemModel.tokenId,
                                   price: widget.priceController.text,
                                   volume: widget.volumeController.text,
+                                  date: DateTime.now(),
                                 );
                           },
                           child: const Text('SELL'),

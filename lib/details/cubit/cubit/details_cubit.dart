@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:rektometer/models/trades_model.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
@@ -21,11 +22,13 @@ class DetailsCubit extends Cubit<DetailsState> {
     required String tradeTokenId,
     required String price,
     required String volume,
+    required DateTime date,
   }) async {
     await _portfolioRepository.addTradeModel(
       tradeTokenId: tradeTokenId,
       price: price,
       volume: volume,
+      date: date,
     );
   }
 
@@ -33,11 +36,13 @@ class DetailsCubit extends Cubit<DetailsState> {
     required String tradeTokenId,
     required String price,
     required String volume,
+    required DateTime date,
   }) async {
     await _portfolioRepository.addTradeModel(
       tradeTokenId: tradeTokenId,
       price: price,
       volume: volume,
+      date: date,
     );
   }
 

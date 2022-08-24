@@ -123,11 +123,13 @@ class PortfolioRepository {
     required String tradeTokenId,
     required String price,
     required String volume,
+    required DateTime date,
   }) async {
     await _portfolioRemoteDataSource.addTrade(
       tradeTokenId: tradeTokenId,
       price: price,
       volume: volume,
+      date: date,
     );
   }
 
