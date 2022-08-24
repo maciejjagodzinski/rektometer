@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/account/my_account_page.dart';
 import 'package:rektometer/app/portfolio/portfolio_page.dart';
+import 'package:rektometer/app/rektometer/cubit/cubit/rektometer_cubit.dart';
+import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
+import 'package:rektometer/repositories/portfolio_repository.dart';
 
 class RektometerPage extends StatefulWidget {
   const RektometerPage({
@@ -28,12 +32,41 @@ class _RektometerPageState extends State<RektometerPage> {
           appBar: AppBar(
             title: const Text('REKT-O-METER'),
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text('rektometer'),
-              ],
+          body: BlocProvider(
+            create: (context) => RektometerCubit(
+                PortfolioRepository(PortfolioRemoteDataSource()))
+              ..showRektometer(),
+            child: BlocBuilder<RektometerCubit, RektometerState>(
+              builder: (context, state) {
+                if (state.errorMessage.isNotEmpty) {
+                  return Center(
+                    child: Text('Something got REKT...${state.errorMessage}'),
+                  );
+                }
+                if (state.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final rektometerModel = state.rektometerModel!;
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('rektometer'),
+                      Text(
+                        'initial value: ${rektometerModel.initialValue.toString()}',
+                      ),
+                      Text(
+                        'current value: ${rektometerModel.value.toString()}',
+                      ),
+                      Text(
+                        'ROI: ${rektometerModel.roi.toString()}',
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         );

@@ -8,8 +8,13 @@ part 'add_token_state.dart';
 
 class AddTokenCubit extends Cubit<AddTokenState> {
   AddTokenCubit(this._tokenListRepository, this._portfolioRepository)
-      : super(const AddTokenState(
-            addTokenId: '', tokenList: [], isLoading: false, errorMessage: ''));
+      : super(
+          const AddTokenState(
+              addTokenId: '',
+              tokenList: [],
+              isLoading: false,
+              errorMessage: ''),
+        );
 
   final TokenListRepository _tokenListRepository;
   final PortfolioRepository _portfolioRepository;

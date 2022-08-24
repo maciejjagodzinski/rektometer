@@ -121,10 +121,10 @@ class PortfolioWidget extends StatelessWidget {
                 height: 35,
                 child: Text(portfolioItemModel.symbol),
               ),
-              Container(
-                height: 35,
-                child: Text(portfolioItemModel.name),
-              ),
+              // Container(
+              //   height: 35,
+              //   child: Text(portfolioItemModel.name),
+              // ),
             ],
           ),
         ),
