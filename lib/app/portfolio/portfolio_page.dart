@@ -38,29 +38,83 @@ class _PortfolioPageState extends State<PortfolioPage> {
             PortfolioCubit(PortfolioRepository(PortfolioRemoteDataSource()))
               ..showPortfolio(),
         child: BlocBuilder<PortfolioCubit, PortfolioState>(
-          builder: (context, state) {
-            final portfolioItemModels = state.portfolioItemModels;
+            builder: (context, state) {
+          final portfolioItemModels = state.portfolioItemModels;
 
-            if (state.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state.errorMessage.isNotEmpty) {
-              return Center(
-                child: Text('occured ${state.errorMessage}'),
-              );
-            }
-
-            return ListView(
-              children: [
-                for (final portfolioItemModel in portfolioItemModels) ...[
-                  PortfolioWidget(portfolioItemModel)
-                ]
-              ],
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          },
-        ),
+          }
+          if (state.errorMessage.isNotEmpty) {
+            return Center(
+              child: Text('occured ${state.errorMessage}'),
+            );
+          }
+
+          return ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                child: Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary
+                            .withOpacity(0.3),
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(children: [
+                      SizedBox(
+                        width: 120,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Name',
+                                style: Theme.of(context).textTheme.caption),
+                            Text('Symbol',
+                                style: Theme.of(context).textTheme.caption),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 38),
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Price',
+                                style: Theme.of(context).textTheme.caption),
+                            Text('24h',
+                                style: Theme.of(context).textTheme.caption),
+                          ]),
+                      const Spacer(),
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Value',
+                                style: Theme.of(context).textTheme.caption),
+                            Text('Volume',
+                                style: Theme.of(context).textTheme.caption),
+                          ]),
+                    ]),
+                  ),
+                ),
+              ),
+              for (final portfolioItemModel in portfolioItemModels) ...[
+                PortfolioWidget(portfolioItemModel)
+              ]
+            ],
+          );
+        }),
       ),
     );
   }
@@ -88,45 +142,79 @@ class PortfolioWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
         child: Container(
-          color: Colors.black12,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 35,
-                child: Image.network(portfolioItemModel.image),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
               ),
-              Container(
-                height: 35,
-                child: Text(portfolioItemModel.volume.toString()),
-              ),
-              Container(
-                height: 35,
-                child: Text(portfolioItemModel.price.toString()),
-              ),
-              Container(
-                height: 35,
-                child: Text(portfolioItemModel.tokenId),
-              ),
-              Container(
-                height: 35,
-                child: Text(portfolioItemModel.priceChange.toString()),
-              ),
-              Container(
-                height: 35,
-                child: Text(portfolioItemModel.value.toString()),
-              ),
-              Container(
-                height: 35,
-                child: Text(portfolioItemModel.symbol),
-              ),
-              // Container(
-              //   height: 35,
-              //   child: Text(portfolioItemModel.name),
-              // ),
-            ],
+            ),
           ),
+          height: 60,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(children: [
+            Image.network(
+              portfolioItemModel.image,
+              width: 30,
+              height: 30,
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 90,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    portfolioItemModel.name.split(' ').first,
+                  ),
+                  Text(
+                    portfolioItemModel.symbol.toUpperCase(),
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary
+                            .withOpacity(0.6)),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 30),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${portfolioItemModel.price.toStringAsFixed(2)}\$',
+                  ),
+                  Text(
+                    '${portfolioItemModel.priceChange.toStringAsFixed(2)}%',
+                    style: TextStyle(
+                      color: portfolioItemModel.priceChange < 0
+                          ? Colors.red[700]
+                          : Colors.green[700],
+                    ),
+                  ),
+                ]),
+            const Spacer(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '${portfolioItemModel.value.toStringAsFixed(0)}\$',
+                ),
+                Text(
+                  portfolioItemModel.volume.toStringAsFixed(2),
+                  style: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onPrimary
+                          .withOpacity(0.6)),
+                ),
+              ],
+            ),
+          ]),
         ),
       ),
     );

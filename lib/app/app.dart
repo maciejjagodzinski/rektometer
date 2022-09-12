@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           overline: GoogleFonts.openSans(
               fontSize: 8, fontWeight: FontWeight.w400, letterSpacing: 1.5),
         ),
-        scaffoldBackgroundColor: const Color(0x00212121),
+        scaffoldBackgroundColor: const Color(0x00121212),
       ),
       home: const RootPage(),
     );
