@@ -19,6 +19,12 @@ class MyApp extends StatelessWidget {
           secondary: Color(0xffe65100),
           onPrimary: Color(0xffffffff),
         ),
+        cardTheme: CardTheme(
+          color: const Color(0x1fffffff),
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusDirectional.circular(15)),
+        ),
         textTheme: TextTheme(
           headline1: GoogleFonts.openSans(
               fontSize: 81, fontWeight: FontWeight.w300, letterSpacing: -1.5),
@@ -48,6 +54,7 @@ class MyApp extends StatelessWidget {
               fontSize: 8, fontWeight: FontWeight.w400, letterSpacing: 1.5),
         ),
         scaffoldBackgroundColor: const Color(0x00121212),
+        backgroundColor: const Color(0xff121212),
       ),
       home: const RootPage(),
     );

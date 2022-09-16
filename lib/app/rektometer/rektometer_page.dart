@@ -49,21 +49,81 @@ class _RektometerPageState extends State<RektometerPage> {
                   );
                 }
                 final rektometerModel = state.rektometerModel!;
+
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('rektometer'),
-                      Text(
-                        'initial value: ${rektometerModel.initialValue.toString()}',
+                  child: Container(
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                          color: Theme.of(context).colorScheme.primary,
+                          blurRadius: 20),
+                    ]),
+                    child: Card(
+                      color: Theme.of(context).backgroundColor,
+                      child: SizedBox(
+                        height: 470,
+                        width: 300,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Ink.image(
+                                image:
+                                    const AssetImage('images/wojak_studio.png'),
+                                height: 220,
+                                fit: BoxFit.contain,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                '- Now I just have to wait...',
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                'Initial investment:',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                              Text(
+                                '${rektometerModel.initialValue.toStringAsFixed(2)}\$',
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'Current value:',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                              Text(
+                                '${rektometerModel.value.toStringAsFixed(2)}\$',
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                'ROI:',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                              Text(
+                                '${rektometerModel.roi.toStringAsFixed(2)}%',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .apply(
+                                        color: rektometerModel.roi < 0
+                                            ? Colors.red[700]
+                                            : Colors.green[700]),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                      Text(
-                        'current value: ${rektometerModel.value.toString()}',
-                      ),
-                      Text(
-                        'ROI: ${rektometerModel.roi.toString()}',
-                      )
-                    ],
+                    ),
                   ),
                 );
               },
