@@ -31,39 +31,28 @@ class _AddTokenPageState extends State<AddTokenPage> {
           PortfolioRepository(PortfolioRemoteDataSource()),
         )..addTokenPageStart(),
         child: BlocBuilder<AddTokenCubit, AddTokenState>(
-          builder: (context, state) {
-            final tokenList = state.tokenList;
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      final searchResult = await showSearch(
-                          context: context,
-                          delegate: SearchTokenModelDelegate(tokenList));
-                      setState(() {
-                        addTokenId = searchResult;
-                      });
-                    },
-                    icon: const Icon(Icons.search),
-                    label: const Text("Search for tokens to add"),
-                  ),
-                  addTokenId == ''
-                      ? Container()
-                      : ElevatedButton.icon(
-                          onPressed: () {
-                            context
-                                .read<AddTokenCubit>()
-                                .addToken(id: addTokenId);
-                          },
-                          icon: const Icon(Icons.add),
-                          label: Text(addTokenId))
-                ],
-              ),
-            );
-          },
-        ),
+            builder: (context, state) {
+          final tokenList = state.tokenList;
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    final searchResult = await showSearch(
+                        context: context,
+                        delegate: SearchTokenModelDelegate(tokenList));
+                    setState(() {
+                      addTokenId = searchResult;
+                    });
+                  },
+                  icon: const Icon(Icons.search),
+                  label: const Text("Search for tokens to add"),
+                ),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/add/cubit/add_token_cubit.dart';
+import 'package:rektometer/app/portfolio/portfolio_page.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/data/remote_data_sources/token_remote_data_source.dart';
 import 'package:rektometer/models/token_list_model.dart';
@@ -59,11 +60,9 @@ class SearchTokenModelDelegate extends SearchDelegate {
                     decoration: BoxDecoration(boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).colorScheme.primary,
-                        blurRadius: 20,
+                        blurRadius: 8,
                       ),
                     ]),
-                    height: 140,
-                    width: 300,
                     child: Card(
                       color: Theme.of(context).backgroundColor,
                       child: Padding(
@@ -79,6 +78,9 @@ class SearchTokenModelDelegate extends SearchDelegate {
                               context
                                   .read<AddTokenCubit>()
                                   .addToken(id: result);
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: ((context) => const PortfolioPage()),
+                              ));
                             },
                             icon: Icon(Icons.check_box,
                                 size: 50,
