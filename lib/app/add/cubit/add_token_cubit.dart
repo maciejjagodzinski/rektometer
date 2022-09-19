@@ -8,13 +8,13 @@ part 'add_token_state.dart';
 
 class AddTokenCubit extends Cubit<AddTokenState> {
   AddTokenCubit(this._tokenListRepository, this._portfolioRepository)
-      : super(
-          const AddTokenState(
-              addTokenId: '',
-              tokenList: [],
-              isLoading: false,
-              errorMessage: ''),
-        );
+      : super(const AddTokenState(
+          addTokenId: '',
+          tokenList: [],
+          isLoading: false,
+          errorMessage: '',
+          tokenSaved: false,
+        ));
 
   final TokenListRepository _tokenListRepository;
   final PortfolioRepository _portfolioRepository;
@@ -23,10 +23,12 @@ class AddTokenCubit extends Cubit<AddTokenState> {
     final tokenList = await _tokenListRepository.getTokenListModel();
     {
       emit(AddTokenState(
-          tokenList: tokenList,
-          addTokenId: '',
-          isLoading: false,
-          errorMessage: ''));
+        tokenList: tokenList,
+        addTokenId: '',
+        isLoading: false,
+        errorMessage: '',
+        tokenSaved: false,
+      ));
     }
   }
 
@@ -34,5 +36,14 @@ class AddTokenCubit extends Cubit<AddTokenState> {
     required String id,
   }) async {
     await _portfolioRepository.addTokenToPortfolio(id: id);
+    {
+      emit(const AddTokenState(
+        isLoading: false,
+        errorMessage: '',
+        tokenList: [],
+        addTokenId: '',
+        tokenSaved: true,
+      ));
+    }
   }
 }

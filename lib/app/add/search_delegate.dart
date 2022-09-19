@@ -49,50 +49,57 @@ class SearchTokenModelDelegate extends SearchDelegate {
             create: (context) => AddTokenCubit(
                 TokenListRepository(TokenListRemoteDataSource()),
                 PortfolioRepository(PortfolioRemoteDataSource())),
-            child: BlocBuilder<AddTokenCubit, AddTokenState>(
-                builder: (context, state) {
-              return Center(
-                child: Column(children: [
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).colorScheme.primary,
-                        blurRadius: 8,
-                      ),
-                    ]),
-                    child: Card(
-                      color: Theme.of(context).backgroundColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(children: [
-                          Text(
-                            'Add ${result.toUpperCase()} to portfolio?',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          const SizedBox(height: 10),
-                          IconButton(
-                            onPressed: () {
-                              context
-                                  .read<AddTokenCubit>()
-                                  .addToken(id: result);
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: ((context) => const PortfolioPage()),
-                              ));
-                            },
-                            icon: Icon(Icons.check_box,
-                                size: 50,
-                                color: Theme.of(context).colorScheme.primary),
-                          ),
-                        ]),
+            child: BlocListener<AddTokenCubit, AddTokenState>(
+              listener: (context, state) {
+                if (state.tokenSaved) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => const PortfolioPage()),
+                  ));
+                }
+                ;
+              },
+              child: BlocBuilder<AddTokenCubit, AddTokenState>(
+                  builder: (context, state) {
+                return Center(
+                  child: Column(children: [
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).colorScheme.primary,
+                          blurRadius: 8,
+                        ),
+                      ]),
+                      child: Card(
+                        color: Theme.of(context).backgroundColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(children: [
+                            Text(
+                              'Add ${result.toUpperCase()} to portfolio?',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            const SizedBox(height: 10),
+                            IconButton(
+                              onPressed: () {
+                                context
+                                    .read<AddTokenCubit>()
+                                    .addToken(id: result);
+                              },
+                              icon: Icon(Icons.check_box,
+                                  size: 50,
+                                  color: Theme.of(context).colorScheme.primary),
+                            ),
+                          ]),
+                        ),
                       ),
                     ),
-                  ),
-                ]),
-              );
-            }),
+                  ]),
+                );
+              }),
+            ),
           );
         });
   }

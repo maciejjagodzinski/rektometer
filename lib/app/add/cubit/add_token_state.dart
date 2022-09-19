@@ -6,11 +6,13 @@ class AddTokenState {
   final String errorMessage;
   final List<TokenListModel> tokenList;
   final String addTokenId;
+  final bool tokenSaved;
 
   const AddTokenState({
     required this.isLoading,
     required this.errorMessage,
     required this.tokenList,
     required this.addTokenId,
+    required this.tokenSaved,
   });
 }
