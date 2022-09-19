@@ -1,3 +1,4 @@
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/account/my_account_page.dart';
@@ -37,44 +38,103 @@ class _RektometerPageState extends State<RektometerPage> {
                 PortfolioRepository(PortfolioRemoteDataSource()))
               ..showRektometer(),
             child: BlocBuilder<RektometerCubit, RektometerState>(
-              builder: (context, state) {
-                if (state.errorMessage.isNotEmpty) {
-                  return Center(
-                    child: Text('Something got REKT...${state.errorMessage}'),
-                  );
-                }
-                if (state.isLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                final rektometerModel = state.rektometerModel!;
-
+                builder: (context, state) {
+              if (state.errorMessage.isNotEmpty) {
                 return Center(
+                  child: Text('Something got REKT...${state.errorMessage}'),
+                );
+              }
+              if (state.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final rektometerModel = state.rektometerModel!;
+
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Container(
                     decoration: BoxDecoration(boxShadow: [
                       BoxShadow(
                           color: Theme.of(context).colorScheme.primary,
-                          blurRadius: 20),
+                          blurRadius: 8,
+                          spreadRadius: 0),
                     ]),
                     child: Card(
                       color: Theme.of(context).backgroundColor,
-                      child: SizedBox(
-                        height: 470,
-                        width: 300,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
+                      child: Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Ink.image(
-                                image:
-                                    const AssetImage('images/wojak_studio.png'),
-                                height: 220,
-                                fit: BoxFit.contain,
-                              ),
-                              const SizedBox(
-                                height: 10,
+                              Expanded(
+                                child: SfRadialGauge(axes: [
+                                  RadialAxis(
+                                    minimum: -100,
+                                    maximum: 200,
+                                    interval: 50,
+                                    minorTicksPerInterval: 4,
+                                    majorTickStyle: MajorTickStyle(
+                                      length: 10,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withOpacity(0.6),
+                                    ),
+                                    axisLineStyle: const AxisLineStyle(
+                                      thickness: 20,
+                                    ),
+                                    showLastLabel: true,
+                                    annotations: [
+                                      GaugeAnnotation(
+                                          widget: Text(
+                                            '${rektometerModel.roi.toStringAsFixed(2)}%',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6!
+                                                .apply(
+                                                    color: rektometerModel.roi <
+                                                            0
+                                                        ? Colors.red[700]
+                                                        : Colors.green[700]),
+                                          ),
+                                          positionFactor: 0.8,
+                                          angle: 90)
+                                    ],
+                                    ranges: [
+                                      GaugeRange(
+                                        startValue: -100,
+                                        endValue: 200,
+                                        startWidth: 20,
+                                        endWidth: 20,
+                                        gradient: const SweepGradient(colors: [
+                                          Color(0xFFB71C1C),
+                                          Color(0xFFFFA726),
+                                          Color(0xFF1B5E20),
+                                        ], stops: [
+                                          0.1,
+                                          0.25,
+                                          0.85,
+                                        ]),
+                                      ),
+                                    ],
+                                    pointers: [
+                                      NeedlePointer(
+                                        value: rektometerModel.roi,
+                                        knobStyle:
+                                            KnobStyle(color: Colors.grey[700]),
+                                        enableAnimation: true,
+                                        animationType: AnimationType.ease,
+                                        animationDuration: 1500,
+                                        needleColor: Colors.grey[400],
+                                        needleLength: 0.8,
+                                        needleStartWidth: 0.8,
+                                        needleEndWidth: 5,
+                                      )
+                                    ],
+                                  )
+                                ]),
                               ),
                               Text(
                                 '- Now I just have to wait...',
@@ -106,11 +166,11 @@ class _RektometerPageState extends State<RektometerPage> {
                                 height: 10,
                               ),
                               Text(
-                                'ROI:',
+                                'Profit / Loss:',
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               Text(
-                                '${rektometerModel.roi.toStringAsFixed(2)}%',
+                                '${(rektometerModel.value - rektometerModel.initialValue).toStringAsFixed(2)}\$',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6!
@@ -119,15 +179,13 @@ class _RektometerPageState extends State<RektometerPage> {
                                             ? Colors.red[700]
                                             : Colors.green[700]),
                               )
-                            ],
-                          ),
-                        ),
+                            ]),
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            }),
           ),
         );
       }),
