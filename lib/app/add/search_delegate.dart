@@ -26,11 +26,29 @@ class SearchTokenModelDelegate extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          close(context, query);
+    return BlocProvider(
+      create: (context) => AddTokenCubit(
+          TokenListRepository(TokenListRemoteDataSource()),
+          PortfolioRepository(PortfolioRemoteDataSource())),
+      child: BlocListener<AddTokenCubit, AddTokenState>(
+        listener: (context, state) {
+          if (state.tokenSaved) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: ((context) => const PortfolioPage()),
+            ));
+          }
         },
-        icon: const Icon(Icons.arrow_back));
+        child: BlocBuilder<AddTokenCubit, AddTokenState>(
+          builder: (context, state) {
+            return IconButton(
+                onPressed: () {
+                  close(context, query);
+                },
+                icon: const Icon(Icons.arrow_back));
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -56,7 +74,6 @@ class SearchTokenModelDelegate extends SearchDelegate {
                     builder: ((context) => const PortfolioPage()),
                   ));
                 }
-                ;
               },
               child: BlocBuilder<AddTokenCubit, AddTokenState>(
                   builder: (context, state) {
