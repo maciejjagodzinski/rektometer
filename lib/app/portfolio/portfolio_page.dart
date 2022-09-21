@@ -19,40 +19,37 @@ class PortfolioPage extends StatefulWidget {
 class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: ((context) => const AddTokenPage()),
-            ),
+    return BlocProvider(
+      create: (context) =>
+          PortfolioCubit(PortfolioRepository(PortfolioRemoteDataSource()))
+            ..showPortfolio(),
+      child: BlocBuilder<PortfolioCubit, PortfolioState>(
+          builder: (context, state) {
+        final portfolioItemModels = state.portfolioItemModels;
+
+        if (state.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        },
-        child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: const Text('Your Portfolio'),
-      ),
-      body: BlocProvider(
-        create: (context) =>
-            PortfolioCubit(PortfolioRepository(PortfolioRemoteDataSource()))
-              ..showPortfolio(),
-        child: BlocBuilder<PortfolioCubit, PortfolioState>(
-            builder: (context, state) {
-          final portfolioItemModels = state.portfolioItemModels;
-
-          if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state.errorMessage.isNotEmpty) {
-            return Center(
-              child: Text('occured ${state.errorMessage}'),
-            );
-          }
-
-          return ListView(
+        }
+        if (state.errorMessage.isNotEmpty) {
+          return Center(
+            child: Text('occured ${state.errorMessage}'),
+          );
+        }
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: ((context) => const AddTokenPage()),
+              ));
+            },
+            child: const Icon(Icons.add),
+          ),
+          appBar: AppBar(
+            title: const Text('Your Portfolio'),
+          ),
+          body: ListView(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
@@ -113,9 +110,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 PortfolioWidget(portfolioItemModel)
               ]
             ],
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -13,6 +13,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
             portfolioItemModels: [],
             isLoading: true,
             errorMessage: '',
+            addTokenPageNavigated: false,
           ),
         );
 
@@ -26,6 +27,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
         isLoading: false,
         errorMessage: '',
         portfolioItemModels: portfolioItemModels,
+        addTokenPageNavigated: false,
       ),
     );
   }

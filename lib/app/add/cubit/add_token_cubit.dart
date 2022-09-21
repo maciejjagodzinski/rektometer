@@ -14,6 +14,7 @@ class AddTokenCubit extends Cubit<AddTokenState> {
           isLoading: false,
           errorMessage: '',
           tokenSaved: false,
+          navigatedToPortfolioPage: false,
         ));
 
   final TokenListRepository _tokenListRepository;
@@ -28,6 +29,7 @@ class AddTokenCubit extends Cubit<AddTokenState> {
         isLoading: false,
         errorMessage: '',
         tokenSaved: false,
+        navigatedToPortfolioPage: false,
       ));
     }
   }
@@ -43,7 +45,19 @@ class AddTokenCubit extends Cubit<AddTokenState> {
         tokenList: [],
         addTokenId: '',
         tokenSaved: true,
+        navigatedToPortfolioPage: false,
       ));
     }
+  }
+
+  Future<void> navigateToPortfolioPage() async {
+    emit(const AddTokenState(
+      isLoading: false,
+      errorMessage: '',
+      tokenList: [],
+      addTokenId: '',
+      tokenSaved: false,
+      navigatedToPortfolioPage: true,
+    ));
   }
 }

@@ -66,10 +66,7 @@ class _DetailsPage extends State<DetailsPage> {
                 Text(
                   widget.portfolioItemModel.name +
                       '(${widget.portfolioItemModel.symbol.toUpperCase()})',
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 const SizedBox(
                   height: 30,
@@ -156,22 +153,21 @@ class _DetailsPage extends State<DetailsPage> {
                 const SizedBox(height: 30),
                 for (final tradeModel in tradeModels) ...[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        child: Text(tradeModel.type),
-                      ),
-                      SizedBox(
-                        child: Text(tradeModel.date.toDate().toString()),
-                      ),
-                      SizedBox(
-                        child: Text(tradeModel.price.toString()),
-                      ),
-                      SizedBox(
-                        child: Text(tradeModel.volume.toString()),
-                      )
-                    ],
-                  )
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          child: Text(tradeModel.type),
+                        ),
+                        SizedBox(
+                          child: Text(tradeModel.date.toDate().toString()),
+                        ),
+                        SizedBox(
+                          child: Text(tradeModel.price.toString()),
+                        ),
+                        SizedBox(
+                          child: Text(tradeModel.volume.toString()),
+                        )
+                      ])
                 ]
               ]),
             )

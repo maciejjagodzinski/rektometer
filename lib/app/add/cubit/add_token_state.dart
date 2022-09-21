@@ -7,6 +7,7 @@ class AddTokenState {
   final List<TokenListModel> tokenList;
   final String addTokenId;
   final bool tokenSaved;
+  final bool navigatedToPortfolioPage;
 
   const AddTokenState({
     required this.isLoading,
@@ -14,5 +15,6 @@ class AddTokenState {
     required this.tokenList,
     required this.addTokenId,
     required this.tokenSaved,
+    required this.navigatedToPortfolioPage,
   });
 }
