@@ -42,4 +42,21 @@ class PortfolioCubit extends Cubit<PortfolioState> {
       );
     }
   }
+
+  Future<void> removeTokenFromPortfolio({
+    required String investmentDocumentId,
+  }) async {
+    try {
+      await _portfolioRepository.deleteInvestment(
+        investmentDocumentId: investmentDocumentId,
+      );
+    } catch (error) {
+      emit(PortfolioState(
+        isLoading: false,
+        errorMessage: error.toString(),
+        portfolioItemModels: const [],
+        addTokenPageNavigated: false,
+      ));
+    }
+  }
 }

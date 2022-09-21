@@ -1,5 +1,4 @@
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/models/added_token_model.dart';
 import 'package:rektometer/models/portfolio_item_model.dart';
 import 'package:rektometer/models/trades_model.dart';
 
@@ -7,45 +6,41 @@ class PortfolioRepository {
   PortfolioRepository(this._portfolioRemoteDataSource);
   final PortfolioRemoteDataSource _portfolioRemoteDataSource;
 
-  Future<List<PortfolioItemModel>> getPortfolioItemsApiData({
-    required List<String> trackerIdsList,
-  }) async {
-    final jsonTracker = await _portfolioRemoteDataSource.getTrackerData(
-        trackerIdsList: trackerIdsList);
-
-    if (jsonTracker == null) {
-      return [];
-    }
-    return jsonTracker.map((e) => PortfolioItemModel.fromJson(e)).toList();
-  }
-
   Future<List<PortfolioItemModel>> getPortfolioItemModels() async {
-    final addedTokenModels =
+    final investmentsData =
         await _portfolioRemoteDataSource.getRemoteInvestmentsData();
-    final addedTokensIds = addedTokenModels!.docs
-        .map((doc) {
-          return AddedTokenModel(
-            addedTokenId: doc['id'],
-            investmentDocumentId: doc.id,
-          );
+    final investmentsPortfolioItemModels = investmentsData!.docs.map((doc) {
+      return PortfolioItemModel(
+        tokenId: doc['id'],
+        image: '',
+        name: '',
+        symbol: '',
+        price: 0.0,
+        priceChange: 0.0,
+        volume: 0.0,
+        value: 0.0,
+        investmentDocumentId: doc.id,
+      );
+    }).toList();
+
+    final portfolioTokensIds = investmentsPortfolioItemModels
+        .map((investmentsPortfolioItemModel) {
+          return investmentsPortfolioItemModel.tokenId;
         })
-        .toList()
-        .map((addedTokensIds) => addedTokensIds.addedTokenId)
         .toSet()
         .toList();
 
     final apiTrackerData = await _portfolioRemoteDataSource.getTrackerData(
-        trackerIdsList: addedTokensIds);
+        trackerIdsList: portfolioTokensIds);
     if (apiTrackerData == null) {
       return [];
     }
     final apiPortfolioItemModels =
         apiTrackerData.map((e) => PortfolioItemModel.fromJson(e)).toList();
 
-    final firebaseTradeModels =
-        await _portfolioRemoteDataSource.getRemoteTradesData();
+    final tradesData = await _portfolioRemoteDataSource.getRemoteTradesData();
 
-    final listOfTradeModels = firebaseTradeModels!.docs.map((doc) {
+    final allTradesPortfolioItemModels = tradesData!.docs.map((doc) {
       return PortfolioItemModel(
         tokenId: doc['id'],
         image: '',
@@ -55,16 +50,18 @@ class PortfolioRepository {
         priceChange: 0.0,
         volume: doc['volume'] + 0.0,
         value: 0.0,
+        investmentDocumentId: '',
       );
     }).toList();
 
-    final firebasePortfolioItemModels = addedTokensIds.map((addedTokenId) {
-      final tradeModels = listOfTradeModels
-          .where((tradeModel) => tradeModel.tokenId == addedTokenId);
+    final combinedTradesPortfolioItemModels =
+        portfolioTokensIds.map((portfolioTokenId) {
+      final filteredTradesPortfolioItemModels = allTradesPortfolioItemModels
+          .where((tradeModel) => tradeModel.tokenId == portfolioTokenId);
 
-      if (tradeModels.isEmpty) {
+      if (filteredTradesPortfolioItemModels.isEmpty) {
         return PortfolioItemModel(
-          tokenId: addedTokenId,
+          tokenId: portfolioTokenId,
           image: '',
           name: '',
           symbol: '',
@@ -72,10 +69,11 @@ class PortfolioRepository {
           priceChange: 0.0,
           volume: 0.0,
           value: 0.0,
+          investmentDocumentId: '',
         );
       }
 
-      return tradeModels.reduce((value, element) {
+      return filteredTradesPortfolioItemModels.reduce((value, element) {
         return PortfolioItemModel(
           tokenId: value.tokenId,
           image: value.image,
@@ -85,17 +83,19 @@ class PortfolioRepository {
           priceChange: value.priceChange,
           volume: value.volume + element.volume,
           value: value.value,
+          investmentDocumentId: '',
         );
       });
     }).toList();
 
-    final combinedPortfolioItemModels =
-        apiPortfolioItemModels + firebasePortfolioItemModels;
+    final combinedPortfolioItemModels = apiPortfolioItemModels +
+        combinedTradesPortfolioItemModels +
+        investmentsPortfolioItemModels;
 
-    return addedTokensIds.map((addedTokenId) {
+    return portfolioTokensIds.map((portfolioTokensIds) {
       final portfolioItemModels = combinedPortfolioItemModels.where(
           (combinedPortfolioItemModel) =>
-              combinedPortfolioItemModel.tokenId == addedTokenId);
+              combinedPortfolioItemModel.tokenId == portfolioTokensIds);
 
       return portfolioItemModels.reduce((value, element) {
         return PortfolioItemModel(
@@ -108,6 +108,7 @@ class PortfolioRepository {
           volume: value.volume + element.volume,
           value:
               (value.volume + element.volume) * (value.price + element.price),
+          investmentDocumentId: element.investmentDocumentId,
         );
       });
     }).toList();
@@ -160,6 +161,14 @@ class PortfolioRepository {
   }) async {
     await _portfolioRemoteDataSource.deleteTradeDocument(
       tradeDocumentId: tradeDocumentId,
+    );
+  }
+
+  Future<void> deleteInvestment({
+    required String investmentDocumentId,
+  }) async {
+    await _portfolioRemoteDataSource.deleteInvestmentDocument(
+      investmentDocumentId: investmentDocumentId,
     );
   }
 }

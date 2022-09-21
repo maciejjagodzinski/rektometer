@@ -8,6 +8,7 @@ class PortfolioItemModel {
     required this.priceChange,
     required this.volume,
     required this.value,
+    required this.investmentDocumentId,
   });
 
   final String tokenId;
@@ -18,6 +19,7 @@ class PortfolioItemModel {
   final double priceChange;
   final double volume;
   final double value;
+  final String investmentDocumentId;
 
   PortfolioItemModel.fromJson(Map<String, dynamic> json)
       : tokenId = json['id'],
@@ -27,5 +29,6 @@ class PortfolioItemModel {
         price = json['current_price'] + 0.0,
         priceChange = json['price_change_percentage_24h'] + 0.0,
         volume = 0.0,
-        value = 0.0;
+        value = 0.0,
+        investmentDocumentId = '';
 }

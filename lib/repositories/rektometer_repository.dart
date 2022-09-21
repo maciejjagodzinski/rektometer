@@ -47,6 +47,7 @@ class RektometerRepository {
         priceChange: 0.0,
         volume: doc['volume'] + 0.0,
         value: 0.0,
+        investmentDocumentId: '',
       );
     }).toList();
 
@@ -64,6 +65,7 @@ class RektometerRepository {
           priceChange: 0.0,
           volume: 0.0,
           value: 0.0,
+          investmentDocumentId: '',
         );
       }
 
@@ -77,6 +79,7 @@ class RektometerRepository {
           priceChange: value.priceChange,
           volume: value.volume + element.volume,
           value: value.value,
+          investmentDocumentId: '',
         );
       });
     }).toList();
@@ -100,6 +103,7 @@ class RektometerRepository {
           volume: value.volume + element.volume,
           value:
               (value.volume + element.volume) * (value.price + element.price),
+          investmentDocumentId: '',
         );
       });
     }).toList();
@@ -114,6 +118,7 @@ class RektometerRepository {
         priceChange: 0.0,
         volume: 0.0,
         value: value.value + element.value,
+        investmentDocumentId: '',
       );
     }).value;
 

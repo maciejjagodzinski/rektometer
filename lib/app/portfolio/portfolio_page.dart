@@ -127,46 +127,107 @@ class PortfolioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: ((context) =>
-                DetailsPage(portfolioItemModel: portfolioItemModel)),
-          ),
-        );
+    return Dismissible(
+      key: ValueKey(
+        portfolioItemModel.investmentDocumentId,
+      ),
+      confirmDismiss: (direction) async {
+        return direction == DismissDirection.endToStart;
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
+      onDismissed: ((direction) {
+        context.read<PortfolioCubit>().removeTokenFromPortfolio(
+              investmentDocumentId: portfolioItemModel.investmentDocumentId,
+            );
+      }),
+      background: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.red[200],
+        ),
+        child: const Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.delete_forever),
+          ),
+        ),
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) =>
+                  DetailsPage(portfolioItemModel: portfolioItemModel)),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color:
+                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
+                ),
               ),
             ),
-          ),
-          height: 60,
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(children: [
-            Image.network(
-              portfolioItemModel.image,
-              width: 30,
-              height: 30,
-            ),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 90,
-              child: Column(
+            height: 60,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(children: [
+              Image.network(
+                portfolioItemModel.image,
+                width: 30,
+                height: 30,
+              ),
+              const SizedBox(width: 8),
+              SizedBox(
+                width: 90,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      portfolioItemModel.name.split(' ').first,
+                    ),
+                    Text(
+                      portfolioItemModel.symbol.toUpperCase(),
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.6)),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 30),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${portfolioItemModel.price.toStringAsFixed(2)}\$',
+                    ),
+                    Text(
+                      '${portfolioItemModel.priceChange.toStringAsFixed(2)}%',
+                      style: TextStyle(
+                        color: portfolioItemModel.priceChange < 0
+                            ? Colors.red[700]
+                            : Colors.green[700],
+                      ),
+                    ),
+                  ]),
+              const Spacer(),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    portfolioItemModel.name.split(' ').first,
+                    '${portfolioItemModel.value.toStringAsFixed(0)}\$',
                   ),
                   Text(
-                    portfolioItemModel.symbol.toUpperCase(),
+                    portfolioItemModel.volume.toStringAsFixed(2),
                     style: TextStyle(
                         color: Theme.of(context)
                             .colorScheme
@@ -175,43 +236,8 @@ class PortfolioWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            const SizedBox(width: 30),
-            Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${portfolioItemModel.price.toStringAsFixed(2)}\$',
-                  ),
-                  Text(
-                    '${portfolioItemModel.priceChange.toStringAsFixed(2)}%',
-                    style: TextStyle(
-                      color: portfolioItemModel.priceChange < 0
-                          ? Colors.red[700]
-                          : Colors.green[700],
-                    ),
-                  ),
-                ]),
-            const Spacer(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${portfolioItemModel.value.toStringAsFixed(0)}\$',
-                ),
-                Text(
-                  portfolioItemModel.volume.toStringAsFixed(2),
-                  style: TextStyle(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onPrimary
-                          .withOpacity(0.6)),
-                ),
-              ],
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );

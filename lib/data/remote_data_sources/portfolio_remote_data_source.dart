@@ -93,4 +93,17 @@ class PortfolioRemoteDataSource {
           .delete();
     }
   }
+
+  Future<void> deleteInvestmentDocument(
+      {required String investmentDocumentId}) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection('investments')
+          .doc(investmentDocumentId)
+          .delete();
+    }
+  }
 }
