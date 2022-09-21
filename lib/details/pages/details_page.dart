@@ -152,22 +152,77 @@ class _DetailsPage extends State<DetailsPage> {
                     ]),
                 const SizedBox(height: 30),
                 for (final tradeModel in tradeModels) ...[
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          child: Text(tradeModel.type),
+                  Dismissible(
+                    key: ValueKey(
+                      tradeModel.tradeDocumentId,
+                    ),
+                    confirmDismiss: (direction) async {
+                      return direction == DismissDirection.endToStart;
+                    },
+                    onDismissed: ((direction) {
+                      context.read<DetailsCubit>().deleteTrade(
+                            tradeDocumentId: tradeModel.tradeDocumentId,
+                          );
+                    }),
+                    background: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.red[200],
+                      ),
+                      child: const Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Icon(Icons.delete_forever),
                         ),
-                        SizedBox(
-                          child: Text(tradeModel.date.toDate().toString()),
+                      ),
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary
+                                .withOpacity(0.3),
+                          ),
                         ),
-                        SizedBox(
-                          child: Text(tradeModel.price.toString()),
-                        ),
-                        SizedBox(
-                          child: Text(tradeModel.volume.toString()),
-                        )
-                      ])
+                      ),
+                      height: 50,
+                      width: double.infinity,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                            child: Text(tradeModel.type,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .apply(
+                                      color: tradeModel.type == 'SELL'
+                                          ? Colors.red[200]
+                                          : Colors.green[200],
+                                    )),
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              tradeModel.tradeDateFormatted(),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              tradeModel.price.toString(),
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            tradeModel.volume.toString(),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
                 ]
               ]),
             )

@@ -145,6 +145,7 @@ class PortfolioRepository {
 
     final allTrades = firebaseTrades!.docs.map((doc) {
       return TradeModel(
+        tradeDocumentId: doc.id,
         tradeTokenId: doc['id'],
         volume: doc['volume'] + 0.0,
         price: doc['price'] + 0.0,
@@ -154,6 +155,14 @@ class PortfolioRepository {
     }).toList();
 
     return allTrades.where((trade) => trade.tradeTokenId == id).toList();
+  }
+
+  Future<void> deleteTradeForSingleToken({
+    required String tradeDocumentId,
+  }) async {
+    await _portfolioRemoteDataSource.deleteTradeDocument(
+      tradeDocumentId: tradeDocumentId,
+    );
   }
 
   ///

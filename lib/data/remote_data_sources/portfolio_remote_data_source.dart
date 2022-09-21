@@ -81,4 +81,16 @@ class PortfolioRemoteDataSource {
       });
     }
   }
+
+  Future<void> deleteTradeDocument({required String tradeDocumentId}) async {
+    final userID = FirebaseAuth.instance.currentUser?.uid;
+    {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userID)
+          .collection('trades')
+          .doc(tradeDocumentId)
+          .delete();
+    }
+  }
 }

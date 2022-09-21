@@ -24,13 +24,21 @@ class DetailsCubit extends Cubit<DetailsState> {
     required DateTime date,
     required String type,
   }) async {
-    await _portfolioRepository.addTradeModel(
-      tradeTokenId: tradeTokenId,
-      price: price,
-      volume: volume,
-      date: date,
-      type: type,
-    );
+    try {
+      await _portfolioRepository.addTradeModel(
+        tradeTokenId: tradeTokenId,
+        price: price,
+        volume: volume,
+        date: date,
+        type: type,
+      );
+    } catch (error) {
+      emit(DetailsState(
+        tradeModels: [],
+        isLoading: false,
+        errorMessage: error.toString(),
+      ));
+    }
   }
 
   Future<void> addSellTrade({
@@ -40,26 +48,55 @@ class DetailsCubit extends Cubit<DetailsState> {
     required DateTime date,
     required String type,
   }) async {
-    await _portfolioRepository.addTradeModel(
-      tradeTokenId: tradeTokenId,
-      price: price,
-      volume: '-' + volume,
-      date: date,
-      type: type,
-    );
+    try {
+      await _portfolioRepository.addTradeModel(
+        tradeTokenId: tradeTokenId,
+        price: price,
+        volume: '-' + volume,
+        date: date,
+        type: type,
+      );
+    } catch (error) {
+      emit(DetailsState(
+        tradeModels: const [],
+        isLoading: false,
+        errorMessage: error.toString(),
+      ));
+    }
+  }
+
+  Future<void> deleteTrade({required String tradeDocumentId}) async {
+    try {
+      await _portfolioRepository.deleteTradeForSingleToken(
+          tradeDocumentId: tradeDocumentId);
+    } catch (error) {
+      emit(DetailsState(
+        tradeModels: const [],
+        isLoading: false,
+        errorMessage: error.toString(),
+      ));
+    }
   }
 
   Future<void> showTrades({
     required String id,
   }) async {
-    final tradeModels =
-        await _portfolioRepository.getTradesForSingleTokenData(id: id);
-    emit(
-      DetailsState(
-        tradeModels: tradeModels,
+    try {
+      final tradeModels =
+          await _portfolioRepository.getTradesForSingleTokenData(id: id);
+      emit(
+        DetailsState(
+          tradeModels: tradeModels,
+          isLoading: false,
+          errorMessage: '',
+        ),
+      );
+    } catch (error) {
+      emit(DetailsState(
+        tradeModels: [],
         isLoading: false,
-        errorMessage: '',
-      ),
-    );
+        errorMessage: error.toString(),
+      ));
+    }
   }
 }
