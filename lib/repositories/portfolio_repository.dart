@@ -147,7 +147,7 @@ class PortfolioRepository {
         tradeTokenId: doc['id'],
         volume: doc['volume'] + 0.0,
         price: doc['price'] + 0.0,
-        date: doc['date'] as DateTime,
+        date: doc['date'].toDate(),
         type: doc['type'],
       );
     }).toList();

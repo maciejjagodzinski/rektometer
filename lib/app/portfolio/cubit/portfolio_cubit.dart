@@ -20,15 +20,26 @@ class PortfolioCubit extends Cubit<PortfolioState> {
   final PortfolioRepository _portfolioRepository;
 
   Future<void> showPortfolio() async {
-    final portfolioItemModels =
-        await _portfolioRepository.getPortfolioItemModels();
-    emit(
-      PortfolioState(
-        isLoading: false,
-        errorMessage: '',
-        portfolioItemModels: portfolioItemModels,
-        addTokenPageNavigated: false,
-      ),
-    );
+    try {
+      final portfolioItemModels =
+          await _portfolioRepository.getPortfolioItemModels();
+      emit(
+        PortfolioState(
+          isLoading: false,
+          errorMessage: '',
+          portfolioItemModels: portfolioItemModels,
+          addTokenPageNavigated: false,
+        ),
+      );
+    } catch (error) {
+      emit(
+        PortfolioState(
+          isLoading: false,
+          errorMessage: error.toString(),
+          portfolioItemModels: const [],
+          addTokenPageNavigated: false,
+        ),
+      );
+    }
   }
 }
