@@ -42,7 +42,7 @@ class PortfolioRemoteDataSource {
     return listDynamic.map((e) => e as Map<String, dynamic>).toList();
   }
 
-  Future<void> add({
+  Future<void> addInvestmentDocument({
     required String id,
   }) async {
     final userID = FirebaseAuth.instance.currentUser?.uid;
@@ -57,7 +57,7 @@ class PortfolioRemoteDataSource {
     }
   }
 
-  Future<void> addTrade({
+  Future<void> addTradeDocument({
     required String tradeTokenId,
     required String price,
     required String volume,

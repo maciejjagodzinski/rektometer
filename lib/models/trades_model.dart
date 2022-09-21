@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class TradeModel {
@@ -14,10 +13,10 @@ class TradeModel {
   final String tradeTokenId;
   final double volume;
   final double price;
-  final Timestamp date;
+  final DateTime date;
   final String type;
 
   String tradeDateFormatted() {
-    return DateFormat.yMd().format(date.toDate());
+    return DateFormat.yMd().format(date);
   }
 }

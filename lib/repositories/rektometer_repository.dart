@@ -1,25 +1,13 @@
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/models/added_token_model.dart';
 import 'package:rektometer/models/portfolio_item_model.dart';
-import 'package:rektometer/models/trades_model.dart';
+import 'package:rektometer/models/rektometer_model.dart';
 
-class PortfolioRepository {
-  PortfolioRepository(this._portfolioRemoteDataSource);
+class RektometerRepository {
+  RektometerRepository(this._portfolioRemoteDataSource);
   final PortfolioRemoteDataSource _portfolioRemoteDataSource;
 
-  Future<List<PortfolioItemModel>> getPortfolioItemsApiData({
-    required List<String> trackerIdsList,
-  }) async {
-    final jsonTracker = await _portfolioRemoteDataSource.getTrackerData(
-        trackerIdsList: trackerIdsList);
-
-    if (jsonTracker == null) {
-      return [];
-    }
-    return jsonTracker.map((e) => PortfolioItemModel.fromJson(e)).toList();
-  }
-
-  Future<List<PortfolioItemModel>> getPortfolioItemModels() async {
+  Future<RektometerModel> getRektometerModel() async {
     final addedTokenModels =
         await _portfolioRemoteDataSource.getRemoteInvestmentsData();
     final addedTokensIds = addedTokenModels!.docs
@@ -37,7 +25,11 @@ class PortfolioRepository {
     final apiTrackerData = await _portfolioRemoteDataSource.getTrackerData(
         trackerIdsList: addedTokensIds);
     if (apiTrackerData == null) {
-      return [];
+      return RektometerModel(
+        value: 0.0,
+        initialValue: 0.0,
+        roi: 0.0,
+      );
     }
     final apiPortfolioItemModels =
         apiTrackerData.map((e) => PortfolioItemModel.fromJson(e)).toList();
@@ -92,7 +84,7 @@ class PortfolioRepository {
     final combinedPortfolioItemModels =
         apiPortfolioItemModels + firebasePortfolioItemModels;
 
-    return addedTokensIds.map((addedTokenId) {
+    final portfolioItemModels = addedTokensIds.map((addedTokenId) {
       final portfolioItemModels = combinedPortfolioItemModels.where(
           (combinedPortfolioItemModel) =>
               combinedPortfolioItemModel.tokenId == addedTokenId);
@@ -111,55 +103,37 @@ class PortfolioRepository {
         );
       });
     }).toList();
-  }
 
-  Future<void> addTokenToPortfolio({
-    required String id,
-  }) async {
-    await _portfolioRemoteDataSource.addInvestmentDocument(id: id);
-  }
-
-  Future<void> addTradeModel({
-    required String tradeTokenId,
-    required String price,
-    required String volume,
-    required DateTime date,
-    required String type,
-  }) async {
-    await _portfolioRemoteDataSource.addTradeDocument(
-      tradeTokenId: tradeTokenId,
-      price: price,
-      volume: volume,
-      date: date,
-      type: type,
-    );
-  }
-
-  Future<List<TradeModel>> getTradesForSingleTokenData({
-    required String id,
-  }) async {
-    final firebaseTrades =
-        await _portfolioRemoteDataSource.getRemoteTradesData();
-
-    final allTrades = firebaseTrades!.docs.map((doc) {
-      return TradeModel(
-        tradeDocumentId: doc.id,
-        tradeTokenId: doc['id'],
-        volume: doc['volume'] + 0.0,
-        price: doc['price'] + 0.0,
-        date: doc['date'] as DateTime,
-        type: doc['type'],
+    final value = portfolioItemModels.reduce((value, element) {
+      return PortfolioItemModel(
+        tokenId: '',
+        image: '',
+        name: '',
+        symbol: '',
+        price: 0.0,
+        priceChange: 0.0,
+        volume: 0.0,
+        value: value.value + element.value,
       );
-    }).toList();
+    }).value;
 
-    return allTrades.where((trade) => trade.tradeTokenId == id).toList();
-  }
+    final initialValue = firebaseTradeModels.docs.map((doc) {
+      return RektometerModel(
+        value: 0.0,
+        initialValue: doc['price'] * doc['volume'] + 0.0,
+        roi: 0.0,
+      );
+    }).reduce((value, element) {
+      return RektometerModel(
+          value: 0.0,
+          initialValue: value.initialValue + element.initialValue + 0.0,
+          roi: 0.0);
+    }).initialValue;
 
-  Future<void> deleteTradeForSingleToken({
-    required String tradeDocumentId,
-  }) async {
-    await _portfolioRemoteDataSource.deleteTradeDocument(
-      tradeDocumentId: tradeDocumentId,
+    return RektometerModel(
+      value: value + 0.0,
+      initialValue: initialValue + 0.0,
+      roi: ((value - initialValue) * 100 / initialValue) + 0.0,
     );
   }
 }

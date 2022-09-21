@@ -34,7 +34,7 @@ class DetailsCubit extends Cubit<DetailsState> {
       );
     } catch (error) {
       emit(DetailsState(
-        tradeModels: [],
+        tradeModels: const [],
         isLoading: false,
         errorMessage: error.toString(),
       ));
@@ -93,7 +93,7 @@ class DetailsCubit extends Cubit<DetailsState> {
       );
     } catch (error) {
       emit(DetailsState(
-        tradeModels: [],
+        tradeModels: const [],
         isLoading: false,
         errorMessage: error.toString(),
       ));
