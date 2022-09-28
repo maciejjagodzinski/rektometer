@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/add/cubit/add_token_cubit.dart';
+import 'package:rektometer/app/add/cubit/search_token_cubit.dart';
 import 'package:rektometer/app/add/search_delegate.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/data/remote_data_sources/token_remote_data_source.dart';
+import 'package:rektometer/data/remote_data_sources/search_token_remote_data_source.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
-import 'package:rektometer/repositories/token_list_repository.dart';
+import 'package:rektometer/repositories/search_list_repository.dart';
 
-class AddTokenPage extends StatefulWidget {
-  const AddTokenPage({
+class SearchTokenPage extends StatefulWidget {
+  const SearchTokenPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<AddTokenPage> createState() => _AddTokenPageState();
+  State<SearchTokenPage> createState() => _SearchTokenPageState();
 }
 
-class _AddTokenPageState extends State<AddTokenPage> {
+class _SearchTokenPageState extends State<SearchTokenPage> {
   var addTokenId = '';
 
   @override
@@ -26,11 +26,11 @@ class _AddTokenPageState extends State<AddTokenPage> {
         title: const Text('Add some coins'),
       ),
       body: BlocProvider(
-        create: (context) => AddTokenCubit(
-          TokenListRepository(TokenListRemoteDataSource()),
+        create: (context) => SearchTokenCubit(
+          SearchListRepository(SearchListRemoteDataSource()),
           PortfolioRepository(PortfolioRemoteDataSource()),
         )..addTokenPageStart(),
-        child: BlocBuilder<AddTokenCubit, AddTokenState>(
+        child: BlocBuilder<SearchTokenCubit, SearchTokenState>(
             builder: (context, state) {
           final tokenList = state.tokenList;
           return Center(

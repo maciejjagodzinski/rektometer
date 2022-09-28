@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/add/cubit/add_token_cubit.dart';
+import 'package:rektometer/app/add/cubit/search_token_cubit.dart';
 import 'package:rektometer/app/portfolio/portfolio_page.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/data/remote_data_sources/token_remote_data_source.dart';
-import 'package:rektometer/models/token_list_model.dart';
+import 'package:rektometer/data/remote_data_sources/search_token_remote_data_source.dart';
+import 'package:rektometer/models/search_list_model.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
-import 'package:rektometer/repositories/token_list_repository.dart';
+import 'package:rektometer/repositories/search_list_repository.dart';
 
 class SearchTokenModelDelegate extends SearchDelegate {
   SearchTokenModelDelegate(this.tokenList);
 
-  final List<TokenListModel> tokenList;
+  final List<SearchListModel> tokenList;
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -26,29 +26,11 @@ class SearchTokenModelDelegate extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AddTokenCubit(
-          TokenListRepository(TokenListRemoteDataSource()),
-          PortfolioRepository(PortfolioRemoteDataSource())),
-      child: BlocListener<AddTokenCubit, AddTokenState>(
-        listener: (context, state) {
-          if (state.tokenSaved) {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: ((context) => const PortfolioPage()),
-            ));
-          }
+    return IconButton(
+        onPressed: () {
+          close(context, query);
         },
-        child: BlocBuilder<AddTokenCubit, AddTokenState>(
-          builder: (context, state) {
-            return IconButton(
-                onPressed: () {
-                  close(context, query);
-                },
-                icon: const Icon(Icons.arrow_back));
-          },
-        ),
-      ),
-    );
+        icon: const Icon(Icons.arrow_back));
   }
 
   @override
@@ -64,10 +46,11 @@ class SearchTokenModelDelegate extends SearchDelegate {
         itemBuilder: (context, index) {
           final result = matchQuery[index];
           return BlocProvider(
-            create: (context) => AddTokenCubit(
-                TokenListRepository(TokenListRemoteDataSource()),
-                PortfolioRepository(PortfolioRemoteDataSource())),
-            child: BlocListener<AddTokenCubit, AddTokenState>(
+            create: (context) => SearchTokenCubit(
+              SearchListRepository(SearchListRemoteDataSource()),
+              PortfolioRepository(PortfolioRemoteDataSource()),
+            ),
+            child: BlocListener<SearchTokenCubit, SearchTokenState>(
               listener: (context, state) {
                 if (state.tokenSaved) {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -75,7 +58,7 @@ class SearchTokenModelDelegate extends SearchDelegate {
                   ));
                 }
               },
-              child: BlocBuilder<AddTokenCubit, AddTokenState>(
+              child: BlocBuilder<SearchTokenCubit, SearchTokenState>(
                   builder: (context, state) {
                 return Center(
                   child: Column(children: [
@@ -102,7 +85,7 @@ class SearchTokenModelDelegate extends SearchDelegate {
                             IconButton(
                               onPressed: () {
                                 context
-                                    .read<AddTokenCubit>()
+                                    .read<SearchTokenCubit>()
                                     .addToken(id: result);
                               },
                               icon: Icon(Icons.check_box,

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-class TokenListRemoteDataSource {
+class SearchListRemoteDataSource {
   Future<List<Map<String, dynamic>>?> getTokenListData() async {
     final response = await Dio()
         .get<List<dynamic>>('https://api.coingecko.com/api/v3/coins/list?');

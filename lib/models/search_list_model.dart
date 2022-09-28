@@ -1,5 +1,5 @@
-class TokenListModel {
-  TokenListModel({
+class SearchListModel {
+  SearchListModel({
     required this.name,
     required this.id,
     required this.symbol,
@@ -8,7 +8,7 @@ class TokenListModel {
   final String id;
   final String symbol;
 
-  TokenListModel.fromJson(Map<String, dynamic> json)
+  SearchListModel.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         id = json['id'],
         symbol = json['symbol'];
