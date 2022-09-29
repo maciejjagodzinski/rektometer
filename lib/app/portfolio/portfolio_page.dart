@@ -49,67 +49,73 @@ class _PortfolioPageState extends State<PortfolioPage> {
           appBar: AppBar(
             title: const Text('Your Portfolio'),
           ),
-          body: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
-                child: Container(
-                  height: 40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimary
-                            .withOpacity(0.3),
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(children: [
-                      SizedBox(
-                        width: 120,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Name',
-                                style: Theme.of(context).textTheme.caption),
-                            Text('Symbol',
-                                style: Theme.of(context).textTheme.caption),
-                          ],
+          body: RefreshIndicator(
+            onRefresh: () async {
+              await context.read<PortfolioCubit>().showPortfolio();
+            },
+            child: ListView(
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                  child: Container(
+                    height: 40,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.3),
                         ),
                       ),
-                      const SizedBox(width: 38),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Price',
-                                style: Theme.of(context).textTheme.caption),
-                            Text('24h',
-                                style: Theme.of(context).textTheme.caption),
-                          ]),
-                      const Spacer(),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Value',
-                                style: Theme.of(context).textTheme.caption),
-                            Text('Volume',
-                                style: Theme.of(context).textTheme.caption),
-                          ]),
-                    ]),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(children: [
+                        SizedBox(
+                          width: 120,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Name',
+                                  style: Theme.of(context).textTheme.caption),
+                              Text('Symbol',
+                                  style: Theme.of(context).textTheme.caption),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 38),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Price',
+                                  style: Theme.of(context).textTheme.caption),
+                              Text('24h',
+                                  style: Theme.of(context).textTheme.caption),
+                            ]),
+                        const Spacer(),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Value',
+                                  style: Theme.of(context).textTheme.caption),
+                              Text('Volume',
+                                  style: Theme.of(context).textTheme.caption),
+                            ]),
+                      ]),
+                    ),
                   ),
                 ),
-              ),
-              for (final portfolioItemModel in portfolioItemModels) ...[
-                PortfolioWidget(portfolioItemModel)
-              ]
-            ],
+                for (final portfolioItemModel in portfolioItemModels) ...[
+                  PortfolioWidget(portfolioItemModel)
+                ]
+              ],
+            ),
           ),
         );
       }),
