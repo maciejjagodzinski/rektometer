@@ -59,8 +59,8 @@ class _DetailsPage extends State<DetailsPage> {
               child: Column(children: [
                 Image.network(
                   widget.portfolioItemModel.image.toString(),
-                  width: 150,
-                  height: 150,
+                  width: 100,
+                  height: 100,
                 ),
                 const SizedBox(height: 30),
                 Text(

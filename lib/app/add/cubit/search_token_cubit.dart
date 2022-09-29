@@ -19,7 +19,7 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
   final SearchListRepository _searchListRepository;
   final PortfolioRepository _portfolioRepository;
 
-  Future<void> addTokenPageStart() async {
+  Future<void> searchTokenPageStart() async {
     emit(const SearchTokenState(
       isLoading: true,
       errorMessage: '',

@@ -36,7 +36,7 @@ class PortfolioRepository {
       return [];
     }
     final apiPortfolioItemModels =
-        apiTrackerData.map((e) => PortfolioItemModel.fromJson(e)).toList();
+        apiTrackerData.map((e) => PortfolioItemModel.fromApiJson(e)).toList();
 
     final tradesData = await _portfolioRemoteDataSource.getRemoteTradesData();
 

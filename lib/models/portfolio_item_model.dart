@@ -21,7 +21,7 @@ class PortfolioItemModel {
   final double value;
   final String investmentDocumentId;
 
-  PortfolioItemModel.fromJson(Map<String, dynamic> json)
+  PortfolioItemModel.fromApiJson(Map<String, dynamic> json)
       : tokenId = json['id'],
         image = json['image'],
         name = json['name'],

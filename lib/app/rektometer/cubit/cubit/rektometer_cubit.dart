@@ -18,13 +18,21 @@ class RektometerCubit extends Cubit<RektometerState> {
   final RektometerRepository _rektometerRepository;
 
   Future<void> showRektometer() async {
-    final rektometerModel = await _rektometerRepository.getRektometerModel();
-    emit(
-      RektometerState(
-        rektometerModel: rektometerModel,
+    try {
+      final rektometerModel = await _rektometerRepository.getRektometerModel();
+      emit(
+        RektometerState(
+          rektometerModel: rektometerModel,
+          isLoading: false,
+          errorMessage: '',
+        ),
+      );
+    } catch (error) {
+      emit(RektometerState(
+        rektometerModel: null,
         isLoading: false,
-        errorMessage: '',
-      ),
-    );
+        errorMessage: error.toString(),
+      ));
+    }
   }
 }

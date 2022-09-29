@@ -1,3 +1,4 @@
+import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_source.dart';
 import 'package:rektometer/repositories/rektometer_repository.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/account/my_account_page.dart';
 import 'package:rektometer/app/portfolio/portfolio_page.dart';
 import 'package:rektometer/app/rektometer/cubit/cubit/rektometer_cubit.dart';
-import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 
 class RektometerPage extends StatefulWidget {
   const RektometerPage({
@@ -35,7 +35,7 @@ class _RektometerPageState extends State<RektometerPage> {
           ),
           body: BlocProvider(
             create: (context) => RektometerCubit(
-                RektometerRepository(PortfolioRemoteDataSource()))
+                RektometerRepository(RektometerRemoteDataSource()))
               ..showRektometer(),
             child: BlocBuilder<RektometerCubit, RektometerState>(
                 builder: (context, state) {
@@ -159,7 +159,7 @@ class _RektometerPageState extends State<RektometerPage> {
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               Text(
-                                '${rektometerModel.value.toStringAsFixed(2)}\$',
+                                '${rektometerModel.currentValue.toStringAsFixed(2)}\$',
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                               const SizedBox(
@@ -170,7 +170,7 @@ class _RektometerPageState extends State<RektometerPage> {
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               Text(
-                                '${(rektometerModel.value - rektometerModel.initialValue).toStringAsFixed(2)}\$',
+                                '${(rektometerModel.currentValue - rektometerModel.initialValue).toStringAsFixed(2)}\$',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6!

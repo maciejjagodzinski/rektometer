@@ -1,144 +1,145 @@
-import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/models/added_token_model.dart';
-import 'package:rektometer/models/portfolio_item_model.dart';
+import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_source.dart';
 import 'package:rektometer/models/rektometer_model.dart';
 
 class RektometerRepository {
-  RektometerRepository(this._portfolioRemoteDataSource);
-  final PortfolioRemoteDataSource _portfolioRemoteDataSource;
+  RektometerRepository(this._rektometerRemoteDataSource);
+  final RektometerRemoteDataSource _rektometerRemoteDataSource;
 
   Future<RektometerModel> getRektometerModel() async {
-    final addedTokenModels =
-        await _portfolioRemoteDataSource.getRemoteInvestmentsData();
-    final addedTokensIds = addedTokenModels!.docs
+    final investmentsTokensData =
+        await _rektometerRemoteDataSource.getRemoteInvestmentsData();
+
+    final watchlistTokenIds = investmentsTokensData!.docs
         .map((doc) {
-          return AddedTokenModel(
-            addedTokenId: doc['id'],
-            investmentDocumentId: doc.id,
+          return RektometerModel(
+            tokenId: doc['id'],
+            price: 0.0,
+            volume: 0.0,
+            currentValue: 0.0,
+            initialValue: 0.0,
+            roi: 0.0,
           );
         })
         .toList()
-        .map((addedTokensIds) => addedTokensIds.addedTokenId)
+        .map((watchlistTokenIds) => watchlistTokenIds.tokenId)
         .toSet()
         .toList();
 
-    final apiTrackerData = await _portfolioRemoteDataSource.getTrackerData(
-        trackerIdsList: addedTokensIds);
+    final apiTrackerData = await _rektometerRemoteDataSource.getTrackerData(
+        trackerIdsList: watchlistTokenIds);
     if (apiTrackerData == null) {
       return RektometerModel(
-        value: 0.0,
+        tokenId: '',
+        price: 0.0,
+        volume: 0.0,
+        currentValue: 0.0,
         initialValue: 0.0,
         roi: 0.0,
       );
     }
-    final apiPortfolioItemModels =
-        apiTrackerData.map((e) => PortfolioItemModel.fromJson(e)).toList();
+    final apiRektometerModels =
+        apiTrackerData.map((e) => RektometerModel.fromApiJson(e)).toList();
 
-    final firebaseTradeModels =
-        await _portfolioRemoteDataSource.getRemoteTradesData();
+    final firebaseTradesData =
+        await _rektometerRemoteDataSource.getRemoteTradesData();
 
-    final listOfTradeModels = firebaseTradeModels!.docs.map((doc) {
-      return PortfolioItemModel(
+    final tradesVolumes = firebaseTradesData!.docs.map((doc) {
+      return RektometerModel(
         tokenId: doc['id'],
-        image: '',
-        name: '',
-        symbol: '',
         price: 0.0,
-        priceChange: 0.0,
         volume: doc['volume'] + 0.0,
-        value: 0.0,
-        investmentDocumentId: '',
+        currentValue: 0.0,
+        initialValue: 0.0,
+        roi: 0.0,
       );
     }).toList();
 
-    final firebasePortfolioItemModels = addedTokensIds.map((addedTokenId) {
-      final tradeModels = listOfTradeModels
-          .where((tradeModel) => tradeModel.tokenId == addedTokenId);
+    final volumeCombinedRektometerModels =
+        watchlistTokenIds.map((watchlistTokenId) {
+      final trades =
+          tradesVolumes.where((trade) => trade.tokenId == watchlistTokenId);
 
-      if (tradeModels.isEmpty) {
-        return PortfolioItemModel(
-          tokenId: addedTokenId,
-          image: '',
-          name: '',
-          symbol: '',
+      if (trades.isEmpty) {
+        return RektometerModel(
+          tokenId: watchlistTokenId,
           price: 0.0,
-          priceChange: 0.0,
           volume: 0.0,
-          value: 0.0,
-          investmentDocumentId: '',
+          currentValue: 0.0,
+          initialValue: 0.0,
+          roi: 0.0,
         );
       }
 
-      return tradeModels.reduce((value, element) {
-        return PortfolioItemModel(
+      return trades.reduce((value, element) {
+        return RektometerModel(
           tokenId: value.tokenId,
-          image: value.image,
-          name: value.name,
-          symbol: value.symbol,
           price: value.price,
-          priceChange: value.priceChange,
           volume: value.volume + element.volume,
-          value: value.value,
-          investmentDocumentId: '',
+          currentValue: value.currentValue,
+          initialValue: 0.0,
+          roi: 0.0,
         );
       });
     }).toList();
 
-    final combinedPortfolioItemModels =
-        apiPortfolioItemModels + firebasePortfolioItemModels;
+    final combinedRektometerModels =
+        apiRektometerModels + volumeCombinedRektometerModels;
 
-    final portfolioItemModels = addedTokensIds.map((addedTokenId) {
-      final portfolioItemModels = combinedPortfolioItemModels.where(
+    final rektometerModels = watchlistTokenIds.map((watchlistTokenId) {
+      final values = combinedRektometerModels.where(
           (combinedPortfolioItemModel) =>
-              combinedPortfolioItemModel.tokenId == addedTokenId);
+              combinedPortfolioItemModel.tokenId == watchlistTokenId);
 
-      return portfolioItemModels.reduce((value, element) {
-        return PortfolioItemModel(
+      return values.reduce((value, element) {
+        return RektometerModel(
           tokenId: value.tokenId,
-          image: value.image + element.image,
-          name: value.name + element.name,
-          symbol: value.symbol + element.symbol,
           price: value.price + element.price,
-          priceChange: value.priceChange + element.value,
           volume: value.volume + element.volume,
-          value:
+          currentValue:
               (value.volume + element.volume) * (value.price + element.price),
-          investmentDocumentId: '',
+          initialValue: 0.0,
+          roi: 0.0,
         );
       });
     }).toList();
 
-    final value = portfolioItemModels.reduce((value, element) {
-      return PortfolioItemModel(
-        tokenId: '',
-        image: '',
-        name: '',
-        symbol: '',
-        price: 0.0,
-        priceChange: 0.0,
-        volume: 0.0,
-        value: value.value + element.value,
-        investmentDocumentId: '',
-      );
-    }).value;
-
-    final initialValue = firebaseTradeModels.docs.map((doc) {
+    final currentValue = rektometerModels.reduce((value, element) {
       return RektometerModel(
-        value: 0.0,
+        tokenId: '',
+        price: 0.0,
+        volume: 0.0,
+        currentValue: value.currentValue + element.currentValue,
+        initialValue: 0.0,
+        roi: 0.0,
+      );
+    }).currentValue;
+
+    final initialValue = firebaseTradesData.docs.map((doc) {
+      return RektometerModel(
+        tokenId: '',
+        price: 0.0,
+        volume: 0.0,
+        currentValue: 0.0,
         initialValue: doc['price'] * doc['volume'] + 0.0,
         roi: 0.0,
       );
     }).reduce((value, element) {
       return RektometerModel(
-          value: 0.0,
+          tokenId: '',
+          price: 0.0,
+          volume: 0.0,
+          currentValue: 0.0,
           initialValue: value.initialValue + element.initialValue + 0.0,
           roi: 0.0);
     }).initialValue;
 
     return RektometerModel(
-      value: value + 0.0,
+      tokenId: '',
+      price: 0.0,
+      volume: 0.0,
+      currentValue: currentValue + 0.0,
       initialValue: initialValue + 0.0,
-      roi: ((value - initialValue) * 100 / initialValue) + 0.0,
+      roi: ((currentValue - initialValue) * 100 / initialValue) + 0.0,
     );
   }
 }

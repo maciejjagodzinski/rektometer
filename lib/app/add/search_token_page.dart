@@ -29,7 +29,7 @@ class _SearchTokenPageState extends State<SearchTokenPage> {
         create: (context) => SearchTokenCubit(
           SearchListRepository(SearchListRemoteDataSource()),
           PortfolioRepository(PortfolioRemoteDataSource()),
-        )..addTokenPageStart(),
+        )..searchTokenPageStart(),
         child: BlocBuilder<SearchTokenCubit, SearchTokenState>(
             builder: (context, state) {
           final tokenList = state.tokenList;
