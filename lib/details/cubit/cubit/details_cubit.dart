@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rektometer/models/trades_model.dart';
-import 'package:rektometer/repositories/portfolio_repository.dart';
+import 'package:rektometer/repositories/trades_repository.dart';
 
 part 'details_state.dart';
 
 class DetailsCubit extends Cubit<DetailsState> {
-  DetailsCubit(this._portfolioRepository)
+  DetailsCubit(this._tradesRepository)
       : super(
           const DetailsState(
             tradeModels: [],
@@ -15,7 +15,7 @@ class DetailsCubit extends Cubit<DetailsState> {
           ),
         );
 
-  final PortfolioRepository _portfolioRepository;
+  final TradesRepository _tradesRepository;
 
   Future<void> addBuyTrade({
     required String tradeTokenId,
@@ -25,7 +25,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     required String type,
   }) async {
     try {
-      await _portfolioRepository.addTradeModel(
+      await _tradesRepository.addTradeModel(
         tradeTokenId: tradeTokenId,
         price: price,
         volume: volume,
@@ -49,7 +49,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     required String type,
   }) async {
     try {
-      await _portfolioRepository.addTradeModel(
+      await _tradesRepository.addTradeModel(
         tradeTokenId: tradeTokenId,
         price: price,
         volume: '-' + volume,
@@ -67,7 +67,7 @@ class DetailsCubit extends Cubit<DetailsState> {
 
   Future<void> deleteTrade({required String tradeDocumentId}) async {
     try {
-      await _portfolioRepository.deleteTradeForSingleToken(
+      await _tradesRepository.deleteTradeForSingleToken(
           tradeDocumentId: tradeDocumentId);
     } catch (error) {
       emit(DetailsState(
@@ -83,7 +83,7 @@ class DetailsCubit extends Cubit<DetailsState> {
   }) async {
     try {
       final tradeModels =
-          await _portfolioRepository.getTradesForSingleTokenData(id: id);
+          await _tradesRepository.getTradesForSingleTokenData(id: id);
       emit(
         DetailsState(
           tradeModels: tradeModels,

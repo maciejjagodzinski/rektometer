@@ -1,6 +1,5 @@
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/models/portfolio_item_model.dart';
-import 'package:rektometer/models/trades_model.dart';
 
 class PortfolioRepository {
   PortfolioRepository(this._portfolioRemoteDataSource);
@@ -118,50 +117,6 @@ class PortfolioRepository {
     required String id,
   }) async {
     await _portfolioRemoteDataSource.addInvestmentDocument(id: id);
-  }
-
-  Future<void> addTradeModel({
-    required String tradeTokenId,
-    required String price,
-    required String volume,
-    required DateTime date,
-    required String type,
-  }) async {
-    await _portfolioRemoteDataSource.addTradeDocument(
-      tradeTokenId: tradeTokenId,
-      price: price,
-      volume: volume,
-      date: date,
-      type: type,
-    );
-  }
-
-  Future<List<TradeModel>> getTradesForSingleTokenData({
-    required String id,
-  }) async {
-    final firebaseTrades =
-        await _portfolioRemoteDataSource.getRemoteTradesData();
-
-    final allTrades = firebaseTrades!.docs.map((doc) {
-      return TradeModel(
-        tradeDocumentId: doc.id,
-        tradeTokenId: doc['id'],
-        volume: doc['volume'] + 0.0,
-        price: doc['price'] + 0.0,
-        date: doc['date'].toDate(),
-        type: doc['type'],
-      );
-    }).toList();
-
-    return allTrades.where((trade) => trade.tradeTokenId == id).toList();
-  }
-
-  Future<void> deleteTradeForSingleToken({
-    required String tradeDocumentId,
-  }) async {
-    await _portfolioRemoteDataSource.deleteTradeDocument(
-      tradeDocumentId: tradeDocumentId,
-    );
   }
 
   Future<void> deleteInvestment({

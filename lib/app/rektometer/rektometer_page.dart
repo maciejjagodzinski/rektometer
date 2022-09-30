@@ -17,7 +17,7 @@ class RektometerPage extends StatefulWidget {
 }
 
 class _RektometerPageState extends State<RektometerPage> {
-  var currentIndex = 0;
+  var currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {

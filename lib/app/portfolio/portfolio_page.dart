@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/add/search_token_page.dart';
+import 'package:rektometer/app/search/search_token_page.dart';
 import 'package:rektometer/app/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/details/pages/details_page.dart';

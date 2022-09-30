@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/add/cubit/search_token_cubit.dart';
-import 'package:rektometer/app/add/search_delegate.dart';
+import 'package:rektometer/app/search/cubit/search_token_cubit.dart';
+import 'package:rektometer/app/search/search_delegate.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/data/remote_data_sources/search_token_remote_data_source.dart';
 import 'package:rektometer/repositories/portfolio_repository.dart';
