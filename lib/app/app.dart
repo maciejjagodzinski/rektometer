@@ -73,6 +73,17 @@ class RootPage extends StatelessWidget {
       child: BlocBuilder<RootCubit, RootState>(
         builder: (context, state) {
           final user = state.user;
+
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state.errorMessage.isNotEmpty) {
+            return Center(
+              child: Text('occured ${state.errorMessage}'),
+            );
+          }
           if (user == null) {
             return LoginPage();
           }

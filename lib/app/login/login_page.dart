@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/login/cubit/login_cubit.dart';
+import 'package:rektometer/app/cubit/root_cubit.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({
@@ -18,12 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
-      child: BlocBuilder<LoginCubit, LoginState>(
+      create: (context) => RootCubit(),
+      child: BlocBuilder<RootCubit, RootState>(
         builder: (context, state) {
           if (state.errorMessage.isNotEmpty) {
             return Center(
-              child: Text('Something got REKT...${state.errorMessage}'),
+              child: Text('Something got REKT...${state.errorMessage}',
+                  style: Theme.of(context).textTheme.headlineMedium),
             );
           }
           if (state.isLoading) {
@@ -62,13 +63,13 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         if (state.isCreatingAccount == false) {
                           await context
-                              .read<LoginCubit>()
+                              .read<RootCubit>()
                               .signInWithEmailAndPassword(
                                   widget.emailController.text,
                                   widget.passwordController.text);
                         } else {
                           await context
-                              .read<LoginCubit>()
+                              .read<RootCubit>()
                               .createUserWithEmailAndPassword(
                                   widget.emailController.text,
                                   widget.passwordController.text);
@@ -83,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (state.isCreatingAccount == false) ...[
                       TextButton(
                         onPressed: () {
-                          context.read<LoginCubit>().createUserState();
+                          context.read<RootCubit>().createUserState();
                         },
                         child: const Text('Create Account'),
                       ),
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (state.isCreatingAccount == true) ...[
                       TextButton(
                         onPressed: () {
-                          context.read<LoginCubit>().signInUserState();
+                          context.read<RootCubit>().signInUserState();
                         },
                         child: const Text('Go back to login page'),
                       ),
