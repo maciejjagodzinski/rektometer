@@ -5,6 +5,7 @@ import 'package:rektometer/data/remote_data_sources/trades_remote_data_source.da
 import 'package:rektometer/features/details/cubit/cubit/details_cubit.dart';
 import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/app/domain/repositories/trades_repository.dart';
+import 'package:rektometer/features/portfolio/portfolio_page.dart';
 
 class DetailsPage extends StatefulWidget {
   DetailsPage({
@@ -23,31 +24,45 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPage extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add trades for this token'),
-      ),
-      body: BlocProvider(
-        create: (context) => DetailsCubit(
-          TradesRepository(TradesRemoteDataSource()),
-        )..showTrades(
-            id: widget.portfolioItemModel.tokenId,
+    return BlocProvider(
+      create: (context) => DetailsCubit(
+        TradesRepository(TradesRemoteDataSource()),
+      )..showTrades(
+          id: widget.portfolioItemModel.tokenId,
+        ),
+      child: BlocListener<DetailsCubit, DetailsState>(
+        listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? "Error";
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                errorMessage,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.red[200],
+            ));
+          }
+          if (state.navigatedPortfolio) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: ((context) => const PortfolioPage()),
+            ));
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Add trades for this token'),
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      context.read<DetailsCubit>().navigatePortfolio();
+                    });
+              },
+            ),
           ),
-        child: BlocListener<DetailsCubit, DetailsState>(
-          listener: (context, state) {
-            if (state.status == Status.error) {
-              final errorMessage = state.errorMessage ?? "Error";
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  errorMessage,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                duration: const Duration(seconds: 5),
-                backgroundColor: Colors.red[200],
-              ));
-            }
-          },
-          child: BlocBuilder<DetailsCubit, DetailsState>(
+          body: BlocBuilder<DetailsCubit, DetailsState>(
               builder: (context, state) {
             final tradeModels = state.tradeModels;
 

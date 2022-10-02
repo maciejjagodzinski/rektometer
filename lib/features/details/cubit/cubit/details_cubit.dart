@@ -13,6 +13,7 @@ class DetailsCubit extends Cubit<DetailsState> {
             tradeModels: [],
             errorMessage: null,
             status: Status.initial,
+            navigatedPortfolio: false,
           ),
         );
 
@@ -38,6 +39,7 @@ class DetailsCubit extends Cubit<DetailsState> {
         tradeModels: const [],
         status: Status.error,
         errorMessage: error.toString(),
+        navigatedPortfolio: false,
       ));
     }
   }
@@ -62,6 +64,7 @@ class DetailsCubit extends Cubit<DetailsState> {
         tradeModels: const [],
         status: Status.error,
         errorMessage: error.toString(),
+        navigatedPortfolio: false,
       ));
     }
   }
@@ -75,6 +78,7 @@ class DetailsCubit extends Cubit<DetailsState> {
         tradeModels: const [],
         status: Status.error,
         errorMessage: error.toString(),
+        navigatedPortfolio: false,
       ));
     }
   }
@@ -86,6 +90,7 @@ class DetailsCubit extends Cubit<DetailsState> {
       tradeModels: [],
       status: Status.loading,
       errorMessage: null,
+      navigatedPortfolio: false,
     ));
     try {
       final tradeModels =
@@ -95,6 +100,7 @@ class DetailsCubit extends Cubit<DetailsState> {
           tradeModels: tradeModels,
           status: Status.success,
           errorMessage: null,
+          navigatedPortfolio: false,
         ),
       );
     } catch (error) {
@@ -102,7 +108,17 @@ class DetailsCubit extends Cubit<DetailsState> {
         tradeModels: const [],
         status: Status.error,
         errorMessage: error.toString(),
+        navigatedPortfolio: false,
       ));
     }
+  }
+
+  Future<void> navigatePortfolio() async {
+    emit(const DetailsState(
+      tradeModels: [],
+      status: Status.success,
+      errorMessage: null,
+      navigatedPortfolio: true,
+    ));
   }
 }
