@@ -1,5 +1,5 @@
 import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_source.dart';
-import 'package:rektometer/models/rektometer_model.dart';
+import 'package:rektometer/app/domain/models/rektometer_model.dart';
 
 class RektometerRepository {
   RektometerRepository(this._rektometerRemoteDataSource);

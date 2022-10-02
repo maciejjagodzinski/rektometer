@@ -1,5 +1,5 @@
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/models/portfolio_item_model.dart';
+import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
 
 class PortfolioRepository {
   PortfolioRepository(this._portfolioRemoteDataSource);
@@ -119,7 +119,7 @@ class PortfolioRepository {
     await _portfolioRemoteDataSource.addInvestmentDocument(id: id);
   }
 
-  Future<void> deleteInvestment({
+  Future<void> deleteTokenFromPortfolio({
     required String investmentDocumentId,
   }) async {
     await _portfolioRemoteDataSource.deleteInvestmentDocument(

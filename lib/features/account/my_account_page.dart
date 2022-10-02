@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/cubit/root_cubit.dart';
+import 'package:rektometer/features/cubit/root_cubit.dart';
 
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({

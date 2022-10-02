@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rektometer/models/portfolio_item_model.dart';
-import 'package:rektometer/repositories/portfolio_repository.dart';
+import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
+import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
 
 part 'portfolio_state.dart';
 
@@ -47,7 +47,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     required String investmentDocumentId,
   }) async {
     try {
-      await _portfolioRepository.deleteInvestment(
+      await _portfolioRepository.deleteTokenFromPortfolio(
         investmentDocumentId: investmentDocumentId,
       );
     } catch (error) {

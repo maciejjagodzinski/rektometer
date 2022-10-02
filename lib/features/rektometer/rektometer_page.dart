@@ -1,11 +1,11 @@
 import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_source.dart';
-import 'package:rektometer/repositories/rektometer_repository.dart';
+import 'package:rektometer/app/domain/repositories/rektometer_repository.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rektometer/app/account/my_account_page.dart';
-import 'package:rektometer/app/portfolio/portfolio_page.dart';
-import 'package:rektometer/app/rektometer/cubit/cubit/rektometer_cubit.dart';
+import 'package:rektometer/features/account/my_account_page.dart';
+import 'package:rektometer/features/portfolio/portfolio_page.dart';
+import 'package:rektometer/features/rektometer/cubit/cubit/rektometer_cubit.dart';
 
 class RektometerPage extends StatefulWidget {
   const RektometerPage({

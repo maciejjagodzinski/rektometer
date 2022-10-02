@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rektometer/models/rektometer_model.dart';
-import 'package:rektometer/repositories/rektometer_repository.dart';
+import 'package:rektometer/app/domain/models/rektometer_model.dart';
+import 'package:rektometer/app/domain/repositories/rektometer_repository.dart';
 
 part 'rektometer_state.dart';
 

@@ -1,5 +1,5 @@
 import 'package:rektometer/data/remote_data_sources/trades_remote_data_source.dart';
-import 'package:rektometer/models/trades_model.dart';
+import 'package:rektometer/app/domain/models/trades_model.dart';
 
 class TradesRepository {
   TradesRepository(this._tradesRemoteDataSource);

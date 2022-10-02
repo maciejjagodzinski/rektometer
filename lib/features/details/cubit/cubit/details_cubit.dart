@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rektometer/models/trades_model.dart';
-import 'package:rektometer/repositories/trades_repository.dart';
+import 'package:rektometer/app/domain/models/trades_model.dart';
+import 'package:rektometer/app/domain/repositories/trades_repository.dart';
 
 part 'details_state.dart';
 

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rektometer/models/search_list_model.dart';
-import 'package:rektometer/repositories/portfolio_repository.dart';
-import 'package:rektometer/repositories/search_list_repository.dart';
+import 'package:rektometer/app/domain/models/search_list_model.dart';
+import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
+import 'package:rektometer/app/domain/repositories/search_list_repository.dart';
 
 part 'search_token_state.dart';
 
