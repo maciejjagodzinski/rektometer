@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/features/search/search_token_page.dart';
 import 'package:rektometer/features/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
@@ -23,102 +24,112 @@ class _PortfolioPageState extends State<PortfolioPage> {
       create: (context) =>
           PortfolioCubit(PortfolioRepository(PortfolioRemoteDataSource()))
             ..showPortfolio(),
-      child: BlocBuilder<PortfolioCubit, PortfolioState>(
-          builder: (context, state) {
-        final portfolioItemModels = state.portfolioItemModels;
+      child: BlocListener<PortfolioCubit, PortfolioState>(
+        listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? "Error";
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                errorMessage,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.red[200],
+            ));
+          }
+        },
+        child: BlocBuilder<PortfolioCubit, PortfolioState>(
+            builder: (context, state) {
+          final portfolioItemModels = state.portfolioItemModels;
 
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state.errorMessage.isNotEmpty) {
-          return Center(
-            child: Text('occured ${state.errorMessage}'),
-          );
-        }
-        return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: ((context) => const SearchTokenPage()),
-              ));
-            },
-            child: const Icon(Icons.add),
-          ),
-          appBar: AppBar(
-            title: const Text('Your Portfolio'),
-          ),
-          body: RefreshIndicator(
-            onRefresh: () async {
-              await context.read<PortfolioCubit>().showPortfolio();
-            },
-            child: ListView(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
-                  child: Container(
-                    height: 40,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary
-                              .withOpacity(0.3),
-                        ),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(children: [
-                        SizedBox(
-                          width: 120,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text('Name',
-                                  style: Theme.of(context).textTheme.caption),
-                              Text('Symbol',
-                                  style: Theme.of(context).textTheme.caption),
-                            ],
+          if (state.status == Status.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: ((context) => const SearchTokenPage()),
+                ));
+              },
+              child: const Icon(Icons.add),
+            ),
+            appBar: AppBar(
+              title: const Text('Your Portfolio'),
+            ),
+            body: RefreshIndicator(
+              onRefresh: () async {
+                await context.read<PortfolioCubit>().showPortfolio();
+              },
+              child: ListView(
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                    child: Container(
+                      height: 40,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary
+                                .withOpacity(0.3),
                           ),
                         ),
-                        const SizedBox(width: 38),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text('Price',
-                                  style: Theme.of(context).textTheme.caption),
-                              Text('24h',
-                                  style: Theme.of(context).textTheme.caption),
-                            ]),
-                        const Spacer(),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text('Value',
-                                  style: Theme.of(context).textTheme.caption),
-                              Text('Volume',
-                                  style: Theme.of(context).textTheme.caption),
-                            ]),
-                      ]),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(children: [
+                          SizedBox(
+                            width: 120,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Name',
+                                    style: Theme.of(context).textTheme.caption),
+                                Text('Symbol',
+                                    style: Theme.of(context).textTheme.caption),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 38),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Price',
+                                    style: Theme.of(context).textTheme.caption),
+                                Text('24h',
+                                    style: Theme.of(context).textTheme.caption),
+                              ]),
+                          const Spacer(),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Value',
+                                    style: Theme.of(context).textTheme.caption),
+                                Text('Volume',
+                                    style: Theme.of(context).textTheme.caption),
+                              ]),
+                        ]),
+                      ),
                     ),
                   ),
-                ),
-                for (final portfolioItemModel in portfolioItemModels) ...[
-                  PortfolioWidget(portfolioItemModel)
-                ]
-              ],
+                  for (final portfolioItemModel in portfolioItemModels) ...[
+                    PortfolioWidget(portfolioItemModel)
+                  ]
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }

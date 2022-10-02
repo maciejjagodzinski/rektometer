@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/features/cubit/root_cubit.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,13 +22,15 @@ class _LoginPageState extends State<LoginPage> {
       create: (context) => RootCubit(),
       child: BlocBuilder<RootCubit, RootState>(
         builder: (context, state) {
-          if (state.errorMessage.isNotEmpty) {
+          if (state.status == Status.error) {
+            final errorMessage =
+                state.errorMessage ?? "REKT for unknown reason";
             return Center(
-              child: Text('Something got REKT...${state.errorMessage}',
+              child: Text('Something got REKT...$errorMessage',
                   style: Theme.of(context).textTheme.headlineMedium),
             );
           }
-          if (state.isLoading) {
+          if (state.status == Status.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );

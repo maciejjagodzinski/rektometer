@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
+import 'package:rektometer/app/core/enums.dart';
 
 part 'root_state.dart';
 
@@ -9,9 +10,9 @@ class RootCubit extends Cubit<RootState> {
   RootCubit()
       : super(const RootState(
           user: null,
-          isLoading: false,
-          errorMessage: '',
+          status: Status.initial,
           isCreatingAccount: false,
+          errorMessage: null,
         ));
 
   StreamSubscription? _streamSubscription;
@@ -20,9 +21,9 @@ class RootCubit extends Cubit<RootState> {
     emit(
       const RootState(
         user: null,
-        isLoading: true,
-        errorMessage: '',
+        status: Status.loading,
         isCreatingAccount: false,
+        errorMessage: null,
       ),
     );
 
@@ -31,9 +32,9 @@ class RootCubit extends Cubit<RootState> {
       emit(
         RootState(
           user: user,
-          isLoading: false,
-          errorMessage: '',
+          status: Status.success,
           isCreatingAccount: false,
+          errorMessage: null,
         ),
       );
     })
@@ -41,9 +42,9 @@ class RootCubit extends Cubit<RootState> {
             emit(
               RootState(
                 user: null,
-                isLoading: false,
-                errorMessage: error.toString(),
+                status: Status.error,
                 isCreatingAccount: false,
+                errorMessage: error.toString(),
               ),
             );
           });
@@ -54,8 +55,8 @@ class RootCubit extends Cubit<RootState> {
       const RootState(
         user: null,
         isCreatingAccount: true,
-        isLoading: false,
-        errorMessage: '',
+        status: Status.success,
+        errorMessage: null,
       ),
     );
   }
@@ -65,8 +66,8 @@ class RootCubit extends Cubit<RootState> {
       const RootState(
         user: null,
         isCreatingAccount: false,
-        isLoading: false,
-        errorMessage: '',
+        status: Status.success,
+        errorMessage: null,
       ),
     );
   }
@@ -83,7 +84,7 @@ class RootCubit extends Cubit<RootState> {
     } on FirebaseAuthException catch (error) {
       emit(RootState(
         user: null,
-        isLoading: false,
+        status: Status.success,
         errorMessage: error.toString(),
         isCreatingAccount: false,
       ));
@@ -102,7 +103,7 @@ class RootCubit extends Cubit<RootState> {
     } on FirebaseAuthException catch (error) {
       emit(RootState(
         user: null,
-        isLoading: false,
+        status: Status.success,
         errorMessage: error.toString(),
         isCreatingAccount: false,
       ));

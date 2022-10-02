@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/features/cubit/root_cubit.dart';
 import 'package:rektometer/features/login/login_page.dart';
 import 'package:rektometer/features/rektometer/rektometer_page.dart';
@@ -70,25 +71,36 @@ class RootPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RootCubit()..start(),
-      child: BlocBuilder<RootCubit, RootState>(
-        builder: (context, state) {
-          final user = state.user;
-
-          if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+      child: BlocListener<RootCubit, RootState>(
+        listener: (context, state) {
+          if (state.status == Status.error) {
+            final errorMessage = state.errorMessage ?? "Error";
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                errorMessage,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.red[200],
+            ));
           }
-          if (state.errorMessage.isNotEmpty) {
-            return Center(
-              child: Text('occured ${state.errorMessage}'),
-            );
-          }
-          if (user == null) {
-            return LoginPage();
-          }
-          return const RektometerPage();
         },
+        child: BlocBuilder<RootCubit, RootState>(
+          builder: (context, state) {
+            final user = state.user;
+
+            if (state.status == Status.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (user == null) {
+              return LoginPage();
+            }
+            return const RektometerPage();
+          },
+        ),
       ),
     );
   }

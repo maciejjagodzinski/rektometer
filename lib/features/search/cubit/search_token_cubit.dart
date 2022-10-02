@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/app/domain/models/search_list_model.dart';
 import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
 import 'package:rektometer/app/domain/repositories/search_list_repository.dart';
@@ -11,8 +12,8 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
       : super(const SearchTokenState(
           addTokenId: '',
           tokenList: [],
-          isLoading: false,
-          errorMessage: '',
+          status: Status.initial,
+          errorMessage: null,
           tokenSaved: false,
         ));
 
@@ -21,8 +22,8 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
 
   Future<void> searchTokenPageStart() async {
     emit(const SearchTokenState(
-      isLoading: true,
-      errorMessage: '',
+      status: Status.loading,
+      errorMessage: null,
       tokenList: [],
       addTokenId: '',
       tokenSaved: false,
@@ -33,14 +34,14 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
         emit(SearchTokenState(
           tokenList: tokenList,
           addTokenId: '',
-          isLoading: false,
-          errorMessage: '',
+          status: Status.success,
+          errorMessage: null,
           tokenSaved: false,
         ));
       }
     } catch (error) {
       emit(SearchTokenState(
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
         tokenList: const [],
         addTokenId: '',
@@ -56,8 +57,8 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
       await _portfolioRepository.addTokenToPortfolio(id: id);
       {
         emit(const SearchTokenState(
-          isLoading: false,
-          errorMessage: '',
+          status: Status.success,
+          errorMessage: null,
           tokenList: [],
           addTokenId: '',
           tokenSaved: true,
@@ -65,7 +66,7 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
       }
     } catch (error) {
       emit(SearchTokenState(
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
         tokenList: const [],
         addTokenId: '',

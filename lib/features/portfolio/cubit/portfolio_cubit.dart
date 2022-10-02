@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
 
@@ -11,7 +12,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
       : super(
           const PortfolioState(
             portfolioItemModels: [],
-            isLoading: true,
+            status: Status.initial,
             errorMessage: '',
             addTokenPageNavigated: false,
           ),
@@ -20,13 +21,19 @@ class PortfolioCubit extends Cubit<PortfolioState> {
   final PortfolioRepository _portfolioRepository;
 
   Future<void> showPortfolio() async {
+    emit(const PortfolioState(
+      status: Status.loading,
+      errorMessage: null,
+      portfolioItemModels: [],
+      addTokenPageNavigated: false,
+    ));
     try {
       final portfolioItemModels =
           await _portfolioRepository.getPortfolioItemModels();
       emit(
         PortfolioState(
-          isLoading: false,
-          errorMessage: '',
+          status: Status.success,
+          errorMessage: null,
           portfolioItemModels: portfolioItemModels,
           addTokenPageNavigated: false,
         ),
@@ -34,7 +41,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     } catch (error) {
       emit(
         PortfolioState(
-          isLoading: false,
+          status: Status.error,
           errorMessage: error.toString(),
           portfolioItemModels: const [],
           addTokenPageNavigated: false,
@@ -52,7 +59,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
       );
     } catch (error) {
       emit(PortfolioState(
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
         portfolioItemModels: const [],
         addTokenPageNavigated: false,

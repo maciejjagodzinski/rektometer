@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/app/domain/models/trades_model.dart';
 import 'package:rektometer/app/domain/repositories/trades_repository.dart';
 
@@ -10,8 +11,8 @@ class DetailsCubit extends Cubit<DetailsState> {
       : super(
           const DetailsState(
             tradeModels: [],
-            errorMessage: '',
-            isLoading: true,
+            errorMessage: null,
+            status: Status.initial,
           ),
         );
 
@@ -35,7 +36,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     } catch (error) {
       emit(DetailsState(
         tradeModels: const [],
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
       ));
     }
@@ -59,7 +60,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     } catch (error) {
       emit(DetailsState(
         tradeModels: const [],
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
       ));
     }
@@ -72,7 +73,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     } catch (error) {
       emit(DetailsState(
         tradeModels: const [],
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
       ));
     }
@@ -81,20 +82,25 @@ class DetailsCubit extends Cubit<DetailsState> {
   Future<void> showTrades({
     required String id,
   }) async {
+    emit(const DetailsState(
+      tradeModels: [],
+      status: Status.loading,
+      errorMessage: null,
+    ));
     try {
       final tradeModels =
           await _tradesRepository.getTradesForSingleTokenData(id: id);
       emit(
         DetailsState(
           tradeModels: tradeModels,
-          isLoading: false,
-          errorMessage: '',
+          status: Status.success,
+          errorMessage: null,
         ),
       );
     } catch (error) {
       emit(DetailsState(
         tradeModels: const [],
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
       ));
     }

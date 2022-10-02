@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/app/domain/models/rektometer_model.dart';
 import 'package:rektometer/app/domain/repositories/rektometer_repository.dart';
 
@@ -10,27 +11,32 @@ class RektometerCubit extends Cubit<RektometerState> {
       : super(
           const RektometerState(
             rektometerModel: null,
-            isLoading: true,
-            errorMessage: '',
+            status: Status.initial,
+            errorMessage: null,
           ),
         );
 
   final RektometerRepository _rektometerRepository;
 
   Future<void> showRektometer() async {
+    emit(const RektometerState(
+      rektometerModel: null,
+      status: Status.loading,
+      errorMessage: null,
+    ));
     try {
       final rektometerModel = await _rektometerRepository.getRektometerModel();
       emit(
         RektometerState(
           rektometerModel: rektometerModel,
-          isLoading: false,
-          errorMessage: '',
+          status: Status.success,
+          errorMessage: null,
         ),
       );
     } catch (error) {
       emit(RektometerState(
         rektometerModel: null,
-        isLoading: false,
+        status: Status.error,
         errorMessage: error.toString(),
       ));
     }

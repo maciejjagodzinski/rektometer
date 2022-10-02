@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/features/search/cubit/search_token_cubit.dart';
 import 'package:rektometer/features/search/search_delegate.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
@@ -30,29 +31,47 @@ class _SearchTokenPageState extends State<SearchTokenPage> {
           SearchListRepository(SearchListRemoteDataSource()),
           PortfolioRepository(PortfolioRemoteDataSource()),
         )..searchTokenPageStart(),
-        child: BlocBuilder<SearchTokenCubit, SearchTokenState>(
-            builder: (context, state) {
-          final tokenList = state.tokenList;
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () async {
-                    final searchResult = await showSearch(
-                        context: context,
-                        delegate: SearchTokenModelDelegate(tokenList));
-                    setState(() {
-                      addTokenId = searchResult;
-                    });
-                  },
-                  icon: const Icon(Icons.search),
-                  label: const Text("Search for tokens to add"),
+        child: BlocListener<SearchTokenCubit, SearchTokenState>(
+          listener: (context, state) {
+            if (state.status == Status.error) {
+              final errorMessage = state.errorMessage ?? "Error";
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  errorMessage,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
-              ],
-            ),
-          );
-        }),
+                duration: const Duration(seconds: 5),
+                backgroundColor: Colors.red[200],
+              ));
+            }
+          },
+          child: BlocBuilder<SearchTokenCubit, SearchTokenState>(
+              builder: (context, state) {
+            final tokenList = state.tokenList;
+
+            if (state.status == Status.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      await showSearch(
+                          context: context,
+                          delegate: SearchTokenModelDelegate(tokenList));
+                    },
+                    icon: const Icon(Icons.search),
+                    label: const Text("Search for tokens to add"),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ),
       ),
     );
   }
