@@ -17,7 +17,6 @@ class RektometerRepository {
             volume: 0.0,
             currentValue: 0.0,
             initialValue: 0.0,
-            roi: 0.0,
           );
         })
         .toList()
@@ -34,7 +33,6 @@ class RektometerRepository {
         volume: 0.0,
         currentValue: 0.0,
         initialValue: 0.0,
-        roi: 0.0,
       );
     }
     final apiRektometerModels =
@@ -50,7 +48,6 @@ class RektometerRepository {
         volume: doc['volume'] + 0.0,
         currentValue: 0.0,
         initialValue: 0.0,
-        roi: 0.0,
       );
     }).toList();
 
@@ -66,7 +63,6 @@ class RektometerRepository {
           volume: 0.0,
           currentValue: 0.0,
           initialValue: 0.0,
-          roi: 0.0,
         );
       }
 
@@ -77,7 +73,6 @@ class RektometerRepository {
           volume: value.volume + element.volume,
           currentValue: value.currentValue,
           initialValue: 0.0,
-          roi: 0.0,
         );
       });
     }).toList();
@@ -98,7 +93,6 @@ class RektometerRepository {
           currentValue:
               (value.volume + element.volume) * (value.price + element.price),
           initialValue: 0.0,
-          roi: 0.0,
         );
       });
     }).toList();
@@ -110,7 +104,6 @@ class RektometerRepository {
         volume: 0.0,
         currentValue: value.currentValue + element.currentValue,
         initialValue: 0.0,
-        roi: 0.0,
       );
     }).currentValue;
 
@@ -121,16 +114,15 @@ class RektometerRepository {
         volume: 0.0,
         currentValue: 0.0,
         initialValue: doc['price'] * doc['volume'] + 0.0,
-        roi: 0.0,
       );
     }).reduce((value, element) {
       return RektometerModel(
-          tokenId: '',
-          price: 0.0,
-          volume: 0.0,
-          currentValue: 0.0,
-          initialValue: value.initialValue + element.initialValue + 0.0,
-          roi: 0.0);
+        tokenId: '',
+        price: 0.0,
+        volume: 0.0,
+        currentValue: 0.0,
+        initialValue: value.initialValue + element.initialValue + 0.0,
+      );
     }).initialValue;
 
     return RektometerModel(
@@ -139,7 +131,6 @@ class RektometerRepository {
       volume: 0.0,
       currentValue: currentValue + 0.0,
       initialValue: initialValue + 0.0,
-      roi: ((currentValue - initialValue) * 100 / initialValue) + 0.0,
     );
   }
 }
