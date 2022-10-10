@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rektometer/app/app.dart';
 import 'package:rektometer/features/search/cubit/search_token_cubit.dart';
-import 'package:rektometer/features/portfolio/portfolio_page.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/data/remote_data_sources/search_token_remote_data_source.dart';
 import 'package:rektometer/app/domain/models/search_list_model.dart';
@@ -54,7 +54,7 @@ class SearchTokenModelDelegate extends SearchDelegate {
               listener: (context, state) {
                 if (state.tokenSaved) {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => const PortfolioPage()),
+                    builder: ((context) => const RootPage()),
                   ));
                 }
               },
