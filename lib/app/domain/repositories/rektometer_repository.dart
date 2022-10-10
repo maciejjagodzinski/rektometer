@@ -36,7 +36,7 @@ class RektometerRepository {
       );
     }
     final apiRektometerModels =
-        apiTrackerData.map((e) => RektometerModel.fromApiJson(e)).toList();
+        apiTrackerData.map((e) => RektometerModel.fromJson(e)).toList();
 
     final firebaseTradesData =
         await _rektometerRemoteDataSource.getRemoteTradesData();

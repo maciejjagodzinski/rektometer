@@ -59,6 +59,11 @@ class _RektometerPageState extends State<RektometerPage> {
                     child: CircularProgressIndicator(),
                   );
                 }
+                if (state.rektometerModel == null) {
+                  return const Center(
+                    child: Text('no rektometer data'),
+                  );
+                }
                 final rektometerModel = state.rektometerModel!;
                 return Center(
                   child: Padding(
