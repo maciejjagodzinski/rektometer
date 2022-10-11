@@ -224,7 +224,7 @@ class PortfolioWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${portfolioItemModel.price.toStringAsFixed(2)}\$',
+                      '\$${portfolioItemModel.price.toStringAsFixed(2)}',
                     ),
                     Text(
                       '${portfolioItemModel.priceChange.toStringAsFixed(2)}%',
@@ -241,7 +241,7 @@ class PortfolioWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '${portfolioItemModel.value.toStringAsFixed(0)}\$',
+                    '\$${portfolioItemModel.value.toStringAsFixed(0)}',
                   ),
                   Text(
                     portfolioItemModel.volume.toStringAsFixed(2),
