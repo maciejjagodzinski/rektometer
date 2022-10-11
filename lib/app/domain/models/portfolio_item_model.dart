@@ -12,7 +12,6 @@ class PortfolioItemModel {
     required this.price,
     required this.priceChange,
     required this.volume,
-    required this.value,
     required this.investmentDocumentId,
   });
 
@@ -32,11 +31,12 @@ class PortfolioItemModel {
   @JsonKey(defaultValue: 0.0)
   final double volume;
 
-  @JsonKey(defaultValue: 0.0)
-  final double value;
-
   @JsonKey(defaultValue: '')
   final String investmentDocumentId;
+
+  double get value {
+    return price * volume;
+  }
 
   factory PortfolioItemModel.fromJson(Map<String, dynamic> json) =>
       _$PortfolioItemModelFromJson(json);

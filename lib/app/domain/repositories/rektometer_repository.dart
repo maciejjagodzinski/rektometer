@@ -10,17 +10,7 @@ class RektometerRepository {
         await _rektometerRemoteDataSource.getRemoteInvestmentsData();
 
     final watchlistTokenIds = investmentsTokensData!.docs
-        .map((doc) {
-          return RektometerModel(
-            tokenId: doc['id'],
-            price: 0.0,
-            volume: 0.0,
-            currentValue: 0.0,
-            initialValue: 0.0,
-          );
-        })
-        .toList()
-        .map((watchlistTokenIds) => watchlistTokenIds.tokenId)
+        .map((doc) => doc['id'] as String)
         .toSet()
         .toList();
 

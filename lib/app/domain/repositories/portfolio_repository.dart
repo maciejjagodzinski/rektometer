@@ -17,7 +17,6 @@ class PortfolioRepository {
         price: 0.0,
         priceChange: 0.0,
         volume: 0.0,
-        value: 0.0,
         investmentDocumentId: doc.id,
       );
     }).toList();
@@ -48,7 +47,6 @@ class PortfolioRepository {
         price: 0.0,
         priceChange: 0.0,
         volume: doc['volume'] + 0.0,
-        value: 0.0,
         investmentDocumentId: '',
       );
     }).toList();
@@ -67,7 +65,6 @@ class PortfolioRepository {
           price: 0.0,
           priceChange: 0.0,
           volume: 0.0,
-          value: 0.0,
           investmentDocumentId: '',
         );
       }
@@ -81,7 +78,6 @@ class PortfolioRepository {
           price: value.price,
           priceChange: value.priceChange,
           volume: value.volume + element.volume,
-          value: value.value,
           investmentDocumentId: '',
         );
       });
@@ -105,8 +101,6 @@ class PortfolioRepository {
           price: value.price + element.price,
           priceChange: value.priceChange + element.value,
           volume: value.volume + element.volume,
-          value:
-              (value.volume + element.volume) * (value.price + element.price),
           investmentDocumentId: element.investmentDocumentId,
         );
       });
