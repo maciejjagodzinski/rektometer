@@ -6,8 +6,9 @@ part of 'portfolio_item_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PortfolioItemModel _$PortfolioItemModelFromJson(Map<String, dynamic> json) =>
-    PortfolioItemModel(
+_$_PortfolioItemModel _$$_PortfolioItemModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_PortfolioItemModel(
       tokenId: json['id'] as String,
       image: json['image'] as String,
       name: json['name'] as String,
@@ -18,7 +19,8 @@ PortfolioItemModel _$PortfolioItemModelFromJson(Map<String, dynamic> json) =>
       investmentDocumentId: json['investmentDocumentId'] as String? ?? '',
     );
 
-Map<String, dynamic> _$PortfolioItemModelToJson(PortfolioItemModel instance) =>
+Map<String, dynamic> _$$_PortfolioItemModelToJson(
+        _$_PortfolioItemModel instance) =>
     <String, dynamic>{
       'id': instance.tokenId,
       'image': instance.image,

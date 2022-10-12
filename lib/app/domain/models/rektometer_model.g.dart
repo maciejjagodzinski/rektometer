@@ -6,8 +6,8 @@ part of 'rektometer_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RektometerModel _$RektometerModelFromJson(Map<String, dynamic> json) =>
-    RektometerModel(
+_$_RektometerModel _$$_RektometerModelFromJson(Map<String, dynamic> json) =>
+    _$_RektometerModel(
       currentValue: (json['currentValue'] as num?)?.toDouble() ?? 0.0,
       initialValue: (json['initialValue'] as num?)?.toDouble() ?? 0.0,
       tokenId: json['id'] as String,
@@ -15,7 +15,7 @@ RektometerModel _$RektometerModelFromJson(Map<String, dynamic> json) =>
       volume: (json['volume'] as num?)?.toDouble() ?? 0.0,
     );
 
-Map<String, dynamic> _$RektometerModelToJson(RektometerModel instance) =>
+Map<String, dynamic> _$$_RektometerModelToJson(_$_RektometerModel instance) =>
     <String, dynamic>{
       'currentValue': instance.currentValue,
       'initialValue': instance.initialValue,

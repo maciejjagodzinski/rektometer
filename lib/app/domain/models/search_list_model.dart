@@ -1,26 +1,16 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'search_list_model.freezed.dart';
 part 'search_list_model.g.dart';
 
-@JsonSerializable()
-class SearchListModel {
-  SearchListModel({
-    required this.name,
-    required this.id,
-    required this.symbol,
-  });
-
-  final String name;
-  final String id;
-  final String symbol;
+@freezed
+class SearchListModel with _$SearchListModel {
+  factory SearchListModel({
+    required String name,
+    required String id,
+    required String symbol,
+  }) = _SearchListModel;
 
   factory SearchListModel.fromJson(Map<String, dynamic> json) =>
       _$SearchListModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SearchListModelToJson(this);
-
-  // SearchListModel.fromJson(Map<String, dynamic> json)
-  //     : name = json['name'],
-  //       id = json['id'],
-  //       symbol = json['symbol'];
 }

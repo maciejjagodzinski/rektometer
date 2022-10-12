@@ -6,14 +6,14 @@ part of 'search_list_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchListModel _$SearchListModelFromJson(Map<String, dynamic> json) =>
-    SearchListModel(
+_$_SearchListModel _$$_SearchListModelFromJson(Map<String, dynamic> json) =>
+    _$_SearchListModel(
       name: json['name'] as String,
       id: json['id'] as String,
       symbol: json['symbol'] as String,
     );
 
-Map<String, dynamic> _$SearchListModelToJson(SearchListModel instance) =>
+Map<String, dynamic> _$$_SearchListModelToJson(_$_SearchListModel instance) =>
     <String, dynamic>{
       'name': instance.name,
       'id': instance.id,

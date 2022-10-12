@@ -1,38 +1,21 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'portfolio_item_model.g.dart';
+part 'portfolio_item_model.freezed.dart';
 
-@JsonSerializable()
-class PortfolioItemModel {
-  PortfolioItemModel({
-    required this.tokenId,
-    required this.image,
-    required this.name,
-    required this.symbol,
-    required this.price,
-    required this.priceChange,
-    required this.volume,
-    required this.investmentDocumentId,
-  });
-
-  @JsonKey(name: 'id')
-  final String tokenId;
-
-  final String image;
-  final String name;
-  final String symbol;
-
-  @JsonKey(name: 'current_price')
-  final double price;
-
-  @JsonKey(name: 'price_change_percentage_24h')
-  final double priceChange;
-
-  @JsonKey(defaultValue: 0.0)
-  final double volume;
-
-  @JsonKey(defaultValue: '')
-  final String investmentDocumentId;
+@freezed
+class PortfolioItemModel with _$PortfolioItemModel {
+  const PortfolioItemModel._();
+  factory PortfolioItemModel({
+    @JsonKey(name: 'id') required String tokenId,
+    required String image,
+    required String name,
+    required String symbol,
+    @JsonKey(name: 'current_price') required double price,
+    @JsonKey(name: 'price_change_percentage_24h') required double priceChange,
+    @JsonKey(defaultValue: 0.0) required double volume,
+    @JsonKey(defaultValue: '') required String investmentDocumentId,
+  }) = _PortfolioItemModel;
 
   double get value {
     return price * volume;
@@ -40,17 +23,4 @@ class PortfolioItemModel {
 
   factory PortfolioItemModel.fromJson(Map<String, dynamic> json) =>
       _$PortfolioItemModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PortfolioItemModelToJson(this);
-
-  // PortfolioItemModel.fromApiJson(Map<String, dynamic> json)
-  //     : tokenId = json['id'],
-  //       image = json['image'],
-  //       name = json['name'],
-  //       symbol = json['symbol'],
-  //       price = json['current_price'] + 0.0,
-  //       priceChange = json['price_change_percentage_24h'] + 0.0,
-  //       volume = 0.0,
-  //       value = 0.0,
-  //       investmentDocumentId = '';
 }
