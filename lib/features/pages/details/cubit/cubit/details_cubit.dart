@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/app/domain/models/trades_model.dart';
 import 'package:rektometer/app/domain/repositories/trades_repository.dart';
 
 part 'details_state.dart';
+part 'details_cubit.freezed.dart';
 
 class DetailsCubit extends Cubit<DetailsState> {
   DetailsCubit(this._tradesRepository)

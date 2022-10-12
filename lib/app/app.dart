@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/features/cubit/root_cubit.dart';
-import 'package:rektometer/features/login/login_page.dart';
-import 'package:rektometer/features/rektometer/rektometer_page.dart';
+import 'package:rektometer/features/pages/login/login_page.dart';
+import 'package:rektometer/features/pages/rektometer/rektometer_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

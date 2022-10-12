@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/core/enums.dart';
-import 'package:rektometer/features/search/search_token_page.dart';
-import 'package:rektometer/features/portfolio/cubit/portfolio_cubit.dart';
+import 'package:rektometer/features/pages/search/search_token_page.dart';
+import 'package:rektometer/features/pages/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/features/details/pages/details_page.dart';
+import 'package:rektometer/features/pages/details/pages/details_page.dart';
 import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/app.dart';
 import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/data/remote_data_sources/trades_remote_data_source.dart';
-import 'package:rektometer/features/details/cubit/cubit/details_cubit.dart';
+import 'package:rektometer/features/pages/details/cubit/cubit/details_cubit.dart';
 import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/app/domain/repositories/trades_repository.dart';
 

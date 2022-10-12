@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/app/domain/models/rektometer_model.dart';
 import 'package:rektometer/app/domain/repositories/rektometer_repository.dart';
 
 part 'rektometer_state.dart';
+part 'rektometer_cubit.freezed.dart';
 
 class RektometerCubit extends Cubit<RektometerState> {
   RektometerCubit(this._rektometerRepository)
