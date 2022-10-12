@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/core/enums.dart';
@@ -28,7 +29,7 @@ class _SearchTokenPageState extends State<SearchTokenPage> {
       ),
       body: BlocProvider(
         create: (context) => SearchTokenCubit(
-          SearchListRepository(SearchListRemoteDataSource()),
+          SearchListRepository(SearchListRemoteRetrofitDataSource(Dio())),
           PortfolioRepository(PortfolioRemoteDataSource()),
         )..searchTokenPageStart(),
         child: BlocListener<SearchTokenCubit, SearchTokenState>(

@@ -4,14 +4,9 @@ import 'package:rektometer/app/domain/models/search_list_model.dart';
 class SearchListRepository {
   SearchListRepository(this._searchListRemoteDataSource);
 
-  final SearchListRemoteDataSource _searchListRemoteDataSource;
+  final SearchListRemoteRetrofitDataSource _searchListRemoteDataSource;
 
   Future<List<SearchListModel>> getTokenListModel() async {
-    final json = await _searchListRemoteDataSource.getTokenListData();
-
-    if (json == null) {
-      return [];
-    }
-    return json.map((e) => SearchListModel.fromJson(e)).toList();
+    return _searchListRemoteDataSource.getTokenListData();
   }
 }

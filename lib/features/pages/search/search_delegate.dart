@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/app.dart';
@@ -47,7 +48,7 @@ class SearchTokenModelDelegate extends SearchDelegate {
           final result = matchQuery[index];
           return BlocProvider(
             create: (context) => SearchTokenCubit(
-              SearchListRepository(SearchListRemoteDataSource()),
+              SearchListRepository(SearchListRemoteRetrofitDataSource(Dio())),
               PortfolioRepository(PortfolioRemoteDataSource()),
             ),
             child: BlocListener<SearchTokenCubit, SearchTokenState>(
