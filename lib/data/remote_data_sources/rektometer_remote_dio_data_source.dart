@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:rektometer/app/domain/models/rektometer_model.dart';
+import 'package:rektometer/domain/models/rektometer_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'rektometer_remote_dio_data_source.g.dart';

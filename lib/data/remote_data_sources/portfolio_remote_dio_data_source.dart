@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
+import 'package:rektometer/domain/models/portfolio_item_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'portfolio_remote_dio_data_source.g.dart';

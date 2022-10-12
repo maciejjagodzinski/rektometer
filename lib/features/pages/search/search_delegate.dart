@@ -6,9 +6,9 @@ import 'package:rektometer/data/remote_data_sources/portfolio_remote_dio_data_so
 import 'package:rektometer/features/pages/search/cubit/search_token_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/data/remote_data_sources/search_token_remote_dio_data_source.dart';
-import 'package:rektometer/app/domain/models/search_list_model.dart';
-import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
-import 'package:rektometer/app/domain/repositories/search_list_repository.dart';
+import 'package:rektometer/domain/models/search_list_model.dart';
+import 'package:rektometer/domain/repositories/portfolio_repository.dart';
+import 'package:rektometer/domain/repositories/search_list_repository.dart';
 
 class SearchTokenModelDelegate extends SearchDelegate {
   SearchTokenModelDelegate(this.tokenList);

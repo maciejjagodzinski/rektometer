@@ -1,14 +1,14 @@
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
+import 'package:rektometer/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_dio_data_source.dart';
 
 class PortfolioRepository {
   PortfolioRepository(
     this._portfolioRemoteDataSource,
-    this._PortfolioRemoteRetrofitDataSource,
+    this._portfolioRemoteRetrofitDataSource,
   );
   final PortfolioRemoteDataSource _portfolioRemoteDataSource;
-  final PortfolioRemoteRetrofitDataSource _PortfolioRemoteRetrofitDataSource;
+  final PortfolioRemoteRetrofitDataSource _portfolioRemoteRetrofitDataSource;
 
   Future<List<PortfolioItemModel>> getPortfolioItemModels() async {
     final investmentsData =
@@ -33,9 +33,8 @@ class PortfolioRepository {
         .toSet()
         .toList();
 
-    final apiPortfolioItemModels =
-        await _PortfolioRemoteRetrofitDataSource.getTrackerData(
-            trackerIdsString: portfolioTokensIds.join(','));
+    final apiPortfolioItemModels = await _portfolioRemoteRetrofitDataSource
+        .getTrackerData(trackerIdsString: portfolioTokensIds.join(','));
 
     final tradesData = await _portfolioRemoteDataSource.getRemoteTradesData();
 

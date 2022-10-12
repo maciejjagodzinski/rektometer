@@ -7,8 +7,8 @@ import 'package:rektometer/features/pages/search/search_token_page.dart';
 import 'package:rektometer/features/pages/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/features/pages/details/pages/details_page.dart';
-import 'package:rektometer/app/domain/models/portfolio_item_model.dart';
-import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
+import 'package:rektometer/domain/models/portfolio_item_model.dart';
+import 'package:rektometer/domain/repositories/portfolio_repository.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({

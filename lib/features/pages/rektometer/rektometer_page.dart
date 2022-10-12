@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:rektometer/app/core/enums.dart';
-import 'package:rektometer/app/domain/repositories/rektometer_repository.dart';
+import 'package:rektometer/domain/repositories/rektometer_repository.dart';
 import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_source.dart';
 import 'package:rektometer/data/remote_data_sources/rektometer_remote_dio_data_source.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
