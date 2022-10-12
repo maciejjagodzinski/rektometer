@@ -1,9 +1,12 @@
 import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_source.dart';
+import 'package:rektometer/data/remote_data_sources/rektometer_remote_dio_data_source.dart';
 import 'package:rektometer/app/domain/models/rektometer_model.dart';
 
 class RektometerRepository {
-  RektometerRepository(this._rektometerRemoteDataSource);
+  RektometerRepository(this._rektometerRemoteDataSource,
+      this._RektometerRemoteRetrofitDataSource);
   final RektometerRemoteDataSource _rektometerRemoteDataSource;
+  final RektometerRemoteRetrofitDataSource _RektometerRemoteRetrofitDataSource;
 
   Future<RektometerModel> getRektometerModel() async {
     final investmentsTokensData =
@@ -14,19 +17,9 @@ class RektometerRepository {
         .toSet()
         .toList();
 
-    final apiTrackerData = await _rektometerRemoteDataSource.getTrackerData(
-        trackerIdsList: watchlistTokenIds);
-    if (apiTrackerData == null) {
-      return RektometerModel(
-        tokenId: '',
-        price: 0.0,
-        volume: 0.0,
-        currentValue: 0.0,
-        initialValue: 0.0,
-      );
-    }
     final apiRektometerModels =
-        apiTrackerData.map((e) => RektometerModel.fromJson(e)).toList();
+        await _RektometerRemoteRetrofitDataSource.getTrackerData(
+            trackerIdsString: watchlistTokenIds.join(','));
 
     final firebaseTradesData =
         await _rektometerRemoteDataSource.getRemoteTradesData();

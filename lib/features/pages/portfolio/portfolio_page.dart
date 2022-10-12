@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/core/enums.dart';
+import 'package:rektometer/data/remote_data_sources/portfolio_remote_dio_data_source.dart';
 import 'package:rektometer/features/pages/search/search_token_page.dart';
 import 'package:rektometer/features/pages/portfolio/cubit/portfolio_cubit.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
@@ -21,9 +23,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          PortfolioCubit(PortfolioRepository(PortfolioRemoteDataSource()))
-            ..showPortfolio(),
+      create: (context) => PortfolioCubit(PortfolioRepository(
+          PortfolioRemoteDataSource(),
+          PortfolioRemoteRetrofitDataSource(Dio())))
+        ..showPortfolio(),
       child: BlocListener<PortfolioCubit, PortfolioState>(
         listener: (context, state) {
           if (state.status == Status.error) {

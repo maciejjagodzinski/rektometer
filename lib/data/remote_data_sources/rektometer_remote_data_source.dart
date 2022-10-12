@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class RektometerRemoteDataSource {
@@ -26,22 +25,5 @@ class RektometerRemoteDataSource {
         .doc(userID)
         .collection('trades')
         .get();
-  }
-
-  Future<List<Map<String, dynamic>>?> getTrackerData({
-    required List<String> trackerIdsList,
-  }) async {
-    String trackerIdsString = trackerIdsList.join(',');
-    try {
-      final response = await Dio().get<List<dynamic>>(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=$trackerIdsString&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h');
-      final listDynamic = response.data;
-      if (listDynamic == null) {
-        return null;
-      }
-      return listDynamic.map((e) => e as Map<String, dynamic>).toList();
-    } on DioError catch (error) {
-      throw Exception(error.response?.data ?? 'Error');
-    }
   }
 }

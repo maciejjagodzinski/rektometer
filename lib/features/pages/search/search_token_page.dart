@@ -2,10 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/core/enums.dart';
+import 'package:rektometer/data/remote_data_sources/portfolio_remote_dio_data_source.dart';
 import 'package:rektometer/features/pages/search/cubit/search_token_cubit.dart';
 import 'package:rektometer/features/pages/search/search_delegate.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
-import 'package:rektometer/data/remote_data_sources/search_token_remote_data_source.dart';
+import 'package:rektometer/data/remote_data_sources/search_token_remote_dio_data_source.dart';
 import 'package:rektometer/app/domain/repositories/portfolio_repository.dart';
 import 'package:rektometer/app/domain/repositories/search_list_repository.dart';
 
@@ -30,7 +31,8 @@ class _SearchTokenPageState extends State<SearchTokenPage> {
       body: BlocProvider(
         create: (context) => SearchTokenCubit(
           SearchListRepository(SearchListRemoteRetrofitDataSource(Dio())),
-          PortfolioRepository(PortfolioRemoteDataSource()),
+          PortfolioRepository(PortfolioRemoteDataSource(),
+              PortfolioRemoteRetrofitDataSource(Dio())),
         )..searchTokenPageStart(),
         child: BlocListener<SearchTokenCubit, SearchTokenState>(
           listener: (context, state) {

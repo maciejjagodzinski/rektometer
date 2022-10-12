@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_token_remote_data_source.dart';
+part of 'search_token_remote_dio_data_source.dart';
 
 // **************************************************************************
 // RetrofitGenerator
