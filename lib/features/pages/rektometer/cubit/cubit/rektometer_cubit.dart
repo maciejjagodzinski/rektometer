@@ -8,7 +8,7 @@ part 'rektometer_state.dart';
 part 'rektometer_cubit.freezed.dart';
 
 class RektometerCubit extends Cubit<RektometerState> {
-  RektometerCubit(this._rektometerRepository)
+  RektometerCubit({required this.rektometerRepository})
       : super(
           const RektometerState(
             rektometerModel: null,
@@ -17,7 +17,7 @@ class RektometerCubit extends Cubit<RektometerState> {
           ),
         );
 
-  final RektometerRepository _rektometerRepository;
+  final RektometerRepository rektometerRepository;
 
   Future<void> showRektometer() async {
     emit(const RektometerState(
@@ -26,7 +26,7 @@ class RektometerCubit extends Cubit<RektometerState> {
       errorMessage: null,
     ));
     try {
-      final rektometerModel = await _rektometerRepository.getRektometerModel();
+      final rektometerModel = await rektometerRepository.getRektometerModel();
       emit(
         RektometerState(
           rektometerModel: rektometerModel,

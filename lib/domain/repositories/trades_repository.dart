@@ -2,9 +2,9 @@ import 'package:rektometer/data/remote_data_sources/trades_remote_data_source.da
 import 'package:rektometer/domain/models/trades_model.dart';
 
 class TradesRepository {
-  TradesRepository(this._tradesRemoteDataSource);
+  TradesRepository({required this.tradesRemoteDataSource});
 
-  final TradesRemoteDataSource _tradesRemoteDataSource;
+  final TradesRemoteDataSource tradesRemoteDataSource;
 
   Future<void> addTradeModel({
     required String tradeTokenId,
@@ -13,7 +13,7 @@ class TradesRepository {
     required DateTime date,
     required String type,
   }) async {
-    await _tradesRemoteDataSource.addTradeDocument(
+    await tradesRemoteDataSource.addTradeDocument(
       tradeTokenId: tradeTokenId,
       price: price,
       volume: volume,
@@ -25,7 +25,7 @@ class TradesRepository {
   Future<List<TradeModel>> getTradesForSingleTokenData({
     required String id,
   }) async {
-    final firebaseTrades = await _tradesRemoteDataSource.getRemoteTradesData();
+    final firebaseTrades = await tradesRemoteDataSource.getRemoteTradesData();
 
     final allTrades = firebaseTrades!.docs.map((doc) {
       return TradeModel(
@@ -44,7 +44,7 @@ class TradesRepository {
   Future<void> deleteTradeForSingleToken({
     required String tradeDocumentId,
   }) async {
-    await _tradesRemoteDataSource.deleteTradeDocument(
+    await tradesRemoteDataSource.deleteTradeDocument(
       tradeDocumentId: tradeDocumentId,
     );
   }

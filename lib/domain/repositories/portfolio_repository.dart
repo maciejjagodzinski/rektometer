@@ -3,16 +3,16 @@ import 'package:rektometer/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_dio_data_source.dart';
 
 class PortfolioRepository {
-  PortfolioRepository(
-    this._portfolioRemoteDataSource,
-    this._portfolioRemoteRetrofitDataSource,
-  );
-  final PortfolioRemoteDataSource _portfolioRemoteDataSource;
-  final PortfolioRemoteRetrofitDataSource _portfolioRemoteRetrofitDataSource;
+  PortfolioRepository({
+    required this.portfolioRemoteDataSource,
+    required this.portfolioRemoteRetrofitDataSource,
+  });
+  final PortfolioRemoteDataSource portfolioRemoteDataSource;
+  final PortfolioRemoteRetrofitDataSource portfolioRemoteRetrofitDataSource;
 
   Future<List<PortfolioItemModel>> getPortfolioItemModels() async {
     final investmentsData =
-        await _portfolioRemoteDataSource.getRemoteInvestmentsData();
+        await portfolioRemoteDataSource.getRemoteInvestmentsData();
     final investmentsPortfolioItemModels = investmentsData!.docs.map((doc) {
       return PortfolioItemModel(
         tokenId: doc['id'],
@@ -33,10 +33,10 @@ class PortfolioRepository {
         .toSet()
         .toList();
 
-    final apiPortfolioItemModels = await _portfolioRemoteRetrofitDataSource
+    final apiPortfolioItemModels = await portfolioRemoteRetrofitDataSource
         .getTrackerData(trackerIdsString: portfolioTokensIds.join(','));
 
-    final tradesData = await _portfolioRemoteDataSource.getRemoteTradesData();
+    final tradesData = await portfolioRemoteDataSource.getRemoteTradesData();
 
     final allTradesPortfolioItemModels = tradesData!.docs.map((doc) {
       return PortfolioItemModel(
@@ -110,13 +110,13 @@ class PortfolioRepository {
   Future<void> addTokenToPortfolio({
     required String id,
   }) async {
-    await _portfolioRemoteDataSource.addInvestmentDocument(id: id);
+    await portfolioRemoteDataSource.addInvestmentDocument(id: id);
   }
 
   Future<void> deleteTokenFromPortfolio({
     required String investmentDocumentId,
   }) async {
-    await _portfolioRemoteDataSource.deleteInvestmentDocument(
+    await portfolioRemoteDataSource.deleteInvestmentDocument(
       investmentDocumentId: investmentDocumentId,
     );
   }

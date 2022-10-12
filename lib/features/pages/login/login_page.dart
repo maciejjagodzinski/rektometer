@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/core/enums.dart';
+import 'package:rektometer/app/injection_container.dart';
 import 'package:rektometer/features/cubit/root_cubit.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,8 +19,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RootCubit(),
+    return BlocProvider<RootCubit>(
+      create: (context) {
+        return getIt();
+      },
       child: BlocBuilder<RootCubit, RootState>(
         builder: (context, state) {
           if (state.status == Status.error) {

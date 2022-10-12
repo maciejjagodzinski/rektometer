@@ -8,7 +8,7 @@ part 'details_state.dart';
 part 'details_cubit.freezed.dart';
 
 class DetailsCubit extends Cubit<DetailsState> {
-  DetailsCubit(this._tradesRepository)
+  DetailsCubit({required this.tradesRepository})
       : super(
           const DetailsState(
             tradeModels: [],
@@ -18,7 +18,7 @@ class DetailsCubit extends Cubit<DetailsState> {
           ),
         );
 
-  final TradesRepository _tradesRepository;
+  final TradesRepository tradesRepository;
 
   Future<void> addBuyTrade({
     required String tradeTokenId,
@@ -28,7 +28,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     required String type,
   }) async {
     try {
-      await _tradesRepository.addTradeModel(
+      await tradesRepository.addTradeModel(
         tradeTokenId: tradeTokenId,
         price: price,
         volume: volume,
@@ -53,7 +53,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     required String type,
   }) async {
     try {
-      await _tradesRepository.addTradeModel(
+      await tradesRepository.addTradeModel(
         tradeTokenId: tradeTokenId,
         price: price,
         volume: '-' + volume,
@@ -72,7 +72,7 @@ class DetailsCubit extends Cubit<DetailsState> {
 
   Future<void> deleteTrade({required String tradeDocumentId}) async {
     try {
-      await _tradesRepository.deleteTradeForSingleToken(
+      await tradesRepository.deleteTradeForSingleToken(
           tradeDocumentId: tradeDocumentId);
     } catch (error) {
       emit(DetailsState(
@@ -95,7 +95,7 @@ class DetailsCubit extends Cubit<DetailsState> {
     ));
     try {
       final tradeModels =
-          await _tradesRepository.getTradesForSingleTokenData(id: id);
+          await tradesRepository.getTradesForSingleTokenData(id: id);
       emit(
         DetailsState(
           tradeModels: tradeModels,

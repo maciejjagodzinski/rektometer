@@ -9,7 +9,8 @@ part 'search_token_state.dart';
 part 'search_token_cubit.freezed.dart';
 
 class SearchTokenCubit extends Cubit<SearchTokenState> {
-  SearchTokenCubit(this._searchListRepository, this._portfolioRepository)
+  SearchTokenCubit(
+      {required this.searchListRepository, required this.portfolioRepository})
       : super(const SearchTokenState(
           addTokenId: '',
           tokenList: [],
@@ -18,8 +19,8 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
           tokenSaved: false,
         ));
 
-  final SearchListRepository _searchListRepository;
-  final PortfolioRepository _portfolioRepository;
+  final SearchListRepository searchListRepository;
+  final PortfolioRepository portfolioRepository;
 
   Future<void> searchTokenPageStart() async {
     emit(const SearchTokenState(
@@ -30,7 +31,7 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
       tokenSaved: false,
     ));
     try {
-      final tokenList = await _searchListRepository.getTokenListModel();
+      final tokenList = await searchListRepository.getTokenListModel();
       {
         emit(SearchTokenState(
           tokenList: tokenList,
@@ -55,7 +56,7 @@ class SearchTokenCubit extends Cubit<SearchTokenState> {
     required String id,
   }) async {
     try {
-      await _portfolioRepository.addTokenToPortfolio(id: id);
+      await portfolioRepository.addTokenToPortfolio(id: id);
       {
         emit(const SearchTokenState(
           status: Status.success,

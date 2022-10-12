@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rektometer/app/app.dart';
 import 'package:rektometer/app/core/enums.dart';
-import 'package:rektometer/data/remote_data_sources/trades_remote_data_source.dart';
+import 'package:rektometer/app/injection_container.dart';
 import 'package:rektometer/features/pages/details/cubit/cubit/details_cubit.dart';
 import 'package:rektometer/domain/models/portfolio_item_model.dart';
-import 'package:rektometer/domain/repositories/trades_repository.dart';
 
 class DetailsPage extends StatefulWidget {
   DetailsPage({
@@ -24,12 +23,13 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPage extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DetailsCubit(
-        TradesRepository(TradesRemoteDataSource()),
-      )..showTrades(
-          id: widget.portfolioItemModel.tokenId,
-        ),
+    return BlocProvider<DetailsCubit>(
+      create: (context) {
+        return getIt()
+          ..showTrades(
+            id: widget.portfolioItemModel.tokenId,
+          );
+      },
       child: BlocListener<DetailsCubit, DetailsState>(
         listener: (context, state) {
           if (state.status == Status.error) {

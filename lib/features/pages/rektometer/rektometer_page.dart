@@ -1,8 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:rektometer/app/core/enums.dart';
-import 'package:rektometer/domain/repositories/rektometer_repository.dart';
-import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_source.dart';
-import 'package:rektometer/data/remote_data_sources/rektometer_remote_dio_data_source.dart';
+import 'package:rektometer/app/injection_container.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,11 +33,10 @@ class _RektometerPageState extends State<RektometerPage> {
           appBar: AppBar(
             title: const Text('REKT-O-METER'),
           ),
-          body: BlocProvider(
-            create: (context) => RektometerCubit(RektometerRepository(
-                RektometerRemoteDataSource(),
-                RektometerRemoteRetrofitDataSource(Dio())))
-              ..showRektometer(),
+          body: BlocProvider<RektometerCubit>(
+            create: (context) {
+              return getIt()..showRektometer();
+            },
             child: BlocListener<RektometerCubit, RektometerState>(
               listener: (context, state) {
                 if (state.status == Status.error) {

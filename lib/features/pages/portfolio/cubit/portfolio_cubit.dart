@@ -9,7 +9,7 @@ part 'portfolio_state.dart';
 part 'portfolio_cubit.freezed.dart';
 
 class PortfolioCubit extends Cubit<PortfolioState> {
-  PortfolioCubit(this._portfolioRepository)
+  PortfolioCubit({required this.portfolioRepository})
       : super(
           const PortfolioState(
             portfolioItemModels: [],
@@ -19,7 +19,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
           ),
         );
 
-  final PortfolioRepository _portfolioRepository;
+  final PortfolioRepository portfolioRepository;
 
   Future<void> showPortfolio() async {
     emit(const PortfolioState(
@@ -30,7 +30,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     ));
     try {
       final portfolioItemModels =
-          await _portfolioRepository.getPortfolioItemModels();
+          await portfolioRepository.getPortfolioItemModels();
       emit(
         PortfolioState(
           status: Status.success,
@@ -55,7 +55,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     required String investmentDocumentId,
   }) async {
     try {
-      await _portfolioRepository.deleteTokenFromPortfolio(
+      await portfolioRepository.deleteTokenFromPortfolio(
         investmentDocumentId: investmentDocumentId,
       );
     } catch (error) {
