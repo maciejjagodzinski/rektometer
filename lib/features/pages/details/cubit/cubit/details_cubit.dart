@@ -8,7 +8,6 @@ import 'package:rektometer/domain/repositories/trades_repository.dart';
 part 'details_state.dart';
 part 'details_cubit.freezed.dart';
 
-@injectable
 class DetailsCubit extends Cubit<DetailsState> {
   DetailsCubit({required this.tradesRepository})
       : super(

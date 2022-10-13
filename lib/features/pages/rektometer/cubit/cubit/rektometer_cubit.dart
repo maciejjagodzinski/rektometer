@@ -8,7 +8,6 @@ import 'package:rektometer/domain/repositories/rektometer_repository.dart';
 part 'rektometer_state.dart';
 part 'rektometer_cubit.freezed.dart';
 
-@injectable
 class RektometerCubit extends Cubit<RektometerState> {
   RektometerCubit({required this.rektometerRepository})
       : super(

@@ -9,7 +9,6 @@ import 'package:rektometer/domain/repositories/portfolio_repository.dart';
 part 'portfolio_state.dart';
 part 'portfolio_cubit.freezed.dart';
 
-@injectable
 class PortfolioCubit extends Cubit<PortfolioState> {
   PortfolioCubit({required this.portfolioRepository})
       : super(

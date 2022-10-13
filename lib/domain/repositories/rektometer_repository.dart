@@ -3,7 +3,6 @@ import 'package:rektometer/data/remote_data_sources/rektometer_remote_data_sourc
 import 'package:rektometer/data/remote_data_sources/rektometer_remote_dio_data_source.dart';
 import 'package:rektometer/domain/models/rektometer_model.dart';
 
-@injectable
 class RektometerRepository {
   RektometerRepository(
       {required this.rektometerRemoteDataSource,

@@ -9,7 +9,6 @@ import 'package:rektometer/domain/repositories/search_list_repository.dart';
 part 'search_token_state.dart';
 part 'search_token_cubit.freezed.dart';
 
-@injectable
 class SearchTokenCubit extends Cubit<SearchTokenState> {
   SearchTokenCubit(
       {required this.searchListRepository, required this.portfolioRepository})
