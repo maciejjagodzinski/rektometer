@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:rektometer/data/remote_data_sources/trades_remote_data_source.dart';
 import 'package:rektometer/domain/models/trades_model.dart';
 

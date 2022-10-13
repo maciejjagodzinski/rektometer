@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/domain/models/trades_model.dart';
 import 'package:rektometer/domain/repositories/trades_repository.dart';

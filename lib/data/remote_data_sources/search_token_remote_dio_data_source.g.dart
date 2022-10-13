@@ -12,6 +12,7 @@ class _SearchListRemoteRetrofitDataSource
     implements SearchListRemoteRetrofitDataSource {
   _SearchListRemoteRetrofitDataSource(
     this._dio, {
+    // ignore: unused_element
     this.baseUrl,
   });
 

@@ -12,6 +12,7 @@ class _PortfolioRemoteRetrofitDataSource
     implements PortfolioRemoteRetrofitDataSource {
   _PortfolioRemoteRetrofitDataSource(
     this._dio, {
+    // ignore: unused_element
     this.baseUrl,
   });
 

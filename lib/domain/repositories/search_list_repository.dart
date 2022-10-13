@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:rektometer/data/remote_data_sources/search_token_remote_dio_data_source.dart';
 import 'package:rektometer/domain/models/search_list_model.dart';
 

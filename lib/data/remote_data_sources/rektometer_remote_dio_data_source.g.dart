@@ -12,6 +12,7 @@ class _RektometerRemoteRetrofitDataSource
     implements RektometerRemoteRetrofitDataSource {
   _RektometerRemoteRetrofitDataSource(
     this._dio, {
+    // ignore: unused_element
     this.baseUrl,
   });
 

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/domain/repositories/portfolio_repository.dart';
