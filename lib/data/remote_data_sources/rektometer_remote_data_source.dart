@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class RektometerRemoteDataSource {
   Future<QuerySnapshot<Map<String, dynamic>>?>
       getRemoteInvestmentsData() async {

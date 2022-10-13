@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_data_source.dart';
 import 'package:rektometer/domain/models/portfolio_item_model.dart';
 import 'package:rektometer/data/remote_data_sources/portfolio_remote_dio_data_source.dart';
 
+@injectable
 class PortfolioRepository {
   PortfolioRepository({
     required this.portfolioRemoteDataSource,

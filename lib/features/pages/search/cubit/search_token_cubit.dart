@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rektometer/app/core/enums.dart';
 import 'package:rektometer/domain/models/search_list_model.dart';
 import 'package:rektometer/domain/repositories/portfolio_repository.dart';
@@ -8,6 +9,7 @@ import 'package:rektometer/domain/repositories/search_list_repository.dart';
 part 'search_token_state.dart';
 part 'search_token_cubit.freezed.dart';
 
+@injectable
 class SearchTokenCubit extends Cubit<SearchTokenState> {
   SearchTokenCubit(
       {required this.searchListRepository, required this.portfolioRepository})

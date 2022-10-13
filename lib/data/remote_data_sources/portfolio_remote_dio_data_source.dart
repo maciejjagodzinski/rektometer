@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rektometer/domain/models/portfolio_item_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'portfolio_remote_dio_data_source.g.dart';
 
-@RestApi(baseUrl: "https://api.coingecko.com/api/v3/coins")
+@injectable
+@RestApi()
 abstract class PortfolioRemoteRetrofitDataSource {
-  factory PortfolioRemoteRetrofitDataSource(Dio dio, {String baseUrl}) =
+  @factoryMethod
+  factory PortfolioRemoteRetrofitDataSource(Dio dio) =
       _PortfolioRemoteRetrofitDataSource;
 
   @GET(

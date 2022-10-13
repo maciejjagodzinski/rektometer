@@ -13,9 +13,7 @@ class _SearchListRemoteRetrofitDataSource
   _SearchListRemoteRetrofitDataSource(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'https://api.coingecko.com/api/v3/coins';
-  }
+  });
 
   final Dio _dio;
 
