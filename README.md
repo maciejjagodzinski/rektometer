@@ -9,6 +9,4 @@ Rekt-O-Meter will help you to track value of your crypto investemnts. Now you ca
 
 Demo video :arrow_down_small: 
 
-
-https://user-images.githubusercontent.com/102230466/196046085-f336c17a-95bd-496c-9c95-42f66f1e24d3.mp4
-
+https://user-images.githubusercontent.com/102230466/196046503-37d12524-1896-4a24-8019-1444ea3d7343.mp4
