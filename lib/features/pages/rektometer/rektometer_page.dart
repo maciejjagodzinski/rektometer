@@ -60,7 +60,7 @@ class _RektometerPageState extends State<RektometerPage> {
                 }
                 if (state.rektometerModel == null) {
                   return const Center(
-                    child: Text('no rektometer data'),
+                    child: Text('No rektometer data. Add investments first'),
                   );
                 }
                 final rektometerModel = state.rektometerModel!;
