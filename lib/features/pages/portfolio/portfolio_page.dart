@@ -65,6 +65,19 @@ class _PortfolioPageState extends State<PortfolioPage> {
               child: ListView(
                 children: [
                   Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Row(
+                      children: [
+                        const Text('Powered by Coingecko API'),
+                        Image.asset(
+                          'assets/images/coingecko_logo_without_text.png',
+                          height: 20,
+                          width: 20,
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
                     child: Container(

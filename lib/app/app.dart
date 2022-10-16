@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Rektometer',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: GoogleFonts.openSans().fontFamily,
         colorScheme: const ColorScheme.dark(
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           color: const Color(0x1fffffff),
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusDirectional.circular(15)),
+              borderRadius: BorderRadiusDirectional.circular(5)),
         ),
         textTheme: TextTheme(
           headline1: GoogleFonts.openSans(
