@@ -11,20 +11,29 @@ Demo video :arrow_down_small:
 
 https://user-images.githubusercontent.com/102230466/196046503-37d12524-1896-4a24-8019-1444ea3d7343.mp4
 
-Create user and log in\
-![create](https://user-images.githubusercontent.com/102230466/196048043-6de78567-f4e0-49ea-9639-a8825716fe75.jpg)
-![login](https://user-images.githubusercontent.com/102230466/196048053-78abff03-fccc-4bf4-ba63-d53165844289.jpg)
-
-Add coins and track them\
-![add](https://user-images.githubusercontent.com/102230466/196048083-327438ac-966a-4f55-ae1e-703d380ce395.jpg)
-![confirmadd](https://user-images.githubusercontent.com/102230466/196048239-154a834d-adb6-47dd-bd75-d163ba8732e7.jpg)
-
+Check portfolio performance\
+\
+![performance](https://user-images.githubusercontent.com/102230466/196047930-82976f1e-97db-4977-951f-7cf8c8689f27.jpg)
+\
+\
+\
 Track your investments\
+\
 ![portfolio](https://user-images.githubusercontent.com/102230466/196048094-975f71e5-66bb-435b-8772-10b9ed18a079.jpg)
-
+\
+\
+\
 Add transactions\
+\
 ![details](https://user-images.githubusercontent.com/102230466/196048106-a8b38f4d-af33-44b6-9130-1c86960cbfd6.jpg)
 ![buysell](https://user-images.githubusercontent.com/102230466/196048096-12c6c5fa-3296-4162-a332-58c64c7df93b.jpg)
+\
+\
+\
+Add more coins and track them (more than 3000 coins availble)\
+\
+![add](https://user-images.githubusercontent.com/102230466/196048083-327438ac-966a-4f55-ae1e-703d380ce395.jpg)
+![confirmadd](https://user-images.githubusercontent.com/102230466/196048239-154a834d-adb6-47dd-bd75-d163ba8732e7.jpg)
+\
 
-Check portfolio performance\
-![performance](https://user-images.githubusercontent.com/102230466/196047930-82976f1e-97db-4977-951f-7cf8c8689f27.jpg)
+
