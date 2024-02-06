@@ -12,7 +12,6 @@ class _RektometerRemoteRetrofitDataSource
     implements RektometerRemoteRetrofitDataSource {
   _RektometerRemoteRetrofitDataSource(
     this._dio, {
-    // ignore: unused_element
     this.baseUrl,
   });
 
@@ -22,11 +21,11 @@ class _RektometerRemoteRetrofitDataSource
 
   @override
   Future<List<RektometerModel>> getTrackerData(
-      {required trackerIdsString}) async {
-    const _extra = <String, dynamic>{};
+      {required String trackerIdsString}) async {
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<List<dynamic>>(_setStreamType<List<RektometerModel>>(Options(
       method: 'GET',
@@ -39,7 +38,11 @@ class _RektometerRemoteRetrofitDataSource
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     var value = _result.data!
         .map((dynamic i) => RektometerModel.fromJson(i as Map<String, dynamic>))
         .toList();
@@ -57,5 +60,22 @@ class _RektometerRemoteRetrofitDataSource
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

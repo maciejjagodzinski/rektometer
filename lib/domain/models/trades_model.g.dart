@@ -1,15 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: non_constant_identifier_names
-
 part of 'trades_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TradeModel _$$_TradeModelFromJson(Map<String, dynamic> json) =>
-    _$_TradeModel(
+_$TradeModelImpl _$$TradeModelImplFromJson(Map<String, dynamic> json) =>
+    _$TradeModelImpl(
       tradeDocumentId: json['tradeDocumentId'] as String,
       tradeTokenId: json['tradeTokenId'] as String,
       volume: (json['volume'] as num).toDouble(),
@@ -18,7 +16,7 @@ _$_TradeModel _$$_TradeModelFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String,
     );
 
-Map<String, dynamic> _$$_TradeModelToJson(_$_TradeModel instance) =>
+Map<String, dynamic> _$$TradeModelImplToJson(_$TradeModelImpl instance) =>
     <String, dynamic>{
       'tradeDocumentId': instance.tradeDocumentId,
       'tradeTokenId': instance.tradeTokenId,

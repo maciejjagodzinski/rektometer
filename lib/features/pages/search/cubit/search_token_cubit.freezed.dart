@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'search_token_cubit.dart';
 
@@ -12,7 +12,7 @@ part of 'search_token_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SearchTokenState {
@@ -31,7 +31,8 @@ mixin _$SearchTokenState {
 abstract class $SearchTokenStateCopyWith<$Res> {
   factory $SearchTokenStateCopyWith(
           SearchTokenState value, $Res Function(SearchTokenState) then) =
-      _$SearchTokenStateCopyWithImpl<$Res>;
+      _$SearchTokenStateCopyWithImpl<$Res, SearchTokenState>;
+  @useResult
   $Res call(
       {Status status,
       String? errorMessage,
@@ -41,54 +42,57 @@ abstract class $SearchTokenStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SearchTokenStateCopyWithImpl<$Res>
+class _$SearchTokenStateCopyWithImpl<$Res, $Val extends SearchTokenState>
     implements $SearchTokenStateCopyWith<$Res> {
   _$SearchTokenStateCopyWithImpl(this._value, this._then);
 
-  final SearchTokenState _value;
   // ignore: unused_field
-  final $Res Function(SearchTokenState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
     Object? errorMessage = freezed,
-    Object? tokenList = freezed,
-    Object? addTokenId = freezed,
-    Object? tokenSaved = freezed,
+    Object? tokenList = null,
+    Object? addTokenId = null,
+    Object? tokenSaved = null,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      tokenList: tokenList == freezed
+      tokenList: null == tokenList
           ? _value.tokenList
           : tokenList // ignore: cast_nullable_to_non_nullable
               as List<SearchListModel>,
-      addTokenId: addTokenId == freezed
+      addTokenId: null == addTokenId
           ? _value.addTokenId
           : addTokenId // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenSaved: tokenSaved == freezed
+      tokenSaved: null == tokenSaved
           ? _value.tokenSaved
           : tokenSaved // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_SearchTokenStateCopyWith<$Res>
+abstract class _$$SearchTokenStateImplCopyWith<$Res>
     implements $SearchTokenStateCopyWith<$Res> {
-  factory _$$_SearchTokenStateCopyWith(
-          _$_SearchTokenState value, $Res Function(_$_SearchTokenState) then) =
-      __$$_SearchTokenStateCopyWithImpl<$Res>;
+  factory _$$SearchTokenStateImplCopyWith(_$SearchTokenStateImpl value,
+          $Res Function(_$SearchTokenStateImpl) then) =
+      __$$SearchTokenStateImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Status status,
       String? errorMessage,
@@ -98,42 +102,40 @@ abstract class _$$_SearchTokenStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SearchTokenStateCopyWithImpl<$Res>
-    extends _$SearchTokenStateCopyWithImpl<$Res>
-    implements _$$_SearchTokenStateCopyWith<$Res> {
-  __$$_SearchTokenStateCopyWithImpl(
-      _$_SearchTokenState _value, $Res Function(_$_SearchTokenState) _then)
-      : super(_value, (v) => _then(v as _$_SearchTokenState));
+class __$$SearchTokenStateImplCopyWithImpl<$Res>
+    extends _$SearchTokenStateCopyWithImpl<$Res, _$SearchTokenStateImpl>
+    implements _$$SearchTokenStateImplCopyWith<$Res> {
+  __$$SearchTokenStateImplCopyWithImpl(_$SearchTokenStateImpl _value,
+      $Res Function(_$SearchTokenStateImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_SearchTokenState get _value => super._value as _$_SearchTokenState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
     Object? errorMessage = freezed,
-    Object? tokenList = freezed,
-    Object? addTokenId = freezed,
-    Object? tokenSaved = freezed,
+    Object? tokenList = null,
+    Object? addTokenId = null,
+    Object? tokenSaved = null,
   }) {
-    return _then(_$_SearchTokenState(
-      status: status == freezed
+    return _then(_$SearchTokenStateImpl(
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      tokenList: tokenList == freezed
+      tokenList: null == tokenList
           ? _value._tokenList
           : tokenList // ignore: cast_nullable_to_non_nullable
               as List<SearchListModel>,
-      addTokenId: addTokenId == freezed
+      addTokenId: null == addTokenId
           ? _value.addTokenId
           : addTokenId // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenSaved: tokenSaved == freezed
+      tokenSaved: null == tokenSaved
           ? _value.tokenSaved
           : tokenSaved // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -143,8 +145,8 @@ class __$$_SearchTokenStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SearchTokenState implements _SearchTokenState {
-  const _$_SearchTokenState(
+class _$SearchTokenStateImpl implements _SearchTokenState {
+  const _$SearchTokenStateImpl(
       {required this.status,
       required this.errorMessage,
       required final List<SearchListModel> tokenList,
@@ -159,6 +161,7 @@ class _$_SearchTokenState implements _SearchTokenState {
   final List<SearchListModel> _tokenList;
   @override
   List<SearchListModel> get tokenList {
+    if (_tokenList is EqualUnmodifiableListView) return _tokenList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tokenList);
   }
@@ -174,34 +177,31 @@ class _$_SearchTokenState implements _SearchTokenState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SearchTokenState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.errorMessage, errorMessage) &&
+            other is _$SearchTokenStateImpl &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
             const DeepCollectionEquality()
                 .equals(other._tokenList, _tokenList) &&
-            const DeepCollectionEquality()
-                .equals(other.addTokenId, addTokenId) &&
-            const DeepCollectionEquality()
-                .equals(other.tokenSaved, tokenSaved));
+            (identical(other.addTokenId, addTokenId) ||
+                other.addTokenId == addTokenId) &&
+            (identical(other.tokenSaved, tokenSaved) ||
+                other.tokenSaved == tokenSaved));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(errorMessage),
-      const DeepCollectionEquality().hash(_tokenList),
-      const DeepCollectionEquality().hash(addTokenId),
-      const DeepCollectionEquality().hash(tokenSaved));
+  int get hashCode => Object.hash(runtimeType, status, errorMessage,
+      const DeepCollectionEquality().hash(_tokenList), addTokenId, tokenSaved);
 
   @JsonKey(ignore: true)
   @override
-  _$$_SearchTokenStateCopyWith<_$_SearchTokenState> get copyWith =>
-      __$$_SearchTokenStateCopyWithImpl<_$_SearchTokenState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$SearchTokenStateImplCopyWith<_$SearchTokenStateImpl> get copyWith =>
+      __$$SearchTokenStateImplCopyWithImpl<_$SearchTokenStateImpl>(
+          this, _$identity);
 }
 
 abstract class _SearchTokenState implements SearchTokenState {
@@ -210,7 +210,7 @@ abstract class _SearchTokenState implements SearchTokenState {
       required final String? errorMessage,
       required final List<SearchListModel> tokenList,
       required final String addTokenId,
-      required final bool tokenSaved}) = _$_SearchTokenState;
+      required final bool tokenSaved}) = _$SearchTokenStateImpl;
 
   @override
   Status get status;
@@ -224,6 +224,6 @@ abstract class _SearchTokenState implements SearchTokenState {
   bool get tokenSaved;
   @override
   @JsonKey(ignore: true)
-  _$$_SearchTokenStateCopyWith<_$_SearchTokenState> get copyWith =>
+  _$$SearchTokenStateImplCopyWith<_$SearchTokenStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

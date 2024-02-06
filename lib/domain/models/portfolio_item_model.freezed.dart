@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'portfolio_item_model.dart';
 
@@ -12,7 +12,7 @@ part of 'portfolio_item_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PortfolioItemModel _$PortfolioItemModelFromJson(Map<String, dynamic> json) {
   return _PortfolioItemModel.fromJson(json);
@@ -25,12 +25,12 @@ mixin _$PortfolioItemModel {
   String get image => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
-  @JsonKey(name: 'current_price')
-  double get price => throw _privateConstructorUsedError;
-  @JsonKey(name: 'price_change_percentage_24h')
-  double get priceChange => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current_price', defaultValue: 0.0)
+  double? get price => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0.0)
+  double? get priceChange => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: 0.0)
-  double get volume => throw _privateConstructorUsedError;
+  double? get volume => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: '')
   String get investmentDocumentId => throw _privateConstructorUsedError;
 
@@ -44,145 +44,149 @@ mixin _$PortfolioItemModel {
 abstract class $PortfolioItemModelCopyWith<$Res> {
   factory $PortfolioItemModelCopyWith(
           PortfolioItemModel value, $Res Function(PortfolioItemModel) then) =
-      _$PortfolioItemModelCopyWithImpl<$Res>;
+      _$PortfolioItemModelCopyWithImpl<$Res, PortfolioItemModel>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'id') String tokenId,
       String image,
       String name,
       String symbol,
-      @JsonKey(name: 'current_price') double price,
-      @JsonKey(name: 'price_change_percentage_24h') double priceChange,
-      @JsonKey(defaultValue: 0.0) double volume,
+      @JsonKey(name: 'current_price', defaultValue: 0.0) double? price,
+      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0.0)
+      double? priceChange,
+      @JsonKey(defaultValue: 0.0) double? volume,
       @JsonKey(defaultValue: '') String investmentDocumentId});
 }
 
 /// @nodoc
-class _$PortfolioItemModelCopyWithImpl<$Res>
+class _$PortfolioItemModelCopyWithImpl<$Res, $Val extends PortfolioItemModel>
     implements $PortfolioItemModelCopyWith<$Res> {
   _$PortfolioItemModelCopyWithImpl(this._value, this._then);
 
-  final PortfolioItemModel _value;
   // ignore: unused_field
-  final $Res Function(PortfolioItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tokenId = freezed,
-    Object? image = freezed,
-    Object? name = freezed,
-    Object? symbol = freezed,
+    Object? tokenId = null,
+    Object? image = null,
+    Object? name = null,
+    Object? symbol = null,
     Object? price = freezed,
     Object? priceChange = freezed,
     Object? volume = freezed,
-    Object? investmentDocumentId = freezed,
+    Object? investmentDocumentId = null,
   }) {
     return _then(_value.copyWith(
-      tokenId: tokenId == freezed
+      tokenId: null == tokenId
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
-      image: image == freezed
+      image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      priceChange: priceChange == freezed
+              as double?,
+      priceChange: freezed == priceChange
           ? _value.priceChange
           : priceChange // ignore: cast_nullable_to_non_nullable
-              as double,
-      volume: volume == freezed
+              as double?,
+      volume: freezed == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
-              as double,
-      investmentDocumentId: investmentDocumentId == freezed
+              as double?,
+      investmentDocumentId: null == investmentDocumentId
           ? _value.investmentDocumentId
           : investmentDocumentId // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_PortfolioItemModelCopyWith<$Res>
+abstract class _$$PortfolioItemModelImplCopyWith<$Res>
     implements $PortfolioItemModelCopyWith<$Res> {
-  factory _$$_PortfolioItemModelCopyWith(_$_PortfolioItemModel value,
-          $Res Function(_$_PortfolioItemModel) then) =
-      __$$_PortfolioItemModelCopyWithImpl<$Res>;
+  factory _$$PortfolioItemModelImplCopyWith(_$PortfolioItemModelImpl value,
+          $Res Function(_$PortfolioItemModelImpl) then) =
+      __$$PortfolioItemModelImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'id') String tokenId,
       String image,
       String name,
       String symbol,
-      @JsonKey(name: 'current_price') double price,
-      @JsonKey(name: 'price_change_percentage_24h') double priceChange,
-      @JsonKey(defaultValue: 0.0) double volume,
+      @JsonKey(name: 'current_price', defaultValue: 0.0) double? price,
+      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0.0)
+      double? priceChange,
+      @JsonKey(defaultValue: 0.0) double? volume,
       @JsonKey(defaultValue: '') String investmentDocumentId});
 }
 
 /// @nodoc
-class __$$_PortfolioItemModelCopyWithImpl<$Res>
-    extends _$PortfolioItemModelCopyWithImpl<$Res>
-    implements _$$_PortfolioItemModelCopyWith<$Res> {
-  __$$_PortfolioItemModelCopyWithImpl(
-      _$_PortfolioItemModel _value, $Res Function(_$_PortfolioItemModel) _then)
-      : super(_value, (v) => _then(v as _$_PortfolioItemModel));
+class __$$PortfolioItemModelImplCopyWithImpl<$Res>
+    extends _$PortfolioItemModelCopyWithImpl<$Res, _$PortfolioItemModelImpl>
+    implements _$$PortfolioItemModelImplCopyWith<$Res> {
+  __$$PortfolioItemModelImplCopyWithImpl(_$PortfolioItemModelImpl _value,
+      $Res Function(_$PortfolioItemModelImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_PortfolioItemModel get _value => super._value as _$_PortfolioItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tokenId = freezed,
-    Object? image = freezed,
-    Object? name = freezed,
-    Object? symbol = freezed,
+    Object? tokenId = null,
+    Object? image = null,
+    Object? name = null,
+    Object? symbol = null,
     Object? price = freezed,
     Object? priceChange = freezed,
     Object? volume = freezed,
-    Object? investmentDocumentId = freezed,
+    Object? investmentDocumentId = null,
   }) {
-    return _then(_$_PortfolioItemModel(
-      tokenId: tokenId == freezed
+    return _then(_$PortfolioItemModelImpl(
+      tokenId: null == tokenId
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
-      image: image == freezed
+      image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      priceChange: priceChange == freezed
+              as double?,
+      priceChange: freezed == priceChange
           ? _value.priceChange
           : priceChange // ignore: cast_nullable_to_non_nullable
-              as double,
-      volume: volume == freezed
+              as double?,
+      volume: freezed == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
-              as double,
-      investmentDocumentId: investmentDocumentId == freezed
+              as double?,
+      investmentDocumentId: null == investmentDocumentId
           ? _value.investmentDocumentId
           : investmentDocumentId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -192,20 +196,21 @@ class __$$_PortfolioItemModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PortfolioItemModel extends _PortfolioItemModel {
-  _$_PortfolioItemModel(
+class _$PortfolioItemModelImpl extends _PortfolioItemModel {
+  _$PortfolioItemModelImpl(
       {@JsonKey(name: 'id') required this.tokenId,
       required this.image,
       required this.name,
       required this.symbol,
-      @JsonKey(name: 'current_price') required this.price,
-      @JsonKey(name: 'price_change_percentage_24h') required this.priceChange,
+      @JsonKey(name: 'current_price', defaultValue: 0.0) required this.price,
+      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0.0)
+      required this.priceChange,
       @JsonKey(defaultValue: 0.0) required this.volume,
       @JsonKey(defaultValue: '') required this.investmentDocumentId})
       : super._();
 
-  factory _$_PortfolioItemModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PortfolioItemModelFromJson(json);
+  factory _$PortfolioItemModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PortfolioItemModelImplFromJson(json);
 
   @override
   @JsonKey(name: 'id')
@@ -217,14 +222,14 @@ class _$_PortfolioItemModel extends _PortfolioItemModel {
   @override
   final String symbol;
   @override
-  @JsonKey(name: 'current_price')
-  final double price;
+  @JsonKey(name: 'current_price', defaultValue: 0.0)
+  final double? price;
   @override
-  @JsonKey(name: 'price_change_percentage_24h')
-  final double priceChange;
+  @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0.0)
+  final double? priceChange;
   @override
   @JsonKey(defaultValue: 0.0)
-  final double volume;
+  final double? volume;
   @override
   @JsonKey(defaultValue: '')
   final String investmentDocumentId;
@@ -235,44 +240,37 @@ class _$_PortfolioItemModel extends _PortfolioItemModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PortfolioItemModel &&
-            const DeepCollectionEquality().equals(other.tokenId, tokenId) &&
-            const DeepCollectionEquality().equals(other.image, image) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.symbol, symbol) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
-            const DeepCollectionEquality()
-                .equals(other.priceChange, priceChange) &&
-            const DeepCollectionEquality().equals(other.volume, volume) &&
-            const DeepCollectionEquality()
-                .equals(other.investmentDocumentId, investmentDocumentId));
+            other is _$PortfolioItemModelImpl &&
+            (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.symbol, symbol) || other.symbol == symbol) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.priceChange, priceChange) ||
+                other.priceChange == priceChange) &&
+            (identical(other.volume, volume) || other.volume == volume) &&
+            (identical(other.investmentDocumentId, investmentDocumentId) ||
+                other.investmentDocumentId == investmentDocumentId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(tokenId),
-      const DeepCollectionEquality().hash(image),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(symbol),
-      const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(priceChange),
-      const DeepCollectionEquality().hash(volume),
-      const DeepCollectionEquality().hash(investmentDocumentId));
+  int get hashCode => Object.hash(runtimeType, tokenId, image, name, symbol,
+      price, priceChange, volume, investmentDocumentId);
 
   @JsonKey(ignore: true)
   @override
-  _$$_PortfolioItemModelCopyWith<_$_PortfolioItemModel> get copyWith =>
-      __$$_PortfolioItemModelCopyWithImpl<_$_PortfolioItemModel>(
+  @pragma('vm:prefer-inline')
+  _$$PortfolioItemModelImplCopyWith<_$PortfolioItemModelImpl> get copyWith =>
+      __$$PortfolioItemModelImplCopyWithImpl<_$PortfolioItemModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PortfolioItemModelToJson(
+    return _$$PortfolioItemModelImplToJson(
       this,
     );
   }
@@ -280,23 +278,21 @@ class _$_PortfolioItemModel extends _PortfolioItemModel {
 
 abstract class _PortfolioItemModel extends PortfolioItemModel {
   factory _PortfolioItemModel(
-      {@JsonKey(name: 'id')
-          required final String tokenId,
+      {@JsonKey(name: 'id') required final String tokenId,
       required final String image,
       required final String name,
       required final String symbol,
-      @JsonKey(name: 'current_price')
-          required final double price,
-      @JsonKey(name: 'price_change_percentage_24h')
-          required final double priceChange,
-      @JsonKey(defaultValue: 0.0)
-          required final double volume,
+      @JsonKey(name: 'current_price', defaultValue: 0.0)
+      required final double? price,
+      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0.0)
+      required final double? priceChange,
+      @JsonKey(defaultValue: 0.0) required final double? volume,
       @JsonKey(defaultValue: '')
-          required final String investmentDocumentId}) = _$_PortfolioItemModel;
+      required final String investmentDocumentId}) = _$PortfolioItemModelImpl;
   _PortfolioItemModel._() : super._();
 
   factory _PortfolioItemModel.fromJson(Map<String, dynamic> json) =
-      _$_PortfolioItemModel.fromJson;
+      _$PortfolioItemModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'id')
@@ -308,19 +304,19 @@ abstract class _PortfolioItemModel extends PortfolioItemModel {
   @override
   String get symbol;
   @override
-  @JsonKey(name: 'current_price')
-  double get price;
+  @JsonKey(name: 'current_price', defaultValue: 0.0)
+  double? get price;
   @override
-  @JsonKey(name: 'price_change_percentage_24h')
-  double get priceChange;
+  @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0.0)
+  double? get priceChange;
   @override
   @JsonKey(defaultValue: 0.0)
-  double get volume;
+  double? get volume;
   @override
   @JsonKey(defaultValue: '')
   String get investmentDocumentId;
   @override
   @JsonKey(ignore: true)
-  _$$_PortfolioItemModelCopyWith<_$_PortfolioItemModel> get copyWith =>
+  _$$PortfolioItemModelImplCopyWith<_$PortfolioItemModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

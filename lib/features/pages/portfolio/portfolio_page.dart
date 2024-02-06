@@ -37,8 +37,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ));
           }
         },
-        child: BlocBuilder<PortfolioCubit, PortfolioState>(
-            builder: (context, state) {
+        child: BlocBuilder<PortfolioCubit, PortfolioState>(builder: (context, state) {
           final portfolioItemModels = state.portfolioItemModels;
 
           if (state.status == Status.loading) {
@@ -78,18 +77,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
+                    padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),
                     child: Container(
                       height: 40,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimary
-                                .withOpacity(0.3),
+                            color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
                           ),
                         ),
                       ),
@@ -102,10 +97,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('Name',
-                                    style: Theme.of(context).textTheme.caption),
-                                Text('Symbol',
-                                    style: Theme.of(context).textTheme.caption),
+                                Text('Name', style: Theme.of(context).textTheme.caption),
+                                Text('Symbol', style: Theme.of(context).textTheme.caption),
                               ],
                             ),
                           ),
@@ -114,28 +107,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('Price',
-                                    style: Theme.of(context).textTheme.caption),
-                                Text('24h',
-                                    style: Theme.of(context).textTheme.caption),
+                                Text('Price', style: Theme.of(context).textTheme.caption),
+                                Text('24h', style: Theme.of(context).textTheme.caption),
                               ]),
                           const Spacer(),
                           Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('Value',
-                                    style: Theme.of(context).textTheme.caption),
-                                Text('Volume',
-                                    style: Theme.of(context).textTheme.caption),
+                                Text('Value', style: Theme.of(context).textTheme.caption),
+                                Text('Volume', style: Theme.of(context).textTheme.caption),
                               ]),
                         ]),
                       ),
                     ),
                   ),
-                  for (final portfolioItemModel in portfolioItemModels) ...[
-                    PortfolioWidget(portfolioItemModel)
-                  ]
+                  for (final portfolioItemModel in portfolioItemModels) ...[PortfolioWidget(portfolioItemModel)]
                 ],
               ),
             ),
@@ -184,8 +171,7 @@ class PortfolioWidget extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: ((context) =>
-                  DetailsPage(portfolioItemModel: portfolioItemModel)),
+              builder: ((context) => DetailsPage(portfolioItemModel: portfolioItemModel)),
             ),
           );
         },
@@ -195,8 +181,7 @@ class PortfolioWidget extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  color:
-                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
                 ),
               ),
             ),
@@ -221,11 +206,7 @@ class PortfolioWidget extends StatelessWidget {
                     ),
                     Text(
                       portfolioItemModel.symbol.toUpperCase(),
-                      style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary
-                              .withOpacity(0.6)),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6)),
                     ),
                   ],
                 ),
@@ -236,14 +217,12 @@ class PortfolioWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '\$${portfolioItemModel.price.toStringAsFixed(2)}',
+                      '\$${portfolioItemModel.price!.toStringAsFixed(2)}',
                     ),
                     Text(
-                      '${portfolioItemModel.priceChange.toStringAsFixed(2)}%',
+                      '${portfolioItemModel.priceChange!.toStringAsFixed(2)}%',
                       style: TextStyle(
-                        color: portfolioItemModel.priceChange < 0
-                            ? Colors.red[700]
-                            : Colors.green[700],
+                        color: portfolioItemModel.priceChange! < 0 ? Colors.red[700] : Colors.green[700],
                       ),
                     ),
                   ]),
@@ -256,12 +235,8 @@ class PortfolioWidget extends StatelessWidget {
                     '\$${portfolioItemModel.value.toStringAsFixed(0)}',
                   ),
                   Text(
-                    portfolioItemModel.volume.toStringAsFixed(2),
-                    style: TextStyle(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimary
-                            .withOpacity(0.6)),
+                    portfolioItemModel.volume!.toStringAsFixed(2),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6)),
                   ),
                 ],
               ),

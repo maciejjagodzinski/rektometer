@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'details_cubit.dart';
 
@@ -12,7 +12,7 @@ part of 'details_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$DetailsState {
@@ -30,7 +30,8 @@ mixin _$DetailsState {
 abstract class $DetailsStateCopyWith<$Res> {
   factory $DetailsStateCopyWith(
           DetailsState value, $Res Function(DetailsState) then) =
-      _$DetailsStateCopyWithImpl<$Res>;
+      _$DetailsStateCopyWithImpl<$Res, DetailsState>;
+  @useResult
   $Res call(
       {List<TradeModel> tradeModels,
       Status status,
@@ -39,48 +40,52 @@ abstract class $DetailsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DetailsStateCopyWithImpl<$Res> implements $DetailsStateCopyWith<$Res> {
+class _$DetailsStateCopyWithImpl<$Res, $Val extends DetailsState>
+    implements $DetailsStateCopyWith<$Res> {
   _$DetailsStateCopyWithImpl(this._value, this._then);
 
-  final DetailsState _value;
   // ignore: unused_field
-  final $Res Function(DetailsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tradeModels = freezed,
-    Object? status = freezed,
+    Object? tradeModels = null,
+    Object? status = null,
     Object? errorMessage = freezed,
-    Object? navigatedPortfolio = freezed,
+    Object? navigatedPortfolio = null,
   }) {
     return _then(_value.copyWith(
-      tradeModels: tradeModels == freezed
+      tradeModels: null == tradeModels
           ? _value.tradeModels
           : tradeModels // ignore: cast_nullable_to_non_nullable
               as List<TradeModel>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      navigatedPortfolio: navigatedPortfolio == freezed
+      navigatedPortfolio: null == navigatedPortfolio
           ? _value.navigatedPortfolio
           : navigatedPortfolio // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_DetailsStateCopyWith<$Res>
+abstract class _$$DetailsStateImplCopyWith<$Res>
     implements $DetailsStateCopyWith<$Res> {
-  factory _$$_DetailsStateCopyWith(
-          _$_DetailsState value, $Res Function(_$_DetailsState) then) =
-      __$$_DetailsStateCopyWithImpl<$Res>;
+  factory _$$DetailsStateImplCopyWith(
+          _$DetailsStateImpl value, $Res Function(_$DetailsStateImpl) then) =
+      __$$DetailsStateImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<TradeModel> tradeModels,
       Status status,
@@ -89,37 +94,35 @@ abstract class _$$_DetailsStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DetailsStateCopyWithImpl<$Res>
-    extends _$DetailsStateCopyWithImpl<$Res>
-    implements _$$_DetailsStateCopyWith<$Res> {
-  __$$_DetailsStateCopyWithImpl(
-      _$_DetailsState _value, $Res Function(_$_DetailsState) _then)
-      : super(_value, (v) => _then(v as _$_DetailsState));
+class __$$DetailsStateImplCopyWithImpl<$Res>
+    extends _$DetailsStateCopyWithImpl<$Res, _$DetailsStateImpl>
+    implements _$$DetailsStateImplCopyWith<$Res> {
+  __$$DetailsStateImplCopyWithImpl(
+      _$DetailsStateImpl _value, $Res Function(_$DetailsStateImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_DetailsState get _value => super._value as _$_DetailsState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tradeModels = freezed,
-    Object? status = freezed,
+    Object? tradeModels = null,
+    Object? status = null,
     Object? errorMessage = freezed,
-    Object? navigatedPortfolio = freezed,
+    Object? navigatedPortfolio = null,
   }) {
-    return _then(_$_DetailsState(
-      tradeModels: tradeModels == freezed
+    return _then(_$DetailsStateImpl(
+      tradeModels: null == tradeModels
           ? _value._tradeModels
           : tradeModels // ignore: cast_nullable_to_non_nullable
               as List<TradeModel>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      navigatedPortfolio: navigatedPortfolio == freezed
+      navigatedPortfolio: null == navigatedPortfolio
           ? _value.navigatedPortfolio
           : navigatedPortfolio // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -129,8 +132,8 @@ class __$$_DetailsStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DetailsState implements _DetailsState {
-  const _$_DetailsState(
+class _$DetailsStateImpl implements _DetailsState {
+  const _$DetailsStateImpl(
       {required final List<TradeModel> tradeModels,
       required this.status,
       required this.errorMessage,
@@ -140,6 +143,7 @@ class _$_DetailsState implements _DetailsState {
   final List<TradeModel> _tradeModels;
   @override
   List<TradeModel> get tradeModels {
+    if (_tradeModels is EqualUnmodifiableListView) return _tradeModels;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_tradeModels);
   }
@@ -157,31 +161,32 @@ class _$_DetailsState implements _DetailsState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DetailsState &&
+            other is _$DetailsStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._tradeModels, _tradeModels) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.errorMessage, errorMessage) &&
-            const DeepCollectionEquality()
-                .equals(other.navigatedPortfolio, navigatedPortfolio));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.navigatedPortfolio, navigatedPortfolio) ||
+                other.navigatedPortfolio == navigatedPortfolio));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_tradeModels),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(errorMessage),
-      const DeepCollectionEquality().hash(navigatedPortfolio));
+      status,
+      errorMessage,
+      navigatedPortfolio);
 
   @JsonKey(ignore: true)
   @override
-  _$$_DetailsStateCopyWith<_$_DetailsState> get copyWith =>
-      __$$_DetailsStateCopyWithImpl<_$_DetailsState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$DetailsStateImplCopyWith<_$DetailsStateImpl> get copyWith =>
+      __$$DetailsStateImplCopyWithImpl<_$DetailsStateImpl>(this, _$identity);
 }
 
 abstract class _DetailsState implements DetailsState {
@@ -189,7 +194,7 @@ abstract class _DetailsState implements DetailsState {
       {required final List<TradeModel> tradeModels,
       required final Status status,
       required final String? errorMessage,
-      required final bool navigatedPortfolio}) = _$_DetailsState;
+      required final bool navigatedPortfolio}) = _$DetailsStateImpl;
 
   @override
   List<TradeModel> get tradeModels;
@@ -201,6 +206,6 @@ abstract class _DetailsState implements DetailsState {
   bool get navigatedPortfolio;
   @override
   @JsonKey(ignore: true)
-  _$$_DetailsStateCopyWith<_$_DetailsState> get copyWith =>
+  _$$DetailsStateImplCopyWith<_$DetailsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

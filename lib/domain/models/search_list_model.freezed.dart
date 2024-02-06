@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'search_list_model.dart';
 
@@ -12,7 +12,7 @@ part of 'search_list_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 SearchListModel _$SearchListModelFromJson(Map<String, dynamic> json) {
   return _SearchListModel.fromJson(json);
@@ -34,79 +34,81 @@ mixin _$SearchListModel {
 abstract class $SearchListModelCopyWith<$Res> {
   factory $SearchListModelCopyWith(
           SearchListModel value, $Res Function(SearchListModel) then) =
-      _$SearchListModelCopyWithImpl<$Res>;
+      _$SearchListModelCopyWithImpl<$Res, SearchListModel>;
+  @useResult
   $Res call({String name, String id, String symbol});
 }
 
 /// @nodoc
-class _$SearchListModelCopyWithImpl<$Res>
+class _$SearchListModelCopyWithImpl<$Res, $Val extends SearchListModel>
     implements $SearchListModelCopyWith<$Res> {
   _$SearchListModelCopyWithImpl(this._value, this._then);
 
-  final SearchListModel _value;
   // ignore: unused_field
-  final $Res Function(SearchListModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? id = freezed,
-    Object? symbol = freezed,
+    Object? name = null,
+    Object? id = null,
+    Object? symbol = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_SearchListModelCopyWith<$Res>
+abstract class _$$SearchListModelImplCopyWith<$Res>
     implements $SearchListModelCopyWith<$Res> {
-  factory _$$_SearchListModelCopyWith(
-          _$_SearchListModel value, $Res Function(_$_SearchListModel) then) =
-      __$$_SearchListModelCopyWithImpl<$Res>;
+  factory _$$SearchListModelImplCopyWith(_$SearchListModelImpl value,
+          $Res Function(_$SearchListModelImpl) then) =
+      __$$SearchListModelImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String name, String id, String symbol});
 }
 
 /// @nodoc
-class __$$_SearchListModelCopyWithImpl<$Res>
-    extends _$SearchListModelCopyWithImpl<$Res>
-    implements _$$_SearchListModelCopyWith<$Res> {
-  __$$_SearchListModelCopyWithImpl(
-      _$_SearchListModel _value, $Res Function(_$_SearchListModel) _then)
-      : super(_value, (v) => _then(v as _$_SearchListModel));
+class __$$SearchListModelImplCopyWithImpl<$Res>
+    extends _$SearchListModelCopyWithImpl<$Res, _$SearchListModelImpl>
+    implements _$$SearchListModelImplCopyWith<$Res> {
+  __$$SearchListModelImplCopyWithImpl(
+      _$SearchListModelImpl _value, $Res Function(_$SearchListModelImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_SearchListModel get _value => super._value as _$_SearchListModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? id = freezed,
-    Object? symbol = freezed,
+    Object? name = null,
+    Object? id = null,
+    Object? symbol = null,
   }) {
-    return _then(_$_SearchListModel(
-      name: name == freezed
+    return _then(_$SearchListModelImpl(
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      symbol: symbol == freezed
+      symbol: null == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
               as String,
@@ -116,12 +118,12 @@ class __$$_SearchListModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SearchListModel implements _SearchListModel {
-  _$_SearchListModel(
+class _$SearchListModelImpl implements _SearchListModel {
+  _$SearchListModelImpl(
       {required this.name, required this.id, required this.symbol});
 
-  factory _$_SearchListModel.fromJson(Map<String, dynamic> json) =>
-      _$$_SearchListModelFromJson(json);
+  factory _$SearchListModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SearchListModelImplFromJson(json);
 
   @override
   final String name;
@@ -136,31 +138,29 @@ class _$_SearchListModel implements _SearchListModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SearchListModel &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.symbol, symbol));
+            other is _$SearchListModelImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.symbol, symbol) || other.symbol == symbol));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(symbol));
+  int get hashCode => Object.hash(runtimeType, name, id, symbol);
 
   @JsonKey(ignore: true)
   @override
-  _$$_SearchListModelCopyWith<_$_SearchListModel> get copyWith =>
-      __$$_SearchListModelCopyWithImpl<_$_SearchListModel>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$SearchListModelImplCopyWith<_$SearchListModelImpl> get copyWith =>
+      __$$SearchListModelImplCopyWithImpl<_$SearchListModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SearchListModelToJson(
+    return _$$SearchListModelImplToJson(
       this,
     );
   }
@@ -170,10 +170,10 @@ abstract class _SearchListModel implements SearchListModel {
   factory _SearchListModel(
       {required final String name,
       required final String id,
-      required final String symbol}) = _$_SearchListModel;
+      required final String symbol}) = _$SearchListModelImpl;
 
   factory _SearchListModel.fromJson(Map<String, dynamic> json) =
-      _$_SearchListModel.fromJson;
+      _$SearchListModelImpl.fromJson;
 
   @override
   String get name;
@@ -183,6 +183,6 @@ abstract class _SearchListModel implements SearchListModel {
   String get symbol;
   @override
   @JsonKey(ignore: true)
-  _$$_SearchListModelCopyWith<_$_SearchListModel> get copyWith =>
+  _$$SearchListModelImplCopyWith<_$SearchListModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

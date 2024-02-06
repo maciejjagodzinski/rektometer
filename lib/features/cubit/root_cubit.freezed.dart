@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'root_cubit.dart';
 
@@ -12,7 +12,7 @@ part of 'root_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$RootState {
@@ -29,7 +29,8 @@ mixin _$RootState {
 /// @nodoc
 abstract class $RootStateCopyWith<$Res> {
   factory $RootStateCopyWith(RootState value, $Res Function(RootState) then) =
-      _$RootStateCopyWithImpl<$Res>;
+      _$RootStateCopyWithImpl<$Res, RootState>;
+  @useResult
   $Res call(
       {User? user,
       Status status,
@@ -38,47 +39,52 @@ abstract class $RootStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RootStateCopyWithImpl<$Res> implements $RootStateCopyWith<$Res> {
+class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
+    implements $RootStateCopyWith<$Res> {
   _$RootStateCopyWithImpl(this._value, this._then);
 
-  final RootState _value;
   // ignore: unused_field
-  final $Res Function(RootState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? user = freezed,
-    Object? status = freezed,
-    Object? isCreatingAccount = freezed,
+    Object? status = null,
+    Object? isCreatingAccount = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      user: user == freezed
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      isCreatingAccount: isCreatingAccount == freezed
+      isCreatingAccount: null == isCreatingAccount
           ? _value.isCreatingAccount
           : isCreatingAccount // ignore: cast_nullable_to_non_nullable
               as bool,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_RootStateCopyWith<$Res> implements $RootStateCopyWith<$Res> {
-  factory _$$_RootStateCopyWith(
-          _$_RootState value, $Res Function(_$_RootState) then) =
-      __$$_RootStateCopyWithImpl<$Res>;
+abstract class _$$RootStateImplCopyWith<$Res>
+    implements $RootStateCopyWith<$Res> {
+  factory _$$RootStateImplCopyWith(
+          _$RootStateImpl value, $Res Function(_$RootStateImpl) then) =
+      __$$RootStateImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {User? user,
       Status status,
@@ -87,36 +93,35 @@ abstract class _$$_RootStateCopyWith<$Res> implements $RootStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_RootStateCopyWithImpl<$Res> extends _$RootStateCopyWithImpl<$Res>
-    implements _$$_RootStateCopyWith<$Res> {
-  __$$_RootStateCopyWithImpl(
-      _$_RootState _value, $Res Function(_$_RootState) _then)
-      : super(_value, (v) => _then(v as _$_RootState));
+class __$$RootStateImplCopyWithImpl<$Res>
+    extends _$RootStateCopyWithImpl<$Res, _$RootStateImpl>
+    implements _$$RootStateImplCopyWith<$Res> {
+  __$$RootStateImplCopyWithImpl(
+      _$RootStateImpl _value, $Res Function(_$RootStateImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_RootState get _value => super._value as _$_RootState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? user = freezed,
-    Object? status = freezed,
-    Object? isCreatingAccount = freezed,
+    Object? status = null,
+    Object? isCreatingAccount = null,
     Object? errorMessage = freezed,
   }) {
-    return _then(_$_RootState(
-      user: user == freezed
+    return _then(_$RootStateImpl(
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      isCreatingAccount: isCreatingAccount == freezed
+      isCreatingAccount: null == isCreatingAccount
           ? _value.isCreatingAccount
           : isCreatingAccount // ignore: cast_nullable_to_non_nullable
               as bool,
-      errorMessage: errorMessage == freezed
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -126,8 +131,8 @@ class __$$_RootStateCopyWithImpl<$Res> extends _$RootStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RootState implements _RootState {
-  const _$_RootState(
+class _$RootStateImpl implements _RootState {
+  const _$RootStateImpl(
       {required this.user,
       required this.status,
       required this.isCreatingAccount,
@@ -148,30 +153,27 @@ class _$_RootState implements _RootState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RootState &&
-            const DeepCollectionEquality().equals(other.user, user) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.isCreatingAccount, isCreatingAccount) &&
-            const DeepCollectionEquality()
-                .equals(other.errorMessage, errorMessage));
+            other is _$RootStateImpl &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.isCreatingAccount, isCreatingAccount) ||
+                other.isCreatingAccount == isCreatingAccount) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(user),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(isCreatingAccount),
-      const DeepCollectionEquality().hash(errorMessage));
+  int get hashCode =>
+      Object.hash(runtimeType, user, status, isCreatingAccount, errorMessage);
 
   @JsonKey(ignore: true)
   @override
-  _$$_RootStateCopyWith<_$_RootState> get copyWith =>
-      __$$_RootStateCopyWithImpl<_$_RootState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$RootStateImplCopyWith<_$RootStateImpl> get copyWith =>
+      __$$RootStateImplCopyWithImpl<_$RootStateImpl>(this, _$identity);
 }
 
 abstract class _RootState implements RootState {
@@ -179,7 +181,7 @@ abstract class _RootState implements RootState {
       {required final User? user,
       required final Status status,
       required final bool isCreatingAccount,
-      required final String? errorMessage}) = _$_RootState;
+      required final String? errorMessage}) = _$RootStateImpl;
 
   @override
   User? get user;
@@ -191,6 +193,6 @@ abstract class _RootState implements RootState {
   String? get errorMessage;
   @override
   @JsonKey(ignore: true)
-  _$$_RootStateCopyWith<_$_RootState> get copyWith =>
+  _$$RootStateImplCopyWith<_$RootStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

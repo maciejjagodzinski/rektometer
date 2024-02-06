@@ -11,8 +11,8 @@ class PortfolioRepository {
   final PortfolioRemoteRetrofitDataSource portfolioRemoteRetrofitDataSource;
 
   Future<List<PortfolioItemModel>> getPortfolioItemModels() async {
-    final investmentsData =
-        await portfolioRemoteDataSource.getRemoteInvestmentsData();
+    final investmentsData = await portfolioRemoteDataSource.getRemoteInvestmentsData();
+
     final investmentsPortfolioItemModels = investmentsData!.docs.map((doc) {
       return PortfolioItemModel(
         tokenId: doc['id'],
@@ -32,12 +32,13 @@ class PortfolioRepository {
         })
         .toSet()
         .toList();
-
-    final apiPortfolioItemModels = await portfolioRemoteRetrofitDataSource
-        .getTrackerData(trackerIdsString: portfolioTokensIds.join(','));
-
+    print('get tracked data');
+    final apiPortfolioItemModels =
+        await portfolioRemoteRetrofitDataSource.getTrackerData(trackerIdsString: portfolioTokensIds.join(','));
+    print('trackerdata');
     final tradesData = await portfolioRemoteDataSource.getRemoteTradesData();
 
+    print('trade: $tradesData');
     final allTradesPortfolioItemModels = tradesData!.docs.map((doc) {
       return PortfolioItemModel(
         tokenId: doc['id'],
@@ -51,10 +52,9 @@ class PortfolioRepository {
       );
     }).toList();
 
-    final combinedTradesPortfolioItemModels =
-        portfolioTokensIds.map((portfolioTokenId) {
-      final filteredTradesPortfolioItemModels = allTradesPortfolioItemModels
-          .where((tradeModel) => tradeModel.tokenId == portfolioTokenId);
+    final combinedTradesPortfolioItemModels = portfolioTokensIds.map((portfolioTokenId) {
+      final filteredTradesPortfolioItemModels =
+          allTradesPortfolioItemModels.where((tradeModel) => tradeModel.tokenId == portfolioTokenId);
 
       if (filteredTradesPortfolioItemModels.isEmpty) {
         return PortfolioItemModel(
@@ -70,6 +70,13 @@ class PortfolioRepository {
       }
 
       return filteredTradesPortfolioItemModels.reduce((value, element) {
+        double fixedPrice() {
+          if (value.price != null) {
+            return value.price!;
+          }
+          return 0.0;
+        }
+
         return PortfolioItemModel(
           tokenId: value.tokenId,
           image: value.image,
@@ -77,20 +84,18 @@ class PortfolioRepository {
           symbol: value.symbol,
           price: value.price,
           priceChange: value.priceChange,
-          volume: value.volume + element.volume,
+          volume: value.volume! + element.volume!,
           investmentDocumentId: '',
         );
       });
     }).toList();
 
-    final combinedPortfolioItemModels = apiPortfolioItemModels +
-        combinedTradesPortfolioItemModels +
-        investmentsPortfolioItemModels;
+    final combinedPortfolioItemModels =
+        apiPortfolioItemModels + combinedTradesPortfolioItemModels + investmentsPortfolioItemModels;
 
     return portfolioTokensIds.map((portfolioTokensIds) {
-      final portfolioItemModels = combinedPortfolioItemModels.where(
-          (combinedPortfolioItemModel) =>
-              combinedPortfolioItemModel.tokenId == portfolioTokensIds);
+      final portfolioItemModels = combinedPortfolioItemModels
+          .where((combinedPortfolioItemModel) => combinedPortfolioItemModel.tokenId == portfolioTokensIds);
 
       return portfolioItemModels.reduce((value, element) {
         return PortfolioItemModel(
@@ -98,9 +103,9 @@ class PortfolioRepository {
           image: value.image + element.image,
           name: value.name + element.name,
           symbol: value.symbol + element.symbol,
-          price: value.price + element.price,
-          priceChange: value.priceChange + element.value,
-          volume: value.volume + element.volume,
+          price: value.price! + element.price!,
+          priceChange: value.priceChange! + element.priceChange!,
+          volume: value.volume! + element.volume!,
           investmentDocumentId: element.investmentDocumentId,
         );
       });
